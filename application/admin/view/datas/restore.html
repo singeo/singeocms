@@ -1,0 +1,133 @@
+{extend name="common/base" /}
+{block name="main"}
+<div class="page-inner">
+    <div class="page-title">
+        <h3>{$title}(共{$totalNum}个文件，共计{$totalSize})</h3>
+    </div>
+    <div id="main-wrapper">
+        <div class="row">
+            <div class="panel panel-body panel-white">
+                <div class="table-responsive">
+                    <div class="dataTables_wrapper">
+                        <table id="tables" class="display table" style="width: 100%; cellspacing: 0;">
+                            <thead>
+                            <tr>
+                                <th>文件名称</th>
+                                <th>数据大小</th>
+                                <th>创建时间</th>
+                                <th>状态</th>
+                                <th>操作</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {volist name="list" id="item"}
+                            <tr id="file_{$item.time}">
+                                <td>{$item.filename}</td>
+                                <td>{$item.size}</td>
+                                <td>{$item.time|date="Y-m-d H:i:s",###}</td>
+                                <td><span class="info">-</span></td>
+                                <td>
+                                    {if condition="@checkAuth('/admin/Datas/import')"}
+                                    <button type="button" class="btn btn-info" onclick="data_import('{$item.time}');">恢复</button>
+                                    {/if}
+                                    {if condition="@checkAuth('/admin/Datas/downFile')"}
+                                    <button type="button" class="btn btn-primary" onclick="window.location.href='/admin/Datas/downFile?time={$item.time}'">下载</button>
+                                    {/if}
+                                    {if condition="@checkAuth('/admin/Datas/delFile')"}
+                                    <button type="button" class="btn btn-warning" onclick="data_delfile('{$item.time}',{$item.part});">删除</button>
+                                    {/if}
+                                </td>
+                            </tr>
+                            {/volist}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{/block}
+{block name="footer_js"}
+<script src="{$Think.config.system_static}plugins/datatables/js/jquery.datatables.min.js"></script>
+<script src="{$Think.config.system_static}plugins/x-editable/bootstrap3-editable/js/bootstrap-editable.js"></script>
+<script type="application/javascript">
+    $(function(){
+        $('#tables').DataTable({
+            paging: false,
+            info: false,
+            ordering:false,
+            searching:false,
+            language:lang
+        });
+    });
+    {if condition="@checkAuth('/admin/Datas/import')"}
+    var now_import ;
+    function data_import(name) {
+        $.ajax({
+            type: 'post',
+            url: '/admin/Datas/import',
+            data: {'time': name},
+            async: true,
+            dataType: 'json',
+            beforeSend:function(){
+                now_import = 'file_' + name ;
+                showbackmsg(now_import,'正在初始化') ;
+            },
+            success: function(context){
+                if(context.status == 1){
+                    showbackmsg(now_import, "开始恢复...(0%)");
+                    handle_import(context.data);
+                    window.onbeforeunload = function(){ return "正在恢复数据库，请不要关闭！" }
+                }else{
+                    $.myModal.alert({
+                        content : context.msg ,
+                        btn : true
+                    }) ;
+                }
+            }
+        });
+    }
+    //执行恢复
+    function handle_import(tab) {
+        $.ajax({
+            type: 'post',
+            url: '/admin/Datas/import',
+            data: tab,
+            dataType: 'json',
+            success: function (context) {
+                if (context.status) {
+                    showbackmsg(now_import, context.msg);
+                    if (typeof context.data == "undefined") {
+                        window.onbeforeunload = function () {
+                            return null
+                        };
+                        return;
+                    }
+                    handle_import(context.data);
+                } else {
+                    $.myModal.alert({
+                        content: context.msg,
+                        btn: true
+                    });
+                }
+            }
+        });
+    }
+    //数据表还原结果显示
+    function showbackmsg(id, msg){
+        $('#' + id).find(".info").html(msg);
+    }
+    {/if}
+    {if condition="@checkAuth('/admin/Datas/delFile')"}
+    function data_delfile(name) {
+        $.myModal.open({
+            remote:'/admin/Datas/delFile?time='+ name,
+            backdrop: 'static',
+            keyboard: false,
+            show:true,
+        }) ;
+    }
+    {/if}
+</script>
+{/block}

@@ -1,0 +1,171 @@
+{extend name="common/base" /}
+{block name="style"}
+<link href="{$Think.config.system_static}plugins/kindeditor/themes/default/default.css" rel="stylesheet" type="text/css"/>
+<style>
+    .color_ccc{
+        color: #ccc;
+    }
+
+    .pd0{
+        padding: 0px;
+    }
+</style>
+{/block}
+{block name="main"}
+<div class="page-inner">
+    <div class="page-title">
+        <h3>{$title}</h3>
+    </div>
+    <div id="main-wrapper">
+        <div class="row">
+            <div class="panel panel-body panel-white">
+                {if condition="@checkAuth('/admin/Webconfig/configAdd')"}
+                <button type="button" class="btn btn-success m-b-sm" onclick="configAdd();">新增配置项</button>
+                {/if}
+                <ul id="config_group_tab" class="nav nav-tabs">
+                    {volist name="config_group" id="group"}
+                    <li><a href="#config_tab_{$key}" data-toggle="tab">{$group}</a></li>
+                    {/volist}
+                </ul>
+                <div id="config_group_tab_content" class="tab-content">
+                    {volist name="config_group" id="group"}
+                    <div class="tab-pane fade" id="config_tab_{$key}">
+                        {present name="groupList[$key]"}
+                        <form class="form-horizontal" name="config_option_form" method="post" action="/admin/Webconfig/submitUpdateConfig">
+                            <input type="hidden" name="c_group" value="{$key}" />
+                            {volist name="groupList[$key]" id="g_group"}
+                            <div class="form-group">
+                                <div class="col-sm-4 text-right">
+                                    {if condition="@checkAuth('/admin/Webconfig/configEdit')"}
+                                    <a class="fa fa-edit" href="javascript:configEdit({$g_group.id})"></a>
+                                    {/if}
+                                    <label class="control-label">
+                                        {$g_group.c_name}<span class="color_ccc">[{$g_group.c_key}]</span>
+                                    </label>
+                                </div>
+                                {eq name="g_group.c_type" value="input"}
+                                <div class="col-sm-4">
+                                    <input type="text" name="{$g_group.c_key}" class="form-control" value="{$g_group.c_value}">
+                                    <span class="color_ccc">{$g_group.remark}</span>
+                                </div>
+                                {/eq}
+                                {eq name="g_group.c_type" value="textarea"}
+                                <div class="col-sm-4">
+                                    <textarea name="{$g_group.c_key}" class="form-control" rows="5">{$g_group.c_value}</textarea>
+                                    <span class="color_ccc">{$g_group.remark}</span>
+                                </div>
+                                {/eq}
+                                {eq name="g_group.c_type" value="radio"}
+                                <div class="col-sm-4 pd0">
+                                    {volist name="$g_group.enum_value" id="enum"}
+                                    <label class="checkbox-inline">
+                                        <input type="radio" name="{$g_group.c_key}" value="{$enum.o_val}" {if condition="$enum.o_val eq $g_group.c_value"}checked{/if}/>  {$enum.o_text}
+                                    </label>
+                                    {/volist}
+                                </div>
+                                {/eq}
+                                {eq name="g_group.c_type" value="checkbox"}
+                                <div class="col-sm-4 pd0">
+                                    {volist name="$g_group.enum_value" id="enum"}
+                                    <label class="checkbox-inline">
+                                        <input type="checkbox" name="{$g_group.c_key}[]" value="{$enum.o_val}" {if condition="$enum.o_val eq $g_group.c_value"}checked{/if}/>  {$enum.o_text}
+                                    </label>
+                                    {/volist}
+                                </div>
+                                {/eq}
+                                {eq name="g_group.c_type" value="select"}
+                                <div class="col-sm-4">
+                                    <select name="{$g_group.c_key}" class="form-control">
+                                        {volist name="$g_group.enum_value" id="enum"}
+                                        <option value="{$enum.o_val}">{$enum.o_text}</option>
+                                        {/volist}
+                                    </select>
+                                </div>
+                                {/eq}
+                                {eq name="g_group.c_type" value="file"}
+                                <div class="col-sm-4">
+                                    <div class="col-sm-10 pd0">
+                                        <input type="text" id="{$g_group.c_key}" name="{$g_group.c_key}" class="form-control ke_upload_url" value="{$g_group.c_value}" readonly />
+                                    </div>
+                                    <div class="col-sm-2">
+                                        <input type="button" class="btn btn-primary ke_upload" data-id="{$g_group.c_key}" value="上传"/>
+                                    </div>
+                                    <span class="color_ccc">{$g_group.remark}</span>
+                                </div>
+                                {/eq}
+                            </div>
+                            {/volist}
+                            <div class="form-group">
+                                <div class="col-sm-offset-4 col-sm-4">
+                                    <button type="submit" id="add-row" class="btn btn-success">保存</button>
+                                </div>
+                            </div>
+                        </form>
+                        {/present}
+                    </div>
+                    {/volist}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{/block}
+{block name="footer_js"}
+<script src="{$Think.config.system_static}plugins/kindeditor/kindeditor-all-min.js"></script>
+<script type="application/javascript">
+//上传图片
+KindEditor.ready(function(K) {
+    var editor = K.editor({
+        uploadJson : '/admin/Webconfig/upload?dir=image' ,
+        fileManagerJson : '/admin/Webconfig/fileManager?dir=image',
+        allowFileManager : true,
+        formatUploadUrl : false,
+    });
+    K('.ke_upload').click(function() {
+        var url_field = $('#' + $(this).attr('data-id')) ;
+        editor.loadPlugin('image', function() {
+            editor.plugin.imageDialog({
+                imageUrl : url_field.val(),
+                clickFn : function(url, title, width, height, border, align) {
+                    url_field.val(url) ;
+                    editor.hideDialog();
+                }
+            });
+        });
+    });
+});
+
+$(function () {
+    $('#config_group_tab li:first').addClass('active') ;
+    $('#config_group_tab_content .tab-pane:first').addClass('in').addClass('active') ;
+});
+{if condition="@checkAuth('/admin/Webconfig/configAdd')"}
+//新增用户
+function configAdd(){
+    $.myModal.open({
+        remote:'/admin/Webconfig/configAdd',
+        backdrop: 'static',
+        keyboard: false,
+        show:true,
+        success:function(o){
+            configValid();
+        }
+    }) ;
+}
+{/if}
+{if condition="@checkAuth('/admin/Webconfig/configEdit')"}
+//新增用户
+function configEdit(id){
+    $.myModal.open({
+        remote:'/admin/Webconfig/configEdit?id=' + id,
+        backdrop: 'static',
+        keyboard: false,
+        show:true,
+        success:function(o){
+            configValid();
+        }
+    }) ;
+}
+{/if}
+</script>
+{/block}

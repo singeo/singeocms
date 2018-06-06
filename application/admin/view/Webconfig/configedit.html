@@ -1,0 +1,87 @@
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+    <h4 class="modal-title" id="myModalLabel">修改配置项</h4>
+</div>
+<form class="form-horizontal" name="configForm" method="post" action="/admin/Webconfig/submitConfigEdit">
+    <input type="hidden" name="id" value="{$info.id}">
+    <div class="modal-body">
+        <div class="form-group">
+            <label for="c_name" class="col-sm-2 control-label">配置项名称</label>
+            <div class="col-sm-8">
+                <input type="text" id="c_name" name="c_name" value="{$info.c_name}" class="form-control" dataType="s2-20" nullmsg="请输入配置项名称" errormsg="配置项名称为2-20位字符串" sucmsg=" " placeholder="请输入配置项名称" maxlength="20"/>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="c_key" class="col-sm-2 control-label">配置项KEY</label>
+            <div class="col-sm-8">
+                <input type="text" id="c_key" name="c_key" value="{$info.c_key}" class="form-control" dataType="s2-20" nullmsg="请输入配置项KEY" errormsg="配置项KEY为2-20位字符串" sucmsg=" " placeholder="请输入配置项KEY" maxlength="20"/>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="c_group" class="col-sm-2 control-label">所属组别</label>
+            <div class="col-sm-8">
+                <select class="form-control" id="c_group" name="c_group">
+                    {volist name="config_group" id="group"}
+                    <option value="{$key}" {if condition="$info.c_group eq $key"}selected{/if}>{$group}</option>
+                    {/volist}
+                </select>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="c_type" class="col-sm-2 control-label">类型</label>
+            <div class="col-sm-8">
+                <select class="form-control" id="c_type" name="c_type">
+                    {volist name="onfig_field_type" id="type"}
+                    <option value="{$key}" {if condition="$info.c_type eq $key"}selected{/if}>{$type}</option>
+                    {/volist}
+                </select>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="enum_value" class="col-sm-2 control-label">枚举值</label>
+            <div class="col-sm-8">
+                <input type="text" id="enum_value" name="enum_value" value="{$info.enum_value}" class="form-control" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="remark" class="col-sm-2 control-label">备注说明</label>
+            <div class="col-sm-8">
+                <input type="text" id="remark" name="remark" value="{$info.remark}" class="form-control" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="sort" class="col-sm-2 control-label">排序</label>
+            <div class="col-sm-8">
+                <input type="text" name="sort" id="sort" class="form-control"  value="{$info.sort}"/>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label">状态</label>
+            <div class="col-sm-8">
+                <label class="checkbox-inline">
+                    <input type="radio" name="status" value="1" {eq name="info.status" value="1"}checked{/eq}>&nbsp;正常
+                </label>
+                <label class="checkbox-inline">
+                    <input type="radio" name="status" value="0" {eq name="info.status" value="0"}checked{/eq}>&nbsp;禁用
+                </label>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+        <button type="submit" id="add-row" class="btn btn-success">确认修改</button>
+    </div>
+    {:token('token_hash')}
+</form>
+<script type="text/javascript">
+    function configValid(){
+        $("form[name='configForm']").Validform({
+            tiptype: 3,
+            ajaxPost: false,
+            postonce: false,
+            callback: function(data){
+                return true ;
+            }
+        });
+    }
+</script>

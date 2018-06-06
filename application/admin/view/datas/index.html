@@ -1,0 +1,200 @@
+{extend name="common/base" /}
+{block name="main"}
+<div class="page-inner">
+    <div class="page-title">
+        <h3>{$title}(共{$tableNum}张表，共计{$total})</h3>
+    </div>
+    <div id="main-wrapper">
+        <div class="row">
+            <div class="panel panel-body panel-white">
+                {if condition="@checkAuth('/admin/Datas/backup')"}
+                <button type="button" class="btn btn-success m-b-sm" onclick="backup_init(this);">立即备份</button>
+                {/if}
+                <div class="table-responsive">
+                    <div class="dataTables_wrapper">
+                        <table id="tables" class="display table" style="width: 100%; cellspacing: 0;">
+                            <thead>
+                            <tr>
+                                <th><input class="check-all" type="checkbox"></th>
+                                <th>数据库表</th>
+                                <th>记录条数</th>
+                                <th>引擎</th>
+                                <th>占用空间</th>
+                                <th>编码</th>
+                                <th>创建时间</th>
+                                <th>注释</th>
+                                <th>备份状态</th>
+                                <th>操作</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {volist name="list" id="item"}
+                            <tr id="{$item.name}">
+                                <td><input class="check-ids" type="checkbox" name="tables" value="{$item.name}"></td>
+                                <td>{$item.name}</td>
+                                <td>{$item.rows}</td>
+                                <td>{$item.engine}</td>
+                                <td>{$item.size}</td>
+                                <td>{$item.collation}</td>
+                                <td>{$item.create_time}</td>
+                                <td>{$item.comment}</td>
+                                <td><span class="info">未备份</span></td>
+                                <td>
+                                    {if condition="@checkAuth('/admin/Datas/optimize')"}
+                                    <button type="button" class="btn btn-info" onclick="data_optimize('{$item.name}');">优化</button>
+                                    {/if}
+                                    {if condition="@checkAuth('/admin/Datas/optimize')"}
+                                    <button type="button" class="btn btn-warning" onclick="data_repair('{$item.name}');">修复</button>
+                                    {/if}
+                                </td>
+                            </tr>
+                            {/volist}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{/block}
+{block name="footer_js"}
+<script src="{$Think.config.system_static}plugins/datatables/js/jquery.datatables.min.js"></script>
+<script src="{$Think.config.system_static}plugins/x-editable/bootstrap3-editable/js/bootstrap-editable.js"></script>
+<script type="application/javascript">
+    $(function(){
+        $('#tables').DataTable({
+            paging: false,
+            info: false,
+            ordering:false,
+            searching:false,
+            language:lang
+        });
+        checkAllOrNot() ;
+    });
+    //获取复选框的值
+    function getChkValue() {
+        var chk_value =[];
+        $('input[name="tables"]:checked').each(function(){
+            chk_value.push($(this).val());
+        });
+        return chk_value ;
+    }
+    {if condition="@checkAuth('/admin/Datas/backup')"}
+    var tables ;
+    //开始备份数据库
+    function backup_init(o){
+        var tabs = getChkValue() ;
+        if(tabs == ""){
+            $.myModal.alert({
+                content:'请选择你要备份的表',
+                btn: true
+            });
+            return false ;
+        }
+        $.ajax({
+            type: 'post',
+            url: '/admin/Datas/backup',
+            data: {'tables': tabs},
+            async: true,
+            dataType: 'json',
+            beforeSend:function(){
+                $(o).addClass('disabled') ;
+                $(o).html('正在发送备份请求...') ;
+                //$.myModal.loading({content:'开始备份，请不要关闭本页面！'}) ;
+            },
+            success: function(context){
+                if(context.status == 1){
+                    tables = context.data.tables ;
+                    $(o).html('开始备份，请不要关闭本页面！') ;
+                    backup(o, context.data.tab);
+                    window.onbeforeunload = function(){ return "正在备份数据库，请不要关闭！" }
+                }else{
+                    $.myModal.alert({
+                        content : context.msg ,
+                        btn : true
+                    }) ;
+                }
+            }
+        });
+    }
+    //执行备份
+    function backup(obj, tab, status){
+        status && showbackmsg(tab.id, "开始备份...(0%)");
+        $.ajax({
+            type: 'post',
+            url: '/admin/Datas/backup',
+            data: tab,
+            dataType: 'json',
+            success: function(context){
+                if(context.status){
+                    showbackmsg(tab.id, context.msg);
+                    if(typeof context.data == "undefined"){
+                        $(obj).removeClass("disabled");
+                        $(obj).html("备份完成，点击重新备份");
+                        window.onbeforeunload = function(){ return null }
+                        return;
+                    }
+                    backup(obj,context.data.tab, tab.id != context.data.tab.id);
+                } else {
+                    $.myModal.alert({
+                        content : context.msg ,
+                        btn : true
+                    }) ;
+                    $(obj).removeClass("disabled");
+                    $(obj).html("立即备份");
+                }
+            }
+        });
+    }
+    //数据表备份结果显示
+    function showbackmsg(id, msg){
+        $('#' + tables[id]).find(".info").html(msg);
+    }
+    {/if}
+    {if condition="@checkAuth('/admin/Datas/optimize')"}
+    //优化数据表
+    function data_optimize(table_name) {
+        $.ajax({
+            type: 'post',
+            url: '/admin/Datas/optimize',
+            data: {'tablename': table_name},
+            async: true,
+            dataType: 'json',
+            beforeSend:function(){
+                $.myModal.loading({content:'正在优化'}) ;
+            },
+            success: function(context){
+                $.myModal.closeLoading() ;
+                $.myModal.alert({
+                    content : context.msg ,
+                    btn : true
+                }) ;
+            }
+        });
+    }
+    {/if}
+    {if condition="@checkAuth('/admin/Datas/repair')"}
+    //修复数据表
+    function data_repair(table_name) {
+        $.ajax({
+            type: 'post',
+            url: '/admin/Datas/repair',
+            data: {'tablename': table_name},
+            async: true,
+            dataType: 'json',
+            beforeSend:function(){
+                $.myModal.loading({content:'正在修复'}) ;
+            },
+            success: function(context){
+                $.myModal.closeLoading() ;
+                $.myModal.alert({
+                    content : context.msg ,
+                    btn : true
+                }) ;
+            }
+        });
+    }
+    {/if}
+</script>
+{/block}

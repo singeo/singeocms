@@ -1,0 +1,13 @@
+<script type="text/javascript">
+    // 当前操作完整路径
+    var _CURACTION = '{$curAction}' ;
+    $(function() {
+        //导航栏展开
+        $('#menu a').each(function () {
+            if ($(this).attr('href') == _CURACTION) {
+                $(this).parent('li').addClass('active');
+                $(this).parents('li.droplink').addClass('open').children('ul').show();
+            }
+        });
+    });
+</script>

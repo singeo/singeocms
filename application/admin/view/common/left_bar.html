@@ -1,0 +1,54 @@
+<div class="page-sidebar sidebar compact-menu">
+    <div class="page-sidebar-inner slimscroll">
+        <div class="sidebar-header">
+            <div class="sidebar-profile">
+                <a href="javascript:void(0);" id="profile-menu-link">
+                    <div class="sidebar-profile-image">
+                        <img src="{$Think.config.system_static}images/head.png" class="img-circle img-responsive" alt="">
+                    </div>
+                    <div class="sidebar-profile-details">
+                        <span>{empty name="consoleInfo.user_nickname"}{$consoleInfo.user_login}{else/}{$consoleInfo.user_nickname}{/empty}</span>
+                    </div>
+                </a>
+            </div>
+        </div>
+        {present name="resMenu"}
+        <ul id="menu" class="menu accordion-menu">
+        {volist name="resMenu" id="menuItem"}
+        <li class="droplink">
+            <a class="waves-effect waves-button" href="{$menuItem.menu_url}">
+                <span class="menu-icon glyphicon {$menuItem.menu_icon}"></span>
+                <p>{$menuItem.menu_name}</p>
+                <span class="arrow"></span>
+            </a>
+            {present  name="menuItem._data"}
+            <ul class="sub-menu">
+                {volist name="menuItem._data" id="childItem"}
+                <li {present name="childItem._child"}class="droplink"{/present}>
+                    <a href="{$childItem.menu_url}">
+                        <p>{$childItem.menu_name}</p>
+                        {present name="childItem._child"}
+                        <span class="arrow"></span>
+                        {/present}
+                    </a>
+                    {present name="childItem._data"}
+                    <ul class="sub-menu">
+                        {volist name="childItem._data" id="_childItem"}
+                        <li>
+                            <a href="{$_childItem.menu_url}">
+                                {$_childItem.menu_name}
+                            </a>
+                        </li>
+                        {/volist}
+                    </ul>
+                    {/present}
+                </li>
+                {/volist}
+            </ul>
+            {/present}
+        </li>
+        {/volist}
+        </ul>
+        {/present}
+    </div><!-- Page Sidebar Inner -->
+</div><!-- Page Sidebar -->

@@ -1,0 +1,108 @@
+{extend name="common/base" /}
+{block name="main"}
+<div class="page-inner">
+    <div class="page-title">
+        <h3>{$title}</h3>
+    </div>
+    <div id="main-wrapper">
+        <div class="row">
+            <div class="panel panel-body panel-white">
+                {if condition="@checkAuth('/admin/Consolerole/roleAdd')"}
+                <button type="button" class="btn btn-success m-b-sm" onclick="roleAdd();">新增角色</button>
+                {/if}
+                <div class="table-responsive">
+                    <div class="dataTables_wrapper">
+                        <table id="userTables" class="display table" style="width: 100%; cellspacing: 0;">
+                            <thead>
+                            <tr>
+                                <th>角色名称</th>
+                                <th>状态</th>
+                                <th>排序</th>
+                                <th>创建时间</th>
+                                <th>操作</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {volist name="roleList" id="item"}
+                            <tr>
+                                <td>{$item.role_name}</td>
+                                <td>{$item.status}</td>
+                                <td>{$item.sort}</td>
+                                <td>{notempty name="item.create_time"}{$item.create_time|date="Y-m-d H:i",###}{else/}-{/notempty}</td>
+                                <td>
+                                    {if condition="@checkAuth('/admin/Consolerole/roleEdit')"}
+                                    <button type="button" class="btn btn-info" onclick="roleEdit({$item.id});">修改</button>
+                                    {/if}
+                                    {if condition="@checkAuth('/admin/Consolerole/roleRule')"}
+                                    <button type="button" class="btn btn-warning" onclick="roleRule({$item.id});">授权</button>
+                                    {/if}
+                                </td>
+                            </tr>
+                            {/volist}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{/block}
+{block name="footer_js"}
+<script src="{$Think.config.system_static}plugins/datatables/js/jquery.datatables.min.js"></script>
+<script src="{$Think.config.system_static}plugins/x-editable/bootstrap3-editable/js/bootstrap-editable.js"></script>
+<script type="application/javascript">
+    $(function(){
+        $('#userTables').DataTable({
+            paging: false,
+            info: false,
+            ordering:false,
+            searching:false,
+            language:lang
+        });
+    });
+    {if condition="@checkAuth('/admin/Consolerole/roleAdd')"}
+    //新增用户
+    function roleAdd(){
+        $.myModal.open({
+            remote:'/admin/Consolerole/roleAdd',
+            backdrop: 'static',
+            keyboard: false,
+            show:true,
+            success:function(o){
+                roleValid();
+            }
+        }) ;
+    }
+    {/if}
+    {if condition="@checkAuth('/admin/Consolerole/roleEdit')"}
+    //修改用户
+    function roleEdit(id){
+        $.myModal.open({
+            remote:'/admin/Consolerole/roleEdit?role_id='+ id,
+            backdrop: 'static',
+            keyboard: false,
+            show:true,
+            success:function(o){
+                roleValid();
+            }
+        }) ;
+    }
+    {/if}
+    {if condition="@checkAuth('/admin/Consolerole/roleRule')"}
+    //用户分配角色
+    function roleRule(id){
+        $.myModal.open({
+            style:{'width':'800px'},
+            remote:'/admin/Consolerole/roleRule?role_id='+ id,
+            backdrop: 'static',
+            keyboard: false,
+            show:true,
+            success:function (o) {
+                initCheck();
+            }
+        }) ;
+    }
+    {/if}
+</script>
+{/block}

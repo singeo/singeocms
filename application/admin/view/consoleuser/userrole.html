@@ -1,0 +1,22 @@
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+    <h4 class="modal-title" id="myModalLabel">分配用户角色</h4>
+</div>
+<form class="form-horizontal" name="admin_group_form" action="/admin/Consoleuser/submitUserRole" method="post">
+    <div class="modal-body">
+        <input type="hidden" name="user_id" id="user_id" value="{$user_id}">
+        <dl class="checkmod">
+            <dd class="bd">
+                {volist name="rolelist" id="role"}
+                    <label class="checkbox">
+                        <input name="role_id[]" type="checkbox" value="{$role.id}" {if condition="in_array($role['id'],$userRole)"}checked{/if}>&nbsp;{$role.role_name}
+                    </label>
+                {/volist}
+            </dd>
+        </dl>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+        <button type="submit" id="add-row" class="btn btn-success">确定分配</button>
+    </div>
+</form>

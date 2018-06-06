@@ -1,0 +1,82 @@
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+    <h4 class="modal-title" id="myModalLabel">修改菜单</h4>
+</div>
+<form class="form-horizontal" name="ruleForm" method="post" action="/admin/Consolemenu/submitMenuEdit">
+    <input type="hidden" name="id" value="{$info.id}"/>
+    <div class="modal-body">
+        <div class="form-group">
+            <label for="menu_name" class="col-sm-2 control-label">菜单名称</label>
+            <div class="col-sm-8">
+                <input type="text" id="menu_name" name="menu_name" value="{$info.menu_name}" class="form-control" dataType="s2-20" nullmsg="请输入菜单名称" errormsg="菜单名称为2-20位字符串" sucmsg=" " placeholder="请输入规则名称" maxlength="20"/>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="parent_id" class="col-sm-2 control-label">父菜单</label>
+            <div class="col-sm-8">
+                <select class="form-control" id="parent_id" name="parent_id">
+                    <option value="0">顶级菜单</option>
+                    {volist name="menuTree" id="item"}
+                        <option value="{$item.id}" {if condition="$item.id eq $curMenuID"}selected{/if}>{$item._name}</option>
+                    {/volist}
+                </select>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="menu_url" class="col-sm-2 control-label">菜单地址</label>
+            <div class="col-sm-8">
+                <input type="text" id="menu_url" name="menu_url" value="{$info.menu_url}" class="form-control" dataType="*" nullmsg="请输入菜单地址" errormsg="请输入菜单地址" sucmsg=" " placeholder="请输入菜单地址">
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="type" class="col-sm-2 control-label">类型</label>
+            <div class="col-sm-8">
+                <select id="type" name="type" class="col-xs-10 col-sm-6 form-control" >
+                    <option value="1" {eq name="info.type" value="1"}selected{/eq}>菜单</option>
+                    <option value="2" {eq name="info.type" value="2"}selected{/eq}>操作</option>
+                </select>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="menu_icon" class="col-sm-2 control-label">图标</label>
+            <div class="col-sm-8">
+                <input type="text" id="menu_icon" name="menu_icon" value="{$info.menu_icon}" class="form-control">
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="sort" class="col-sm-2 control-label">排序</label>
+            <div class="col-sm-8">
+                <input type="text" name="sort" id="sort" class="form-control" value="{$info.sort}"/>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label">状态</label>
+            <div class="col-sm-8">
+                <label class="checkbox-inline">
+                    <input type="radio" name="status" value="1" {eq name="info.status" value="1"}checked{/eq}>&nbsp;正常
+                </label>
+                <label class="checkbox-inline">
+                    <input type="radio" name="status" value="0"  {eq name="info.status" value="0"}checked{/eq}>&nbsp;禁用
+                </label>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+        <button type="submit" id="add-row" class="btn btn-success">确认修改</button>
+    </div>
+    {:token('token_hash')}
+</form>
+<script type="text/javascript">
+    function menuValid(){
+        $("form[name='ruleForm']").Validform({
+            tiptype: 3,
+            ajaxPost: false,
+            postonce: false,
+            callback: function(data){
+                //执行登录
+                return true ;
+            }
+        });
+    }
+</script>

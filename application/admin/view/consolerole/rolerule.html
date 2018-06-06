@@ -1,0 +1,61 @@
+<form class="form-horizontal" name="admin_group_form" action="/admin/Consolerole/submitRules" method="post">
+    <div class="modal-body" style="width:800px;height:550px;overflow-x: hidden;overflow-y:auto; ">
+        <input type="hidden" name="role_id" id="role_id" value="{$info.id}">
+        {volist name="menuTree" id="menu"}
+            <dl class="checkmod">
+                <dt class="hd">
+                    <label class="checkbox"><input class="auth_rules rules_all" type="checkbox" name="rules[]" value="{$menu.id}">{$menu.menu_name}</label>
+                </dt>
+                {notempty name="menu._data"}
+                    {volist name="menu._data" id="submenu"}
+                        <dd class="bd">
+                            <div class="rule_check">
+                                <div>
+                                    <label class="checkbox">
+                                        <input class="auth_rules rules_row" type="checkbox" name="rules[]" value="{$submenu.id}">{$submenu.menu_name}
+                                    </label>
+                                </div>
+                                {notempty name="submenu._data"}
+                                    <span class="divsion">&nbsp;</span>
+                                    <span class="child_row">
+                                        {volist name="submenu._data" id="act"}
+                                            <label class="checkbox">
+                                                <input class="auth_rules" type="checkbox" name="rules[]" value="{$act.id}">{$act.menu_name}
+                                            </label>
+                                        {/volist}
+                                    </span>
+                                {/notempty}
+                            </div>
+                        </dd>
+                    {/volist}
+                {/notempty}
+            </dl>
+        {/volist}
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+        <button type="submit" id="add-row" class="btn btn-success">确定授权</button>
+    </div>
+</form>
+
+<script type="text/javascript">
+    function initCheck(){
+        var rules = [{$info.rules}];
+        $('.auth_rules').each(function(){
+            if( $.inArray( parseInt(this.value,10),rules )>-1 ){
+                $(this).prop('checked',true);
+            }
+            if(this.value==''){
+                $(this).closest('span').remove();
+            }
+        });
+        //全选节点
+        $('.rules_all').on('change',function(){
+            $(this).closest('dl').find('dd').find('input').prop('checked',this.checked);
+        });
+        $('.rules_row').on('change',function(){
+            $(this).closest('.rule_check').find('.child_row').find('input').prop('checked',this.checked);
+        });
+
+    }
+</script>

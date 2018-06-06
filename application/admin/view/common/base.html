@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+    {include file="common/header"}
+    {block name="style"}{/block}
+</head>
+<body class="page-header-fixed">
+<div class="overlay"></div>
+<main class="page-content content-wrap">
+    <!-- Navbar -->
+    {include file="common/main_header"}
+    {include file="common/left_bar"}
+    <!-- Navbar -->
+    <div class="page-inner">
+        {block name="main"}{/block}
+        {include file="common/page_footer"}
+    </div><!-- Page Inner -->
+</main><!-- Page Content -->
+<div class="cd-overlay"></div>
+<!-- Javascripts -->
+{include file="common/foot_js"}
+{include file="common/left_bar_js"}
+{block name="footer_js"}{/block}
+</body>
+</html>
