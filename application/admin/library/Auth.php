@@ -7,7 +7,7 @@ class Auth{
     //默认配置
     protected $_config = array(
         'auth_on'           => true,                      // 认证开关
-        'auth_type'         => 2,                         // 认证方式，1为实时认证；2为登录认证。
+        'auth_type'         => 1,                         // 认证方式，1为实时认证；2为登录认证。
         'auth_group'        => 'console_role',        // 用户组数据表名
         'auth_group_access' => 'console_role_user', // 用户-用户组关系表
         'auth_rule'         => 'console_menu',         // 菜单表

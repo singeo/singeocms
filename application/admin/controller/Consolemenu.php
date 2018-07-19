@@ -57,10 +57,10 @@ class Consolemenu extends Base
         $param = $this->request->param() ;
         $consolemenumodel = new \app\admin\model\ConsoleMenu() ;
         $result = $consolemenumodel->saveMenu($param) ;
-        if($result['status'] == 0){
-            $this->error($result['msg']) ;
+        if(!$result){
+            $this->error($consolemenumodel->getErrorMsg()) ;
         }else{
-            $this->success($result['msg']) ;
+            $this->success('新增成功') ;
         }
     }
 
@@ -104,10 +104,10 @@ class Consolemenu extends Base
         $param = $this->request->param() ;
         $consolemenumodel = new \app\admin\model\ConsoleMenu() ;
         $result = $consolemenumodel->updateMenu($param) ;
-        if($result['status'] == 0){
-            $this->error($result['msg']) ;
+        if(!$result){
+            $this->error($consolemenumodel->getErrorMsg()) ;
         }else{
-            $this->success($result['msg']) ;
+            $this->success('修改成功') ;
         }
     }
 

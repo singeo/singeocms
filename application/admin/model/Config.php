@@ -34,24 +34,21 @@ class Config extends Base
      * @return array
      */
     public function saveConfig($data){
-        $arr['status'] = 0 ;
         $validate = new Validate($this->rule, $this->message) ;
         // 数据自动验证
         if (!$validate->check($data)) {
-            $arr['msg'] = $validate->getError() ;
-            return $arr;
+            $this->setErrorMsg($validate->getError()) ;
+            return false;
         }
         if (isset($data['token_hash'])){
             unset($data['token_hash']) ;
         }
         $rst = Db::name('Config')->insert($data) ;
         if($rst){
-            $arr['status'] = 1 ;
-            $arr['msg'] = 'success' ;
-            return $arr;
+            return true ;
         }else{
-            $arr['msg'] = 'fail' ;
-            return $arr;
+            $this->setErrorMsg('failed') ;
+            return false;
         }
     }
 
@@ -61,12 +58,11 @@ class Config extends Base
      * @return array
      */
     public function updateConfig($data){
-        $arr['status'] = 0 ;
         $validate = new Validate($this->rule, $this->message) ;
         // 数据自动验证
         if (!$validate->check($data)) {
-            $arr['msg'] = $validate->getError() ;
-            return $arr;
+            $this->setErrorMsg($validate->getError()) ;
+            return false;
         }
         if (isset($data['token_hash'])){
             unset($data['token_hash']) ;
@@ -75,21 +71,24 @@ class Config extends Base
         unset($data['id']) ;
         $rst = Db::name('Config')->where($where)->update($data) ;
         if($rst){
-            $arr['status'] = 1 ;
-            $arr['msg'] = 'success' ;
-            return $arr;
+            return true ;
         }else{
-            $arr['msg'] = 'fail' ;
-            return $arr;
+            $this->setErrorMsg('fail') ;
+            return false;
         }
     }
 
 
+    /**
+     * 保存配置数据
+     * @param $group_id
+     * @param $data
+     * @return mixed
+     */
     public function storeConfig($group_id, $data){
-        $arr['status'] = 0 ;
         if(empty($data)){
-            $arr['msg'] = '没有可保存的数据' ;
-            return $arr ;
+            $this->setErrorMsg('没有可保存的数据') ;
+            return false;
         }
         $field = 'c_key,c_value' ;
         $stored = Db::name('Config')
@@ -97,8 +96,8 @@ class Config extends Base
             ->field($field)
             ->select() ;
         if(empty($stored)){
-            $arr['msg'] = '没有可保存的数据' ;
-            return $arr ;
+            $this->setErrorMsg('没有可保存的数据') ;
+            return false;
         }else{
             $c_stored = [] ;
             foreach ($stored as $item){
@@ -120,9 +119,7 @@ class Config extends Base
             }
             //更新完成将配置写入到缓存中去
             Cache::set('web_config', $rel_config) ;
-            $arr['status'] = 1 ;
-            $arr['msg'] = '更新成功' ;
-            return $arr ;
+            return true ;
         }
     }
 }

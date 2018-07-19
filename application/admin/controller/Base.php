@@ -32,7 +32,7 @@ class Base extends Controller
             $auth = new Auth() ;
             if(!in_array($url,config('white_menu_url')) && $consoleInfo['id'] != config('super_admin_uid')) { // 不进行权限验证的操作
                 if(!$auth->check($url,$consoleInfo['id'])){
-                    $this->error('没有权限') ;
+                    $this->error('没有权限，请联系管理员') ;
                 }
             }
             $resMenu = $auth->getAuthMenu($consoleInfo['id']) ;
@@ -40,7 +40,7 @@ class Base extends Controller
                 $resMenu = TreeShape::channelLevel($resMenu,0,'','id','parent_id') ;
                 $this->assign('resMenu',$resMenu) ;
             }else{
-                $this->error('没有权限') ;
+                $this->error('没有权限，请联系管理员') ;
             }
             $this->setTitle($url) ;
             $this->assign('consoleInfo', $consoleInfo) ;
@@ -78,7 +78,11 @@ class Base extends Controller
     public function error($msg = '', $url = null, $data = '', $wait = 3, array $header = [])
     {
         if($this->request->isAjax()){
-            $this->modaltips($msg) ;
+            if($this->request->method() == "GET"){ //页面请求返回html 请使用get方式请求
+                $this->modaltips($msg) ;
+            }else{
+                $this->ajaxError($msg) ;
+            }
         }else{
             parent::error($msg, $url, $data, $wait, $header) ;
         }

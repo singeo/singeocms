@@ -20,11 +20,10 @@ class ConsoleUser extends Base
      * @return array
      */
     public function saveUser($data){
-        $arr['status'] = 0 ;
         // 数据自动验证
         if (!$this->validateData($data)) {
-            $arr['msg'] = $this->getError() ;
-            return $arr;
+            $this->setErrorMsg($this->getError()) ;
+            return false ;
         }
         if (isset($data['token_hash'])){
             unset($data['token_hash']) ;
@@ -36,12 +35,10 @@ class ConsoleUser extends Base
         $data['create_time'] = time() ;
         $rst = Db::name('ConsoleUser')->insert($data) ;
         if($rst){
-            $arr['status'] = 1 ;
-            $arr['msg'] = 'success' ;
-            return $arr;
+            return true ;
         }else{
-            $arr['msg'] = 'fail' ;
-            return $arr;
+            $this->setErrorMsg('fail') ;
+            return false ;
         }
     }
 
@@ -54,8 +51,8 @@ class ConsoleUser extends Base
         $arr['status'] = 0 ;
         // 数据自动验证
         if (!$this->validateData($data)) {
-            $arr['msg'] = $this->getError() ;
-            return $arr;
+            $this->setErrorMsg($this->getError()) ;
+            return false ;
         }
         if (isset($data['token_hash'])){
             unset($data['token_hash']) ;
@@ -65,12 +62,10 @@ class ConsoleUser extends Base
         $where['id'] = $id ;
         $rst = Db::name('ConsoleUser')->where($where)->update($data) ;
         if($rst){
-            $arr['status'] = 1 ;
-            $arr['msg'] = 'success' ;
-            return $arr;
+            return true ;
         }else{
-            $arr['msg'] = 'fail' ;
-            return $arr;
+            $this->setErrorMsg('fail') ;
+            return false ;
         }
     }
 }

@@ -43,10 +43,10 @@ class Consoleuser extends Base
         $param = $this->request->param() ;
         $consoleusermodel = new \app\admin\model\ConsoleUser() ;
         $result = $consoleusermodel->saveUser($param) ;
-        if($result['status'] == 0){
-            $this->error($result['msg']) ;
+        if(!$result){
+            $this->error($consoleusermodel->getErrorMsg()) ;
         }else{
-            $this->success($result['msg']) ;
+            $this->success('新增用户成功') ;
         }
     }
 
@@ -74,10 +74,10 @@ class Consoleuser extends Base
         $param = $this->request->param() ;
         $consoleusermodel = new \app\admin\model\ConsoleUser() ;
         $result = $consoleusermodel->updateUser($param) ;
-        if($result['status'] == 0){
-            $this->error($result['msg']) ;
+        if(!$result){
+            $this->error($consoleusermodel->getErrorMsg()) ;
         }else{
-            $this->success($result['msg']) ;
+            $this->success('修改用户成功') ;
         }
     }
 

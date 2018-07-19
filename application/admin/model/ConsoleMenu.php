@@ -31,12 +31,11 @@ class ConsoleMenu extends Base
  * @return array
  */
     public function saveMenu($data){
-        $arr['status'] = 0 ;
         $validate = new Validate($this->rule, $this->message) ;
         // 数据自动验证
         if (!$validate->check($data)) {
-            $arr['msg'] = $validate->getError() ;
-            return $arr;
+            $this->setErrorMsg($validate->getError()) ;
+            return false;
         }
         if (isset($data['token_hash'])){
             unset($data['token_hash']) ;
@@ -44,12 +43,10 @@ class ConsoleMenu extends Base
         $data['create_time'] = time() ;
         $rst = Db::name('ConsoleMenu')->insert($data) ;
         if($rst){
-            $arr['status'] = 1 ;
-            $arr['msg'] = 'success' ;
-            return $arr;
+            return true;
         }else{
-            $arr['msg'] = 'fail' ;
-            return $arr;
+            $this->setErrorMsg('fail') ;
+            return false;
         }
     }
 
@@ -59,12 +56,11 @@ class ConsoleMenu extends Base
      * @return array
      */
     public function updateMenu($data){
-        $arr['status'] = 0 ;
         $validate = new Validate($this->rule, $this->message) ;
         // 数据自动验证
         if (!$validate->check($data)) {
-            $arr['msg'] = $validate->getError() ;
-            return $arr;
+            $this->setErrorMsg($validate->getError()) ;
+            return false;
         }
         if (isset($data['token_hash'])){
             unset($data['token_hash']) ;
@@ -73,12 +69,10 @@ class ConsoleMenu extends Base
         unset($data['id']) ;
         $rst = Db::name('ConsoleMenu')->where($where)->update($data) ;
         if($rst){
-            $arr['status'] = 1 ;
-            $arr['msg'] = 'success' ;
-            return $arr;
+            return true ;
         }else{
-            $arr['msg'] = 'fail' ;
-            return $arr;
+            $this->setErrorMsg('fail') ;
+            return false;
         }
     }
 

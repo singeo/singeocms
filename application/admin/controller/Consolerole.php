@@ -39,10 +39,10 @@ class Consolerole extends Base
         $param = $this->request->param() ;
         $consolerolemodel = new \app\admin\model\ConsoleRole() ;
         $result = $consolerolemodel->saveRole($param) ;
-        if($result['status'] == 0){
-            $this->error($result['msg']) ;
+        if(!$result){
+            $this->error($consolerolemodel->getErrorMsg()) ;
         }else{
-            $this->success($result['msg']) ;
+            $this->success('新增角色成功') ;
         }
     }
 
@@ -70,10 +70,10 @@ class Consolerole extends Base
         $param = $this->request->param() ;
         $consolerolemodel = new \app\admin\model\ConsoleRole() ;
         $result = $consolerolemodel->updateRole($param) ;
-        if($result['status'] == 0){
-            $this->error($result['msg']) ;
+        if(!$result){
+            $this->error($consolerolemodel->getErrorMsg()) ;
         }else{
-            $this->success($result['msg']) ;
+            $this->success('修改角色成功') ;
         }
     }
 

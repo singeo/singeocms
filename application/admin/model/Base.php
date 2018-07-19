@@ -13,6 +13,7 @@ use think\Model;
 
 class Base extends Model
 {
+    protected $error_message = 'error' ;
     /**
      * 查询多条记录
      * @param null $where 查询条件
@@ -60,5 +61,21 @@ class Base extends Model
         }catch (Exception $e){
             return false ;
         }
+    }
+
+    /**
+     * 设置错误信息
+     * @param string $msg
+     */
+    public function setErrorMsg($msg = 'error'){
+        $this->error_message = $msg ;
+    }
+
+    /**
+     * 获取错误信息
+     * @param string $msg
+     */
+    public function getErrorMsg(){
+        return $this->error_message ;
     }
 }

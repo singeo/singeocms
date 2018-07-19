@@ -70,10 +70,10 @@ class Webconfig extends Base
         $param = $this->request->param() ;
         $configmodel = new \app\admin\model\Config() ;
         $result = $configmodel->saveConfig($param) ;
-        if($result['status'] == 0){
-            $this->error($result['msg']) ;
+        if(!$result){
+            $this->error($configmodel->getErrorMsg()) ;
         }else{
-            $this->success($result['msg']) ;
+            $this->success('新增配置项成功') ;
         }
     }
 
@@ -105,10 +105,10 @@ class Webconfig extends Base
         $param = $this->request->param() ;
         $configmodel = new \app\admin\model\Config() ;
         $result = $configmodel->updateConfig($param) ;
-        if($result['status'] == 0){
-            $this->error($result['msg']) ;
+        if(!$result){
+            $this->error($configmodel->getErrorMsg()) ;
         }else{
-            $this->success($result['msg']) ;
+            $this->success('修改配置项成功') ;
         }
     }
 
@@ -121,10 +121,10 @@ class Webconfig extends Base
         unset($param['c_group']) ;
         $configmodel = new \app\admin\model\Config() ;
         $result = $configmodel->storeConfig($c_group, $param) ;
-        if($result['status'] == 0){
-            $this->error($result['msg']) ;
+        if(!$result){
+            $this->error($configmodel->getErrorMsg()) ;
         }else{
-            $this->success($result['msg']) ;
+            $this->success('更新配置项成功') ;
         }
     }
 }
