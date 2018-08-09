@@ -16,4 +16,12 @@ class Index extends Base {
     public function index(){
         return $this->fetch() ;
     }
+
+    /**
+     * 清除数据缓存
+     */
+    public function authclear(){
+        session(config('admin_auth_menu'), null) ;
+        return $this->success('缓存清除成功') ;
+    }
 }

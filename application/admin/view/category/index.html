@@ -1,0 +1,124 @@
+{extend name="common/base" /}
+{block name="style"}
+<link href="{$Think.config.system_static}plugins/kindeditor/themes/default/default.css" rel="stylesheet" type="text/css"/>
+{/block}
+{block name="main"}
+<div class="page-inner">
+    <div class="page-title">
+        <h3>{$title}</h3>
+    </div>
+    <div id="main-wrapper">
+        <div class="row">
+            <div class="panel panel-body panel-white">
+                {if condition="@checkAuth('/admin/Category/cateAdd')"}
+                <button type="button" class="btn btn-success m-b-sm" onclick="cateAdd('');">新增分类</button>
+                {/if}
+                <div class="table-responsive">
+                    <div class="dataTables_wrapper">
+                        <table id="menusTables" class="display table" style="width: 100%; cellspacing: 0;">
+                            <thead>
+                            <tr>
+                                <th>&emsp;折叠</th>
+                                <th>分类名称</th>
+                                <th>分类模型</th>
+                                <th>排序</th>
+                                <th>操作</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {volist name="catelist" id="item"}
+                            <tr data-id="{$item.cid}" data-pid="{$item.pid}" {neq name="item._level" value="1"}class="hide"{/neq}>
+                            <td><neq name="item._level" value="3">{:str_repeat('&emsp;',$item['_level'])}<span class="fold fa fa-plus"></span></neq></td>
+                            <td>{$item._name}</td>
+                            <td>{$item.mode_title}</td>
+                            <td>{$item.sort}</td>
+                            <td>
+                                {if condition="@checkAuth('/admin/Category/cateAdd')"}
+                                <button type="button" class="btn btn-success" onclick="cateAdd({$item.cid})">添加子分类</button>
+                                {/if}
+                                {if condition="@checkAuth('/admin/Category/cateEdit')"}
+                                <button type="button" class="btn btn-info" onclick="cateEdit({$item.cid});">修改</button>
+                                {/if}
+                                {if condition="@checkAuth('/admin/Category/cateDel')"}
+                                <button type="button" class="btn btn-default" onclick="cateDel({$item.cid});">删除</button>
+                                {/if}
+                            </td>
+                            </tr>
+                            {/volist}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{/block}
+{block name="footer_js"}
+<script src="{$Think.config.system_static}plugins/datatables/js/jquery.datatables.min.js"></script>
+<script src="{$Think.config.system_static}plugins/x-editable/bootstrap3-editable/js/bootstrap-editable.js"></script>
+<script src="{$Think.config.system_static}plugins/kindeditor/kindeditor-all-min.js"></script>
+<script type="application/javascript">
+    $(function(){
+        $('#menusTables').DataTable({
+            paging: false,
+            info: false,
+            ordering:false,
+            searching:false,
+            language:lang
+        });
+        //折叠器,显示隐藏
+        $('#menusTables').on('click','.fold',function(){
+            var theTrObj = $(this).parents('tr') ;
+            var foldpid = theTrObj.attr('data-id') ;
+            if($(this).hasClass('fa-plus')){
+                theTrObj.siblings('tr[data-pid="'+ foldpid +'"]').removeClass('hide') ;
+                $(this).removeClass('fa-plus').addClass('fa-minus') ;
+            }else{
+                theTrObj.siblings('tr[data-pid="'+ foldpid +'"]').addClass('hide') ;
+                $(this).removeClass('fa-minus').addClass('fa-plus') ;
+            }
+        });
+    });
+    {if condition="@checkAuth('/admin/Category/cateAdd')"}
+    //新增用户
+    function cateAdd(id){
+        $.myModal.open({
+            remote:'/admin/Category/cateAdd?cate_id=' + id,
+            backdrop: 'static',
+            keyboard: false,
+            show:true,
+            success:function(o){
+                //menuValid();
+                init_upload_kinder() ;
+            }
+        }) ;
+    }
+    {/if}
+    {if condition="@checkAuth('/admin/Category/cateEdit')"}
+    //修改用户
+    function cateEdit(id){
+        $.myModal.open({
+            remote:'/admin/Category/cateEdit?cate_id='+ id,
+            backdrop: 'static',
+            keyboard: false,
+            show:true,
+            success:function(o){
+                //menuValid();
+            }
+        }) ;
+    }
+    {/if}
+    {if condition="@checkAuth('/admin/Category/cateDel')"}
+    //修改用户
+    function cateDel(id){
+        $.myModal.open({
+            remote:'/admin/Category/cateDel?cate_id='+ id,
+            backdrop: 'static',
+            keyboard: false,
+            show:true,
+        }) ;
+    }
+    {/if}
+</script>
+{/block}

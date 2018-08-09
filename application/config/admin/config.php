@@ -22,7 +22,8 @@ return [
     'super_admin_uid' => 1 ,
     //不进行权限验证的菜单
     'white_menu_url' => [
-        '/admin/Index/index'
+        '/admin/Index/index',
+        '/admin/Index/authclear' //清除权限缓存
     ],
     //数据库备份路径
     'data_backup_path' => './uploads/sqlbackup/',
