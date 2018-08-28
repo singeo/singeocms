@@ -11,7 +11,6 @@ return [
     'url_convert'            => false,
     //静态文件位置定义
     'system_static' => '/static/admin/',
-    //'plugins_static' => '/static/plugins/',
     //后台存放登录用户的session名称
     'admin_login_info' => 'wqeudkicxcqe8i' ,
     //后台存放菜单地址的session名称

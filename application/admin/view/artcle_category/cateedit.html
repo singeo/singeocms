@@ -1,0 +1,101 @@
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+    <h4 class="modal-title" id="myModalLabel">新增分类</h4>
+</div>
+<form class="form-horizontal" name="categoryForm" method="post" action="/admin/ArtcleCategory/submitCateEdit">
+    <input type="hidden" id="cid" name="cid" value="{$cateinfo.cid}" />
+    <div class="modal-body">
+        <div class="form-group">
+            <label for="cate_title" class="col-sm-2 control-label">分类名称</label>
+            <div class="col-sm-8">
+                <input type="text" id="cate_title" name="cate_title" value="{$cateinfo.cate_title}" class="form-control" dataType="s2-20" nullmsg="请输入分类名称" errormsg="分类名称为2-20位字符串" sucmsg=" " placeholder="请输入分类名称" maxlength="20"/>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="pid" class="col-sm-2 control-label">父分类</label>
+            <div class="col-sm-8">
+                <select class="form-control" id="pid" name="pid">
+                    <option value="0">顶级分类</option>
+                    {volist name="cateTree" id="item"}
+                    <option value="{$item.cid}" {if condition="$item.cid eq $cateinfo.pid"}selected{/if} {if condition="$item.cid eq $cateinfo.cid"}disabled{/if}>{$item._name}</option>
+                    {/volist}
+                </select>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="cate_desc" class="col-sm-2 control-label">分类描述</label>
+            <div class="col-sm-8">
+                <textarea id="cate_desc" name="cate_desc" class="form-control">{$cateinfo.cate_desc}</textarea>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="cate_pic" class="col-sm-2 control-label">分类图片</label>
+            <div class="col-sm-8">
+                <div class="col-sm-10" style="padding: 0;">
+                    <input type="text" id="cate_pic" name="cate_pic" value="{$cateinfo.cate_pic}" class="form-control ke_upload_url" value="" readonly />
+                </div>
+                <div class="col-sm-2">
+                    <input type="button" class="btn btn-primary ke_upload" value="上传"/>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="sort" class="col-sm-2 control-label">排序</label>
+            <div class="col-sm-8">
+                <input type="text" name="sort" id="sort" value="{$cateinfo.sort}" class="form-control" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label">状态</label>
+            <div class="col-sm-8">
+                <label class="checkbox-inline">
+                    <input type="radio" name="status" value="1" {eq name="cateinfo.status" value="1"}checked{/eq}>&nbsp;正常
+                </label>
+                <label class="checkbox-inline">
+                    <input type="radio" name="status" value="0" {eq name="cateinfo.status" value="0"}checked{/eq}>&nbsp;禁用
+                </label>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+        <button type="submit" id="add-row" class="btn btn-success">新增</button>
+    </div>
+    {:token('token_hash')}
+</form>
+
+<script type="text/javascript">
+    //上传图片
+    function init_upload_kinder(){
+        var editor = KindEditor.editor({
+            uploadJson : '/admin/Webconfig/upload?dir=image' ,
+            fileManagerJson : '/admin/Webconfig/fileManager?dir=image',
+            allowFileManager : true,
+            formatUploadUrl : false,
+        });
+        KindEditor('.ke_upload').click(function() {
+            var url_field = $('#cate_pic') ;
+            editor.loadPlugin('image', function() {
+                editor.plugin.imageDialog({
+                    imageUrl : url_field.val(),
+                    clickFn : function(url, title, width, height, border, align) {
+                        url_field.val(url) ;
+                        editor.hideDialog();
+                    }
+                });
+            });
+        });
+    }
+
+    function menuValid(){
+        $("form[name='categoryForm']").Validform({
+            tiptype: 3,
+            ajaxPost: false,
+            postonce: false,
+            callback: function(data){
+                //执行登录
+                return true ;
+            }
+        });
+    }
+</script>

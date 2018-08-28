@@ -1,36 +1,36 @@
 <?php
 /**
- * 后台菜单操作模型
+ * 文章分类管理模型
  * User: singeo
- * Date: 2018/4/27 0027
- * Time: 上午 10:12
+ * Date: 2018/8/9 0009
+ * Time: 上午 9:48
  */
+
 namespace app\admin\model;
+
 
 use think\Db;
 use think\Validate;
 
-class ConsoleMenu extends Base
+class ArtcleCategory extends Base
 {
-    //验证规则
+//验证规则
     protected $rule = [
-        'menu_name'  => ['require','max' => 30,'token' => 'token_hash'],
-        'menu_url'  => ['require','unique:console_menu'],
+        'cate_title'  => ['require','max' => 30,'token' => 'token_hash'],
     ];
     //验证错误提示信息
     protected $message = [
-        'menu_name.require' => '菜单名必须',
-        'menu_name.max'     => '菜单名长度小于30',
-        'menu_name.token'   => '不能重复提交',
-        'menu_url.require'   => '菜单地址必须',
-        'menu_url.unique'   => '菜单地址不能重复',
+        'cate_title.require' => '文章栏目名称名必须',
+        'cate_title.max'     => '菜单名长度小于30',
+        'cate_title.token'   => '不能重复提交',
     ];
+
     /**
-     * 新增后台菜单
+     * 新增角色
      * @param $data
      * @return array
      */
-    public function saveMenu($data){
+    public function saveArtcleCategory($data){
         $validate = new Validate($this->rule, $this->message) ;
         // 数据自动验证
         if (!$validate->check($data)) {
@@ -41,7 +41,7 @@ class ConsoleMenu extends Base
             unset($data['token_hash']) ;
         }
         $data['create_time'] = time() ;
-        $rst = Db::name('ConsoleMenu')->insert($data) ;
+        $rst = Db::name('ArtcleCategory')->insert($data) ;
         if($rst){
             return true;
         }else{
@@ -51,11 +51,11 @@ class ConsoleMenu extends Base
     }
 
     /**
-     * 修改后台菜单
+     * 修改角色
      * @param $data
      * @return array
      */
-    public function updateMenu($data){
+    public function updateArtcleCategory($data){
         $validate = new Validate($this->rule, $this->message) ;
         // 数据自动验证
         if (!$validate->check($data)) {
@@ -65,9 +65,9 @@ class ConsoleMenu extends Base
         if (isset($data['token_hash'])){
             unset($data['token_hash']) ;
         }
-        $where['id'] = $data['id'] ;
-        unset($data['id']) ;
-        $rst = Db::name('ConsoleMenu')->where($where)->update($data) ;
+        $where['cid'] = $data['cid'] ;
+        unset($data['cid']) ;
+        $rst = Db::name('ArtcleCategory')->where($where)->update($data) ;
         if($rst){
             return true ;
         }else{
@@ -75,5 +75,4 @@ class ConsoleMenu extends Base
             return false;
         }
     }
-
 }

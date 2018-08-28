@@ -10,7 +10,7 @@
     <div id="main-wrapper">
         <div class="row">
             <div class="panel panel-body panel-white">
-                {if condition="@checkAuth('/admin/Category/cateAdd')"}
+                {if condition="@checkAuth('/admin/ArtcleCategory/cateAdd')"}
                 <button type="button" class="btn btn-success m-b-sm" onclick="cateAdd('');">新增分类</button>
                 {/if}
                 <div class="table-responsive">
@@ -20,7 +20,7 @@
                             <tr>
                                 <th>&emsp;折叠</th>
                                 <th>分类名称</th>
-                                <th>分类模型</th>
+                                <th>分类描述</th>
                                 <th>排序</th>
                                 <th>操作</th>
                             </tr>
@@ -30,16 +30,16 @@
                             <tr data-id="{$item.cid}" data-pid="{$item.pid}" {neq name="item._level" value="1"}class="hide"{/neq}>
                             <td><neq name="item._level" value="3">{:str_repeat('&emsp;',$item['_level'])}<span class="fold fa fa-plus"></span></neq></td>
                             <td>{$item._name}</td>
-                            <td>{$item.mode_title}</td>
+                            <td>{$item.cate_desc}</td>
                             <td>{$item.sort}</td>
                             <td>
-                                {if condition="@checkAuth('/admin/Category/cateAdd')"}
+                                {if condition="@checkAuth('/admin/ArtcleCategory/cateAdd')"}
                                 <button type="button" class="btn btn-success" onclick="cateAdd({$item.cid})">添加子分类</button>
                                 {/if}
-                                {if condition="@checkAuth('/admin/Category/cateEdit')"}
+                                {if condition="@checkAuth('/admin/ArtcleCategory/cateEdit')"}
                                 <button type="button" class="btn btn-info" onclick="cateEdit({$item.cid});">修改</button>
                                 {/if}
-                                {if condition="@checkAuth('/admin/Category/cateDel')"}
+                                {if condition="@checkAuth('/admin/ArtcleCategory/cateDel')"}
                                 <button type="button" class="btn btn-default" onclick="cateDel({$item.cid});">删除</button>
                                 {/if}
                             </td>
@@ -80,26 +80,26 @@
             }
         });
     });
-    {if condition="@checkAuth('/admin/Category/cateAdd')"}
+    {if condition="@checkAuth('/admin/ArtcleCategory/cateAdd')"}
     //新增用户
     function cateAdd(id){
         $.myModal.open({
-            remote:'/admin/Category/cateAdd?cate_id=' + id,
+            remote:'/admin/ArtcleCategory/cateAdd?cate_id=' + id,
             backdrop: 'static',
             keyboard: false,
             show:true,
             success:function(o){
-                //menuValid();
+                menuValid();
                 init_upload_kinder() ;
             }
         }) ;
     }
     {/if}
-    {if condition="@checkAuth('/admin/Category/cateEdit')"}
+    {if condition="@checkAuth('/admin/ArtcleCategory/cateEdit')"}
     //修改用户
     function cateEdit(id){
         $.myModal.open({
-            remote:'/admin/Category/cateEdit?cate_id='+ id,
+            remote:'/admin/ArtcleCategory/cateEdit?cate_id='+ id,
             backdrop: 'static',
             keyboard: false,
             show:true,
@@ -109,11 +109,11 @@
         }) ;
     }
     {/if}
-    {if condition="@checkAuth('/admin/Category/cateDel')"}
+    {if condition="@checkAuth('/admin/ArtcleCategory/cateDel')"}
     //修改用户
     function cateDel(id){
         $.myModal.open({
-            remote:'/admin/Category/cateDel?cate_id='+ id,
+            remote:'/admin/ArtcleCategory/cateDel?cate_id='+ id,
             backdrop: 'static',
             keyboard: false,
             show:true,

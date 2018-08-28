@@ -137,6 +137,10 @@ class Consolemenu extends Base
         if(empty($menu_id)){
             $this->error('参数错误') ;
         }
+        $menu_count = Db::name('console_menu')->where(['parent_id'=>$menu_id])->count() ;
+        if($menu_count > 0){
+            $this->error('该菜单下存在子菜单，不能删除') ;
+        }
         $result = Db::name('console_menu')->where(['id'=>$menu_id])->delete() ;
         if(!$result){
             $this->error('删除操作失败！') ;

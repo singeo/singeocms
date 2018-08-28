@@ -8,6 +8,7 @@
 
 namespace app\admin\model;
 use think\Collection;
+use think\Db;
 use think\Exception;
 use think\Model;
 
