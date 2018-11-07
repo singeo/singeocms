@@ -12,7 +12,7 @@
                 </a>
             </div>
         </div>
-        {present name="resMenu"}
+        {notempty name="resMenu"}
         <ul id="menu" class="menu accordion-menu">
         {volist name="resMenu" id="menuItem"}
         <li class="droplink">
@@ -21,17 +21,17 @@
                 <p>{$menuItem.menu_name}</p>
                 <span class="arrow"></span>
             </a>
-            {present  name="menuItem._data"}
+            {notempty  name="menuItem._data"}
             <ul class="sub-menu">
                 {volist name="menuItem._data" id="childItem"}
-                <li {present name="childItem._child"}class="droplink"{/present}>
+                <li {notempty name="childItem._data"}class="droplink"{/notempty}>
                     <a href="{$childItem.menu_url}">
                         <p>{$childItem.menu_name}</p>
-                        {present name="childItem._child"}
+                        {notempty name="childItem._data"}
                         <span class="arrow"></span>
-                        {/present}
+                        {/notempty}
                     </a>
-                    {present name="childItem._data"}
+                    {notempty name="childItem._data"}
                     <ul class="sub-menu">
                         {volist name="childItem._data" id="_childItem"}
                         <li>
@@ -41,14 +41,14 @@
                         </li>
                         {/volist}
                     </ul>
-                    {/present}
+                    {/notempty}
                 </li>
                 {/volist}
             </ul>
-            {/present}
+            {/notempty}
         </li>
         {/volist}
         </ul>
-        {/present}
+        {/notempty}
     </div><!-- Page Sidebar Inner -->
 </div><!-- Page Sidebar -->

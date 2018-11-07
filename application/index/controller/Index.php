@@ -1,29 +1,54 @@
 <?php
 namespace app\index\controller;
 
+use think\Controller;
+use think\Db;
 use think\exception\ErrorException;
 use think\Request;
 
-class Index
+class Index extends Controller
 {
     public function index()
     {
-//        header("Content-type:text/html;charset=utf-8");
-        // 1. 初始化
-//        $ch = curl_init();
-//        // 2. 设置选项，包括URL
-//        curl_setopt($ch,CURLOPT_URL,"http://swoole.singeo.com/aassaa");
-//        curl_setopt($ch,CURLOPT_RETURNTRANSFER,1);
-//        curl_setopt($ch,CURLOPT_HEADER,0);
-//        // 3. 执行并获取HTML文档内容
-//        $output = curl_exec($ch);
-//        if($output === FALSE ){
-//            echo "CURL Error:".curl_error($ch);
-//        }
-//        // 4. 释放curl句柄
-//        curl_close($ch);
+        $draw = new \app\common\library\DrawAward() ;
+        $result = $draw->runDraw() ;
+        print_r($result) ;
+        //return $this->fetch() ;
     }
 
+    public function testsubmit(){
+//        print_r($_FILES) ;
+        //查询最后一条记录
+        header("Content-type:text/html;charset=utf-8");
+        Db::startTrans() ;
+        $goods = Db::name('goods')->order('id DESC')->find() ;
+        if(empty($goods)){
+            $version = 0 ;
+        }else{
+            $version = $goods['t_version'] ;
+        }
+        $new_version = 1 ;
+        $goodsData['t_goods'] = getRandNum(10) ;
+        $goodsData['t_version'] = $new_version ;
+        $rst = Db::name('goods')->insert($goodsData) ;
+        if(!$rst){
+            Db::rollback() ;
+            exit('goods写入失败') ;
+        }
+        $res = Db::name('version')->where(['g_version'=>$version,'id'=>1])->update(['g_version'=>$new_version]) ;
+        if(!$res){
+            Db::rollback() ;
+            exit('版本写入失败') ;
+        }
+
+        $ret = Db::name('award_set')->where(['id'=>1])->update(['awardnum'=>['exp','awardnum - 1']]) ;
+        if(!$ret){
+            Db::rollback() ;
+            exit('奖品已经发放完') ;
+        }
+        Db::commit() ;
+        echo 'success' ;
+    }
 
     public function testCallback($a,$cb){
         echo 'test callback' ;

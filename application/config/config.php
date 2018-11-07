@@ -128,6 +128,10 @@ return [
         'taglib_begin' => '{',
         // 标签库标签结束标记
         'taglib_end'   => '}',
+        //Singeo标签库
+        'taglib_pre_load' => 'app\\common\\library\\Singeo',
+        //标签缓存
+        'cache_time'    => -1
     ],
 
     // 视图输出字符串内容替换

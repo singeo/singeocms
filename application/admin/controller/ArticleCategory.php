@@ -10,20 +10,20 @@ namespace app\admin\controller;
 use app\admin\library\TreeShape;
 use think\Db;
 
-class ArtcleCategory extends Base
+class ArticleCategory extends Base
 {
     /**
      * 文章分类管理页面
      * @return mixed
      */
     public function index(){
-        $categorymodel = new \app\admin\model\ArtcleCategory() ;
+        $categorymodel = new \app\admin\model\ArticleCategory() ;
         $where['status'] = 1 ;
         $orderby = 'sort ASC,cid DESC' ;
         $feild = 'cid,pid,cate_title,cate_desc,status,sort' ;
         $catelist = $categorymodel->getList($where,$feild,null,$orderby) ;
         if($catelist === false){
-            return $this->error($categorymodel->getErrorMsg()) ;
+            $this->error($categorymodel->getErrorMsg()) ;
         }else{
             $catelist = TreeShape::tree($catelist,'cate_title','cid', 'pid') ;
             $this->assign('catelist',$catelist) ;
@@ -39,7 +39,7 @@ class ArtcleCategory extends Base
         $field = 'cid,pid,cate_title' ;
         $where['status'] = 1 ;// 正常
         $orderby = 'sort ASC,cid DESC' ;
-        $catelist = Db::name('artcle_category')
+        $catelist = Db::name('article_category')
             ->where($where)
             ->field($field)
             ->order($orderby)
@@ -55,8 +55,8 @@ class ArtcleCategory extends Base
      */
     public function submitCateAdd(){
         $param = $this->request->param() ;
-        $categorymodel = new \app\admin\model\ArtcleCategory() ;
-        $result = $categorymodel->saveArtcleCategory($param) ;
+        $categorymodel = new \app\admin\model\ArticleCategory() ;
+        $result = $categorymodel->saveArticleCategory($param) ;
         if(!$result){
             $this->error($categorymodel->getErrorMsg()) ;
         }else{
@@ -72,7 +72,7 @@ class ArtcleCategory extends Base
         $field = 'cid,pid,cate_title' ;
         $where['status'] = 1 ;// 正常
         $orderby = 'sort ASC,cid DESC' ;
-        $catelist = Db::name('artcle_category')
+        $catelist = Db::name('article_category')
             ->where($where)
             ->field($field)
             ->order($orderby)
@@ -82,7 +82,7 @@ class ArtcleCategory extends Base
         $where = null ;
         $field = 'cid,pid,cate_title,cate_desc,cate_pic,status,sort' ;
         $where['cid'] = $cate_id ;
-        $cateinfo = Db::name('artcle_category')
+        $cateinfo = Db::name('article_category')
             ->where($where)
             ->field($field)
             ->find() ;
@@ -96,8 +96,8 @@ class ArtcleCategory extends Base
      */
     public function submitCateEdit(){
         $param = $this->request->param() ;
-        $categorymodel = new \app\admin\model\ArtcleCategory() ;
-        $result = $categorymodel->updateArtcleCategory($param) ;
+        $categorymodel = new \app\admin\model\ArticleCategory() ;
+        $result = $categorymodel->updateArticleCategory($param) ;
         if(!$result){
             $this->error($categorymodel->getErrorMsg()) ;
         }else{
@@ -115,7 +115,7 @@ class ArtcleCategory extends Base
         }
         $where['cid'] = $cate_id ;
         $field = 'cid,cate_title' ;
-        $cateInfo = Db::name('artcle_category')
+        $cateInfo = Db::name('article_category')
             ->where($where)
             ->field($field)
             ->find() ;
@@ -131,11 +131,11 @@ class ArtcleCategory extends Base
         if(empty($cid)){
             $this->error('参数错误') ;
         }
-        $cate_count = Db::name('artcle_category')->where(['pid'=>$cid])->count() ;
+        $cate_count = Db::name('article_category')->where(['pid'=>$cid])->count() ;
         if($cate_count > 0){
             $this->error('该分类下存在子菜单，不能删除') ;
         }
-        $result = Db::name('artcle_category')->where(['cid'=>$cid])->delete() ;
+        $result = Db::name('article_category')->where(['cid'=>$cid])->delete() ;
         if(!$result){
             $this->error('删除操作失败！') ;
         }else{

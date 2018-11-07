@@ -31,12 +31,13 @@ class Base extends Model
                 ->limit($limit)
                 ->order($order)
                 ->select() ;
-            if(!empty($result)){
+            if(is_array($result)){
                 return Collection::make($result)->toArray() ;
             }else{
-                return false ;
+                return $result ;
             }
         }catch (Exception $e){
+            $this->setErrorMsg($e->getMessage()) ;
             return false ;
         }
     }
@@ -54,10 +55,10 @@ class Base extends Model
                 ->field($field)
                 ->order($order)
                 ->find() ;
-            if(!empty($result)){
+            if(is_array($result)){
                 return $result->toArray() ;
             }else{
-                return false ;
+                return $result ;
             }
         }catch (Exception $e){
             return false ;

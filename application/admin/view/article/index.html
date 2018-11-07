@@ -1,0 +1,148 @@
+{extend name="common/base" /}
+{block name="style"}
+<link href="{$Think.config.system_static}plugins/bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css" rel="stylesheet" type="text/css"/>
+<!-- dropify.min.css -->
+<link href="{$Think.config.system_static}plugins/dropify/css/dropify.min.css" rel="stylesheet" type="text/css"/>
+<!-- viewer图片查看器-->
+<link href="{$Think.config.system_static}plugins/viewer/viewer.min.css" rel="stylesheet" type="text/css"/>
+{/block}
+{block name="main"}
+<div class="page-inner">
+    <div class="page-title">
+        <h3>{$title}</h3>
+    </div>
+    <div id="main-wrapper">
+        <div class="row">
+            <div class="panel panel-body panel-white">
+                {if condition="@checkAuth('/admin/Article/articleAdd')"}
+                <button type="button" class="btn btn-success m-b-sm" onclick="articleAdd();">新增</button>
+                {/if}
+                <div class="table-responsive">
+                    <div class="dataTables_wrapper">
+                        <table id="userTables" class="display table" style="width: 100%; cellspacing: 0;">
+                            <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>文章标题</th>
+                                <th>文章栏目</th>
+                                <th>缩略图</th>
+                                <th>文章属性</th>
+                                <th>文章作者</th>
+                                <th>文章来源</th>
+                                <th>点击量</th>
+                                <th>发布时间</th>
+                                <th>操作</th>
+                            </tr>
+                            </thead>
+                            <tbody id="list_body">
+                            {volist name="list" id="item"}
+                            <tr>
+                                <td>{$item.id}</td>
+                                <td>{$item.article_title}</td>
+                                <td>{$item.cate_title}</td>
+                                <td>{notempty name="item.article_pic"}
+                                    <img src="{$item.article_pic}" data-original="{$item.article_pic}" class="img-thumbnail img-responsive img-thumb-small" />
+                                    {else /}-{/notempty}</td>
+                                <td>
+                                    {eq name="item.is_head" value="1"}<span class="label label-danger m-r-xxs">头条</span>{/eq}
+                                    {eq name="item.is_recom" value="1"}<span class="label label-warning m-r-xxs">推荐</span>{/eq}
+                                    {eq name="item.is_top" value="1"}<span class="label label-info m-r-xxs">置顶</span>{/eq}
+                                </td>
+                                <td>{$item.author_name|default="系统管理员"}</td>
+                                <td>{$item.source_name|default="原创"}</td>
+                                <td>{$item.view_num}</td>
+                                <td>{$item.publish_time|date="Y-m-d H:i:s",###}</td>
+                                <td>
+                                    {if condition="@checkAuth('/admin/Article/articleEdit')"}
+                                    <button type="button" class="btn btn-info" onclick="articleEdit({$item.id});">修改</button>
+                                    {/if}
+                                    {if condition="@checkAuth('/admin/Article/articleDel')"}
+                                    <button type="button" class="btn btn-default" onclick="articleDel({$item.id});">删除</button>
+                                    {/if}
+                                </td>
+                            </tr>
+                            {/volist}
+                            </tbody>
+                        </table>
+                        <div class="text-center">
+                            {$list->render()}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{/block}
+{block name="footer_js"}
+<script src="{$Think.config.system_static}plugins/datatables/js/jquery.datatables.min.js"></script>
+<script src="{$Think.config.system_static}plugins/x-editable/bootstrap3-editable/js/bootstrap-editable.js"></script>
+<!-- 编辑器 -->
+<script src="{$Think.config.system_static}plugins/kindeditor/kindeditor-all-min.js"></script>
+<!-- 日历 -->
+<script src="{$Think.config.system_static}plugins/bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js"></script>
+<script src="{$Think.config.system_static}plugins/bootstrap-datetimepicker/js/locales/bootstrap-datetimepicker.zh-CN.js"></script>
+<!-- dropify上传插件 -->
+<script src="{$Think.config.system_static}plugins/dropify/js/dropify.js"></script>
+<!-- viewer图片查看器 -->
+<script src="{$Think.config.system_static}plugins/viewer/viewer-jquery.min.js"></script>
+<script type="application/javascript">
+    $(function(){
+        $('#list_body').viewer({
+            url:"data-original"
+        });
+        $('#userTables').DataTable({
+            paging: false,
+            info: false,
+            ordering:false,
+            searching:false,
+            language:lang
+        });
+    });
+    {if condition="@checkAuth('/admin/Article/articleAdd')"}
+    //新增用户
+    function articleAdd(){
+        $.myModal.open({
+            remote:'/admin/Article/articleAdd',
+            backdrop: 'static',
+            style: {'min-width' : '80%'},
+            keyboard: false,
+            show:true,
+            success:function(o){
+                init_upload_kinder() ;
+                init_editor() ;
+                articleValid();
+            }
+        }) ;
+    }
+    {/if}
+    {if condition="@checkAuth('/admin/Article/articleEdit')"}
+    //修改用户
+    function articleEdit(id){
+        $.myModal.open({
+            remote:'/admin/Article/articleEdit?aid='+ id,
+            backdrop: 'static',
+            style: {'min-width' : '80%'},
+            keyboard: false,
+            show:true,
+            success:function(o){
+                init_upload_kinder() ;
+                init_editor() ;
+                articleValid();
+            }
+        }) ;
+    }
+    {/if}
+    {if condition="@checkAuth('/admin/Article/articleDel')"}
+    //修改用户
+    function articleDel(id){
+        $.myModal.open({
+            remote:'/admin/Article/articleDel?aid='+ id,
+            backdrop: 'static',
+            keyboard: false,
+            show:true,
+        }) ;
+    }
+    {/if}
+</script>
+{/block}

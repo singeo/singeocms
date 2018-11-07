@@ -16,58 +16,20 @@ trait FileTraits
      */
     public function upload(){
         $file = request()->file('imgFile');
-        //定义允许上传的文件扩展名
-        $ext_arr = array(
-            'image' => array('gif', 'jpg', 'jpeg', 'png', 'bmp'),
-            'flash' => array('swf', 'flv'),
-            'media' => array('swf', 'flv', 'mp3', 'wav', 'wma', 'wmv', 'mid', 'avi', 'mpg', 'asf', 'rm', 'rmvb'),
-            'file' => array('doc', 'docx', 'xls', 'xlsx', 'ppt', 'htm', 'html', 'txt', 'zip', 'rar', 'gz', 'bz2'),
-        );
         $dir = request()->param('dir') ;
-        //检查目录名
-        $dir_name = empty($dir) ? 'image' : trim($dir);
-        if (empty($ext_arr[$dir_name])) {
-            // 上传失败获取错误信息
-            $result['status'] = 1 ;
-            $result['message'] = '目录名不正确' ;
+
+        $uploadcls = new \app\admin\library\Upload() ;
+        $uploadRes = $uploadcls->doUpload($file,$dir) ;
+        if($uploadRes['status'] == 0){
+            $result['error'] = 1 ;
+            $result['message'] = $uploadRes['msg'] ;
             echo json_encode($result) ;
             exit ;
-        }
-        $file_name = $file->getInfo('name') ;
-        //获得文件扩展名
-        $temp_arr = explode(".", $file_name);
-        $file_ext = array_pop($temp_arr);
-        $file_ext = trim($file_ext);
-        $file_ext = strtolower($file_ext);
-        //检查扩展名
-        if (in_array($file_ext, $ext_arr[$dir_name]) === false) {
-            // 上传失败获取错误信息
-            $result['status'] = 1 ;
-            $result['message'] = "上传文件扩展名是不允许的扩展名。\n只允许" . implode(",", $ext_arr[$dir_name]) . "格式。" ;
+        }else{
+            $result['error'] = 0 ;
+            $result['url'] = $uploadRes['url'] ;
             echo json_encode($result) ;
             exit ;
-        }
-        // 移动到框架应用根目录/public/uploads/ 目录下
-        if($file){
-            if(empty($dir)){
-                $upload_dir = DS . 'uploads' ;
-            }else{
-                $upload_dir = DS . 'uploads' . DS . $dir ;
-            }
-            $info = $file->move(ROOT_PATH . 'public' . $upload_dir);
-            if($info){
-                $save_dir = $upload_dir . DS . $info->getSaveName() ;
-                $result['error'] = 0 ;
-                $result['url'] = str_replace('\\','/', $save_dir) ;
-                echo json_encode($result) ;
-                exit ;
-            }else{
-                // 上传失败获取错误信息
-                $result['status'] = 1 ;
-                $result['message'] = $file->getError() ;
-                echo json_encode($result) ;
-                exit ;
-            }
         }
     }
 

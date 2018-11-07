@@ -5,29 +5,85 @@
     <meta charset="UTF-8">
     <title>Title</title>
     <link href="/static/plugins/sweetalert/sweetalert.css" rel="stylesheet" type="text/css">
+    <link href="/static/admin/plugins/css/dropify.min.css" rel="stylesheet" type="text/css"/>
 </head>
 <body>
+<!--<canvas id="map_canvas" width="1000" height="1000"></canvas>-->
+{Singeo:test name="aaaa" value="bbbb" /}
+<!-- dropify上传插件 -->
+<script src="/static/admin/plugins/dropify/js/dropify.js"></script>
 <script src="/static/admin/plugins/jquery/jquery-2.1.3.min.js"></script>
 <script src="/static/admin/plugins/bootstrap/js/bootstrap.min.js"></script>
 <script src="/static/plugins/sweetalert/sweetalert.min.js"></script>
 <script type="application/javascript">
-    var wsServer = 'ws://127.0.0.1:9502';
-    var websocket = new WebSocket(wsServer);
-    websocket.onopen = function (evt) {
-        console.log("Connected to WebSocket server.");
-    };
+    // var wsServer = 'ws://wss.singeo.com:9502';
+    // var websocket = new WebSocket(wsServer);
+    // websocket.onopen = function (evt) {
+    //     console.log("Connected to WebSocket server.");
+    //     var da = {} ;
+    //     da.name = 'loo' ;
+    //     da.message = 'hello' ;
+    //     websocket.send(da) ;
+    // };
+    //
+    // websocket.onclose = function (evt) {
+    //     console.log("Disconnected");
+    // };
+    //
+    // websocket.onmessage = function (evt) {
+    //     console.log('Retrieved data from server: ' + evt.data);
+    // };
+    //
+    // websocket.onerror = function (evt, e) {
+    //     console.log('Error occured: ' + evt.data);
+    // };
+    // var wsServer = 'ws://127.0.0.1:9502';
+    // var websocket = new WebSocket(wsServer);
+    // websocket.onopen = function (evt) {
+    //     console.log("Connected to WebSocket server.");
+    // };
+    //
+    // websocket.onclose = function (evt) {
+    //     console.log("Disconnected");
+    // };
+    //
+    // websocket.onmessage = function (evt) {
+    //     console.log('Retrieved data from server: ' + evt.data);
+    // };
+    //
+    // websocket.onerror = function (evt, e) {
+    //     console.log('Error occured: ' + evt.data);
+    // };
+    // var draw = document.getElementById('map_canvas');
+    //确认浏览器是否支持<canvas>元素
+    // if(draw.getContext){
+        // var context = draw.getContext('2d');
+        // //给context绘制红色的边框
+        // context.strokeStyle = '#f00';
+        // //内部填充大草原的颜色
+        // context.fillStyle = '#0f0';
+        // context.fillRect(10,10,50,50) ;
+        //开始路径
+        // context.beginPath();
+        // //绘制外圆
+        // context.arc(100,100,99,0,2*Math.PI,true);
+        // //绘制内圆
+        // context.moveTo(194,100);
+        // context.arc(100,100,14,0,2*Math.PI,true);
+        // //绘制分针
+        // context.moveTo(100,100);
+        // context.lineTo(100,15);
+        // //绘制时针
+        // context.moveTo(100,100);
+        // context.lineTo(35,100);
+        //描边路径
 
-    websocket.onclose = function (evt) {
-        console.log("Disconnected");
-    };
-
-    websocket.onmessage = function (evt) {
-        console.log('Retrieved data from server: ' + evt.data);
-    };
-
-    websocket.onerror = function (evt, e) {
-        console.log('Error occured: ' + evt.data);
-    };
+        // context.bezierCurveTo(100,100,400,10,400,400);
+        // context.bezierCurveTo(100,100,400,-10,400,400);
+        // context.bezierCurveTo(100,100,800,-10,400,400);
+        // context.stroke();
+        // context.strokeStyle = '#f00';
+    // }
 </script>
 </body>
 </html>

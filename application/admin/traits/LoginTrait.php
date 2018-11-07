@@ -51,7 +51,7 @@ trait LoginTrait
         //更新登录次数和时间
         $loginData['login_times'] = ['exp','login_times + 1'] ;
         $loginData['last_login_time'] = time() ;
-        $loginData['last_login_ip'] = Lib::get_client_ip() ;
+        $loginData['last_login_ip'] = get_client_ip() ;
         Db::name('console_user')
             ->where(['id'=>$user['id']])
             ->update($loginData) ;

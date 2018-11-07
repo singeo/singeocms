@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50617
 File Encoding         : 65001
 
-Date: 2018-06-06 12:03:47
+Date: 2018-11-07 09:31:46
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -27,14 +27,15 @@ CREATE TABLE `g_advert` (
   `a_pic` varchar(100) DEFAULT NULL COMMENT '广告图片',
   `sort` smallint(6) DEFAULT '50' COMMENT '排序',
   `status` tinyint(1) DEFAULT '1' COMMENT '状态1正常，0失效',
-  `add_time` int(10) DEFAULT '0' COMMENT '创建时间',
+  `create_time` int(10) DEFAULT '0' COMMENT '创建时间',
   `update_time` int(10) DEFAULT '0' COMMENT '更新时间',
   PRIMARY KEY (`aid`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='广告';
+) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COMMENT='广告';
 
 -- ----------------------------
 -- Records of g_advert
 -- ----------------------------
+INSERT INTO `g_advert` VALUES ('1', '1', '测试1123', '测试1测试1测试13', '/uploads/image/20181106/e0ea0c1f62554.jpg', '20', '-1', '1541494461', '1541495373');
 
 -- ----------------------------
 -- Table structure for g_advert_category
@@ -43,14 +44,19 @@ DROP TABLE IF EXISTS `g_advert_category`;
 CREATE TABLE `g_advert_category` (
   `cid` tinyint(3) NOT NULL AUTO_INCREMENT COMMENT '主键',
   `c_name` varchar(20) DEFAULT NULL COMMENT '分类名称',
+  `c_desc` varchar(255) DEFAULT NULL COMMENT '分类描述',
   `sort` tinyint(3) DEFAULT '10' COMMENT '排序',
   `status` tinyint(1) DEFAULT '1' COMMENT '状态1启用，0不启用',
+  `create_time` int(10) DEFAULT NULL COMMENT '创建时间',
+  `update_time` int(10) DEFAULT NULL COMMENT '更新时间',
   PRIMARY KEY (`cid`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='广告分类';
+) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COMMENT='广告分类';
 
 -- ----------------------------
 -- Records of g_advert_category
 -- ----------------------------
+INSERT INTO `g_advert_category` VALUES ('1', '网站banner1', '首页显示banner2', '30', '1', '1541138512', null);
+INSERT INTO `g_advert_category` VALUES ('2', '网站首页banner3', '网站首页banner2', '10', '1', '1541139164', '1541139174');
 
 -- ----------------------------
 -- Table structure for g_area
@@ -3479,45 +3485,135 @@ INSERT INTO `g_area` VALUES ('3407', '3401', '肥东县', '3');
 INSERT INTO `g_area` VALUES ('3408', '3401', '肥西县', '3');
 
 -- ----------------------------
--- Table structure for g_category
+-- Table structure for g_article
 -- ----------------------------
-DROP TABLE IF EXISTS `g_category`;
-CREATE TABLE `g_category` (
+DROP TABLE IF EXISTS `g_article`;
+CREATE TABLE `g_article` (
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '主键',
+  `cid` int(11) DEFAULT NULL COMMENT '文章栏目ID',
+  `article_title` varchar(255) DEFAULT NULL COMMENT '文章标题',
+  `article_desc` varchar(255) DEFAULT NULL COMMENT '文章摘要',
+  `article_pic` varchar(255) DEFAULT NULL COMMENT '文章图片',
+  `seo_keywords` varchar(255) DEFAULT NULL COMMENT 'seo关键字',
+  `seo_desc` varchar(255) DEFAULT NULL COMMENT 'seo描述',
+  `content` text COMMENT '文章内容',
+  `author` int(11) DEFAULT '0' COMMENT '文章作者',
+  `source` int(11) DEFAULT '0' COMMENT '文章来源',
+  `view_num` smallint(6) DEFAULT NULL COMMENT '文章浏览量',
+  `create_time` int(10) DEFAULT NULL COMMENT '添加时间',
+  `publish_time` int(10) DEFAULT NULL COMMENT '发布时间',
+  `update_time` int(10) DEFAULT NULL COMMENT '更新时间',
+  `is_head` tinyint(1) DEFAULT '0' COMMENT '是否头条',
+  `is_recom` tinyint(1) DEFAULT '0' COMMENT '是否推荐',
+  `is_top` tinyint(1) DEFAULT '0' COMMENT '是否置顶',
+  `sort` smallint(6) DEFAULT '50' COMMENT '排序',
+  `status` tinyint(1) DEFAULT '1' COMMENT '文章状态，-1删除，1正常',
+  PRIMARY KEY (`id`),
+  KEY `cid` (`cid`)
+) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COMMENT='文章表';
+
+-- ----------------------------
+-- Records of g_article
+-- ----------------------------
+INSERT INTO `g_article` VALUES ('1', '1', 'aaaaaaa', 'aaaaaaaa', '/uploads/image/20181029/de17d65e9071c.jpg', 'dddddddddd', 'ddddddddddddaaaaaaaaaaaaa', 'ddddddddddddddd', '1', '1', '33', '1540344486', '1540773039', '1541054137', '1', '1', '1', '10', '1');
+INSERT INTO `g_article` VALUES ('2', '1', 'test ', '', '/uploads/image/20181024/d3a530718dabd.jpg', '', '', '', '0', '0', '0', '1540345576', '1540345540', null, '0', '0', '0', '50', '1');
+INSERT INTO `g_article` VALUES ('3', '3', '测试测试测试测试测试测试测试', '', null, '', '', '测试测试测试测试测试测试测试测试测试', '0', '0', '0', '1540886616', '1540886493', null, '1', '1', '1', '50', '-1');
+INSERT INTO `g_article` VALUES ('4', '3', '测试测试测试测试测试测试测试testaaa', '测试测试测试测试测试测试测试testaaa', null, '', '', '<p>\r\n	测试测试测试测试测试测试测试testaaa测试测试测试测试测试测试测试testaaa\r\n</p>\r\n<p>\r\n	<br />\r\n</p>\r\n<p>\r\n	测试测试测试测试测试测试测试testaaa测试测试测试测试测试测试测试testaaa\r\n</p>', '0', '0', '0', '1540953472', '1540953425', '1540953694', '0', '0', '0', '50', '1');
+
+-- ----------------------------
+-- Table structure for g_article_author
+-- ----------------------------
+DROP TABLE IF EXISTS `g_article_author`;
+CREATE TABLE `g_article_author` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `author_name` varchar(30) DEFAULT NULL COMMENT '作者名称',
+  `author_breif` varchar(255) DEFAULT NULL COMMENT '作者简介',
+  `status` tinyint(1) DEFAULT '1' COMMENT '状态-1删除，1正常',
+  `add_time` int(10) DEFAULT NULL COMMENT '创建时间',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COMMENT='文章作者列表';
+
+-- ----------------------------
+-- Records of g_article_author
+-- ----------------------------
+INSERT INTO `g_article_author` VALUES ('1', 'singeo', 'hehhe ', '1', '1540870112');
+
+-- ----------------------------
+-- Table structure for g_article_category
+-- ----------------------------
+DROP TABLE IF EXISTS `g_article_category`;
+CREATE TABLE `g_article_category` (
   `cid` int(11) NOT NULL AUTO_INCREMENT COMMENT '主键',
   `pid` int(11) DEFAULT NULL COMMENT '父栏目ID',
   `cate_title` varchar(50) DEFAULT NULL COMMENT '栏目名称',
-  `cate_mode` tinyint(1) DEFAULT NULL COMMENT '栏目模型',
   `cate_desc` text COMMENT '分类描述',
   `cate_pic` varchar(100) DEFAULT NULL COMMENT '栏目图片',
-  `seo_title` varchar(255) DEFAULT NULL COMMENT 'seo标题',
-  `seo_desc` varchar(255) DEFAULT NULL COMMENT 'seo描述',
-  `seo_keyword` varchar(255) DEFAULT NULL COMMENT 'seo关键字',
-  `cate_tpl` varchar(100) DEFAULT NULL COMMENT '分类页面模板',
   `status` tinyint(1) DEFAULT '1' COMMENT '状态，1正常，0关闭',
   `sort` smallint(6) DEFAULT '50' COMMENT '排序',
+  `create_time` int(10) DEFAULT NULL COMMENT '创建时间',
   PRIMARY KEY (`cid`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='网站分类管理';
+) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COMMENT='网站分类管理';
 
 -- ----------------------------
--- Records of g_category
+-- Records of g_article_category
+-- ----------------------------
+INSERT INTO `g_article_category` VALUES ('1', '0', '文章列表aaa', '文章列表aaa', '/uploads/image/20180829/915dc30eebe70b35d05bd67a1ab6cbb5.jpg', '1', '25', null);
+INSERT INTO `g_article_category` VALUES ('3', '0', '文章列表bbb', '文章列表bbb', '', '1', '50', '1540868368');
+INSERT INTO `g_article_category` VALUES ('4', '0', '文章列表ccc', 'aaaa', '', '1', '50', '1541054117');
+
+-- ----------------------------
+-- Table structure for g_article_picture
+-- ----------------------------
+DROP TABLE IF EXISTS `g_article_picture`;
+CREATE TABLE `g_article_picture` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `aid` int(11) DEFAULT NULL COMMENT '文章ID',
+  `pic_url` varchar(255) DEFAULT NULL COMMENT '图片地址',
+  `pic_tile` varchar(255) DEFAULT NULL COMMENT '图片标题',
+  `pic_desc` varchar(255) DEFAULT NULL COMMENT '图片描述',
+  `create_time` int(10) DEFAULT NULL COMMENT '创建时间',
+  PRIMARY KEY (`id`),
+  KEY `aid` (`aid`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='文章图片列表';
+
+-- ----------------------------
+-- Records of g_article_picture
 -- ----------------------------
 
 -- ----------------------------
--- Table structure for g_category_mode
+-- Table structure for g_article_source
 -- ----------------------------
-DROP TABLE IF EXISTS `g_category_mode`;
-CREATE TABLE `g_category_mode` (
-  `id` tinyint(3) NOT NULL AUTO_INCREMENT COMMENT '主键',
-  `mode_title` varchar(20) DEFAULT NULL COMMENT '模型标题',
-  `mode_act` varchar(100) DEFAULT NULL COMMENT '模型控制操作',
-  `sort` tinyint(3) DEFAULT '50' COMMENT '排序',
-  `status` tinyint(1) DEFAULT '1' COMMENT '状态，1启用，0关闭',
+DROP TABLE IF EXISTS `g_article_source`;
+CREATE TABLE `g_article_source` (
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '主键',
+  `source_name` varchar(30) DEFAULT NULL COMMENT '文章来源名称',
+  `source_url` varchar(70) DEFAULT NULL COMMENT '文章来源网址',
+  `status` tinyint(1) DEFAULT '1' COMMENT '状态-1删除，1正常',
+  `add_time` int(10) DEFAULT NULL COMMENT '新增时间',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='分类模型';
+) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COMMENT='文章来源表';
 
 -- ----------------------------
--- Records of g_category_mode
+-- Records of g_article_source
 -- ----------------------------
+INSERT INTO `g_article_source` VALUES ('1', 'sina', 'http://www.sina.com.cn', '1', '1540870112');
+
+-- ----------------------------
+-- Table structure for g_article_tags
+-- ----------------------------
+DROP TABLE IF EXISTS `g_article_tags`;
+CREATE TABLE `g_article_tags` (
+  `aid` int(11) DEFAULT '0' COMMENT '文章ID',
+  `tags_id` int(11) DEFAULT '0' COMMENT '标签ID'
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='标签与文章关联ID';
+
+-- ----------------------------
+-- Records of g_article_tags
+-- ----------------------------
+INSERT INTO `g_article_tags` VALUES ('4', '2');
+INSERT INTO `g_article_tags` VALUES ('4', '1');
+INSERT INTO `g_article_tags` VALUES ('4', '4');
+INSERT INTO `g_article_tags` VALUES ('4', '3');
 
 -- ----------------------------
 -- Table structure for g_config
@@ -3536,12 +3632,14 @@ CREATE TABLE `g_config` (
   `remark` varchar(255) DEFAULT NULL COMMENT '备注',
   PRIMARY KEY (`id`),
   UNIQUE KEY `c_key_uniq` (`c_key`) USING BTREE
-) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COMMENT='网站配置项';
+) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COMMENT='网站配置项';
 
 -- ----------------------------
 -- Records of g_config
 -- ----------------------------
-INSERT INTO `g_config` VALUES ('1', '1', 'input', '网站名称', 'web_title', null, '', '10', '1', '网站显示的名称');
+INSERT INTO `g_config` VALUES ('1', '1', 'input', '网站名称', 'web_title', 'www.singeo.com', '', '10', '1', '网站显示的名称');
+INSERT INTO `g_config` VALUES ('2', '1', 'input', '网站网址', 'web_url', 'www.singeo.com', '', '60', '1', '网站访问地址');
+INSERT INTO `g_config` VALUES ('3', '1', 'file', '网站logo', 'web_logo', '/uploads/image/20180809/86e34695ed326a828e50ee2c0e1cb2bf.jpg', '', '30', '1', '网站LOGO');
 
 -- ----------------------------
 -- Table structure for g_console_menu
@@ -3561,7 +3659,7 @@ CREATE TABLE `g_console_menu` (
   UNIQUE KEY `menu_url_unique` (`menu_url`) USING BTREE,
   KEY `status` (`status`),
   KEY `parentid` (`parent_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=37 DEFAULT CHARSET=utf8 COMMENT='后台菜单表';
+) ENGINE=MyISAM AUTO_INCREMENT=44 DEFAULT CHARSET=utf8 COMMENT='后台菜单表';
 
 -- ----------------------------
 -- Records of g_console_menu
@@ -3569,7 +3667,7 @@ CREATE TABLE `g_console_menu` (
 INSERT INTO `g_console_menu` VALUES ('1', '0', '1', '1', '系统配置', 'glyphicon-cog', '/admin/Consoleconfig/', '50', '0');
 INSERT INTO `g_console_menu` VALUES ('2', '1', '1', '1', '管理员管理', '', '/admin/Consoleuser/index', '50', '0');
 INSERT INTO `g_console_menu` VALUES ('3', '1', '1', '1', '角色管理', '', '/admin/Consolerole/index', '50', '0');
-INSERT INTO `g_console_menu` VALUES ('4', '1', '1', '1', '菜单管理', '', '/admin/Consolemenu/index', '50', '0');
+INSERT INTO `g_console_menu` VALUES ('4', '1', '1', '1', '后台菜单管理', '', '/admin/Consolemenu/index', '50', '0');
 INSERT INTO `g_console_menu` VALUES ('10', '4', '2', '1', '修改菜单', '', '/admin/Consolemenu/menuEdit', '40', '1527577704');
 INSERT INTO `g_console_menu` VALUES ('15', '3', '2', '1', '提交新增', '', '/admin/Consolerole/submitAddRole', '20', '1527581404');
 INSERT INTO `g_console_menu` VALUES ('14', '3', '2', '1', '新增角色', '', '/admin/Consolerole/roleAdd', '10', '1527581404');
@@ -3599,6 +3697,13 @@ INSERT INTO `g_console_menu` VALUES ('33', '26', '2', '1', '上传空间管理',
 INSERT INTO `g_console_menu` VALUES ('34', '0', '1', '1', '数据库', 'glyphicon-hdd', '/admin/Datas/', '50', '1527750502');
 INSERT INTO `g_console_menu` VALUES ('35', '34', '1', '1', '数据备份', '', '/admin/Datas/index', '10', '1527750949');
 INSERT INTO `g_console_menu` VALUES ('36', '34', '1', '1', '数据还原', '', '/admin/Datas/restore', '20', '1527750999');
+INSERT INTO `g_console_menu` VALUES ('37', '0', '1', '1', '内容管理', 'glyphicon-th', '/admin/Portal/', '40', '1531281719');
+INSERT INTO `g_console_menu` VALUES ('38', '39', '1', '1', '文章分类', '', '/admin/ArticleCategory/index', '10', '1531281965');
+INSERT INTO `g_console_menu` VALUES ('39', '37', '1', '1', '文章管理', '', '/admin/Article/', '10', '1531979241');
+INSERT INTO `g_console_menu` VALUES ('40', '39', '1', '1', '文章列表', '', '/admin/Article/index', '20', '1535507719');
+INSERT INTO `g_console_menu` VALUES ('41', '37', '1', '1', '广告管理', '', '/admin/Advert/', '20', '1541123379');
+INSERT INTO `g_console_menu` VALUES ('42', '41', '1', '1', '广告分类', '', '/admin/AdvertCategory/index', '10', '1541123478');
+INSERT INTO `g_console_menu` VALUES ('43', '41', '1', '1', '广告列表', '', '/admin/Advert/index', '20', '1541123801');
 
 -- ----------------------------
 -- Table structure for g_console_role
@@ -3619,8 +3724,8 @@ CREATE TABLE `g_console_role` (
 -- ----------------------------
 -- Records of g_console_role
 -- ----------------------------
-INSERT INTO `g_console_role` VALUES ('1', '1', '管理员', '1,4,8,9,10,11,12,13,26,27,28,29,30,31,32,33', '50', '0', '1527577950');
-INSERT INTO `g_console_role` VALUES ('2', '1', '测试', '2,3,4', '1', '1527128443', '1527577962');
+INSERT INTO `g_console_role` VALUES ('1', '1', '管理员', '1,4,10,11,12,13,26,29,30,31,32,33', '50', '0', '1527577950');
+INSERT INTO `g_console_role` VALUES ('2', '1', '测试', '2,3,4,8,9', '12', '1527128443', '1531979266');
 
 -- ----------------------------
 -- Table structure for g_console_role_user
@@ -3666,5 +3771,91 @@ CREATE TABLE `g_console_user` (
 -- ----------------------------
 -- Records of g_console_user
 -- ----------------------------
-INSERT INTO `g_console_user` VALUES ('1', 'master', '81281e7e666729f69d62134b814e11bd', 'R6Y8d2', '超级管理员', '123@123.com', '', '', '1524807887', '1', '3', '1528257287', '127.0.0.1');
-INSERT INTO `g_console_user` VALUES ('18', 'test_01', '29338382855cf9d3ab6fb6e773eab437', 'CIinom', 'aaaa', '', '', '', '1527576831', '1', '0', '0', '');
+INSERT INTO `g_console_user` VALUES ('1', 'master', '81281e7e666729f69d62134b814e11bd', 'R6Y8d2', '超级管理员', '123@123.com', '', '', '1524807887', '1', '38', '1541553898', '127.0.0.1');
+INSERT INTO `g_console_user` VALUES ('18', 'test_01', '29338382855cf9d3ab6fb6e773eab437', 'CIinom', 'aaaaa', '', '', '', '1527576831', '1', '3', '1531297909', '127.0.0.1');
+
+-- ----------------------------
+-- Table structure for g_reward_activity
+-- ----------------------------
+DROP TABLE IF EXISTS `g_reward_activity`;
+CREATE TABLE `g_reward_activity` (
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '主键',
+  `activity_name` varchar(255) DEFAULT NULL COMMENT '活动名称',
+  `activity_type` tinyint(3) DEFAULT NULL COMMENT '抽奖活动类型',
+  `award_num` smallint(6) unsigned DEFAULT '0' COMMENT '奖品数量',
+  `start_time` int(10) DEFAULT NULL COMMENT '抽奖开始时间',
+  `end_time` int(10) DEFAULT NULL COMMENT '抽奖结束时间',
+  `status` tinyint(1) DEFAULT '1' COMMENT '状态1正常，-1失效',
+  `create_time` int(10) DEFAULT NULL COMMENT '活动创建时间',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COMMENT='设置抽奖活动';
+
+-- ----------------------------
+-- Records of g_reward_activity
+-- ----------------------------
+INSERT INTO `g_reward_activity` VALUES ('1', '抽奖活动', '1', '40', '1541394000', '1541826000', '1', '1541400736');
+
+-- ----------------------------
+-- Table structure for g_reward_record
+-- ----------------------------
+DROP TABLE IF EXISTS `g_reward_record`;
+CREATE TABLE `g_reward_record` (
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '主键',
+  `uid` int(11) DEFAULT NULL COMMENT '用户ID',
+  `reward_id` int(11) DEFAULT NULL COMMENT '中奖ID',
+  `create_time` int(10) DEFAULT NULL COMMENT '中奖时间',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='中奖纪录';
+
+-- ----------------------------
+-- Records of g_reward_record
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for g_reward_set
+-- ----------------------------
+DROP TABLE IF EXISTS `g_reward_set`;
+CREATE TABLE `g_reward_set` (
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '主键',
+  `activity_type` tinyint(1) DEFAULT NULL COMMENT '所属活动类型',
+  `award_name` varchar(255) DEFAULT NULL COMMENT '奖品名称',
+  `award_key` tinyint(3) DEFAULT '0' COMMENT '奖品key，抽奖奖品位置',
+  `award_num` smallint(6) unsigned DEFAULT '0' COMMENT '奖品数量',
+  `remain_award_num` smallint(6) unsigned DEFAULT '0' COMMENT '剩余奖品数量',
+  `draw_rate` decimal(7,2) DEFAULT '0.00' COMMENT '中奖概率',
+  `status` tinyint(1) DEFAULT '1' COMMENT '状态1正常，-1失效',
+  `create_time` int(10) DEFAULT '0' COMMENT '创建时间',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COMMENT='设置活动的奖品';
+
+-- ----------------------------
+-- Records of g_reward_set
+-- ----------------------------
+INSERT INTO `g_reward_set` VALUES ('1', '1', '奖品1', '0', '10', '10', '10.00', '1', '1541400736');
+INSERT INTO `g_reward_set` VALUES ('2', '1', '奖品2', '0', '10', '10', '30.00', '1', '1541400736');
+INSERT INTO `g_reward_set` VALUES ('3', '1', '奖品3', '0', '10', '10', '30.00', '1', '1541400736');
+INSERT INTO `g_reward_set` VALUES ('4', '1', '奖品4', '0', '10', '10', '30.00', '1', '1541400736');
+
+-- ----------------------------
+-- Table structure for g_tags
+-- ----------------------------
+DROP TABLE IF EXISTS `g_tags`;
+CREATE TABLE `g_tags` (
+  `tags_id` int(11) NOT NULL AUTO_INCREMENT COMMENT '主键',
+  `tags_name` varchar(30) DEFAULT NULL COMMENT '标签名称',
+  `hits_total_num` int(11) DEFAULT '0' COMMENT '总点击量',
+  `hits_day_num` mediumint(7) DEFAULT '0' COMMENT '日点击量(每日定时更新)',
+  `hits_week_num` int(11) DEFAULT '0' COMMENT '周点击量(每周定时更新)',
+  `hits_month_num` int(11) DEFAULT '0' COMMENT '月点击量(每月自动更新)',
+  `add_time` int(10) DEFAULT NULL COMMENT '新增时间',
+  `status` tinyint(1) DEFAULT '1' COMMENT '状态-1删除，1正常',
+  PRIMARY KEY (`tags_id`)
+) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COMMENT='标签列表';
+
+-- ----------------------------
+-- Records of g_tags
+-- ----------------------------
+INSERT INTO `g_tags` VALUES ('1', '测试', '0', '0', '0', '0', '1540953472', '1');
+INSERT INTO `g_tags` VALUES ('2', 'test', '0', '0', '0', '0', '1540953472', '1');
+INSERT INTO `g_tags` VALUES ('3', 'atest', '0', '0', '0', '0', '1540953472', '1');
+INSERT INTO `g_tags` VALUES ('4', 'aaaa', '0', '0', '0', '0', '1540953694', '1');

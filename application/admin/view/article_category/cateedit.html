@@ -1,8 +1,8 @@
 <div class="modal-header">
     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-    <h4 class="modal-title" id="myModalLabel">新增分类</h4>
+    <h4 class="modal-title" id="myModalLabel">编辑分类</h4>
 </div>
-<form class="form-horizontal" name="categoryForm" method="post" action="/admin/ArtcleCategory/submitCateEdit">
+<form class="form-horizontal" name="categoryForm" method="post" action="/admin/ArticleCategory/submitCateEdit">
     <input type="hidden" id="cid" name="cid" value="{$cateinfo.cid}" />
     <div class="modal-body">
         <div class="form-group">
@@ -59,7 +59,7 @@
     </div>
     <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-        <button type="submit" id="add-row" class="btn btn-success">新增</button>
+        <button type="submit" id="add-row" class="btn btn-success">保存</button>
     </div>
     {:token('token_hash')}
 </form>
