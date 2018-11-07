@@ -13,39 +13,39 @@
     <div id="main-wrapper">
         <div class="row">
             <div class="panel panel-body panel-white">
-                {if condition="@checkAuth('/admin/Advert/advertAdd')"}
-                <button type="button" class="btn btn-success m-b-sm" onclick="advertAdd('');">新增广告</button>
+                {if condition="@checkAuth('/admin/SinglePage/singleAdd')"}
+                <button type="button" class="btn btn-success m-b-sm" onclick="singleAdd();">新增页面</button>
                 {/if}
                 <div class="table-responsive">
-                    <table id="advertTables" class="display table" style="width: 100%; cellspacing: 0;">
+                    <table id="cateTables" class="display table" style="width: 100%; cellspacing: 0;">
                         <thead>
                         <tr>
-                            <th>ID</th>
-                            <th>广告名称</th>
-                            <th>广告描述</th>
-                            <th>广告图片</th>
+                            <th>页面ID</th>
+                            <th>页面名称</th>
+                            <th>页面描述</th>
+                            <th>页面图片</th>
                             <th>排序</th>
                             <th>创建时间</th>
                             <th>操作</th>
                         </tr>
                         </thead>
-                        <tbody id="list_body">
+                        <tbody>
                         {volist name="list" id="item"}
                         <tr>
-                            <td>{$item.aid}</td>
-                            <td>{$item.a_title}</td>
-                            <td>{$item.a_desc}</td>
-                            <td>{notempty name="item.a_pic"}
-                                <img src="{$item.a_pic}" data-original="{$item.a_pic}" class="img-thumbnail img-responsive img-thumb-small" />
+                            <td>{$item.id}</td>
+                            <td>{$item.p_name}</td>
+                            <td>{$item.p_description}</td>
+                            <td>{notempty name="item.p_picurl"}
+                                <img src="{$item.p_picurl}" data-original="{$item.p_picurl}" class="img-thumbnail img-responsive img-thumb-small" />
                                 {else /}-{/notempty}</td>
                             <td>{$item.sort}</td>
                             <td>{$item.create_time|date="Y-m-d H:i:s",###}</td>
                             <td>
-                                {if condition="@checkAuth('/admin/Advert/advertEdit')"}
-                                <button type="button" class="btn btn-info" onclick="advertEdit({$item.aid});">修改</button>
+                                {if condition="@checkAuth('/admin/SinglePage/singleEdit')"}
+                                <button type="button" class="btn btn-info" onclick="singleEdit({$item.id});">修改</button>
                                 {/if}
-                                {if condition="@checkAuth('/admin/Advert/advertDel')"}
-                                <button type="button" class="btn btn-default" onclick="advertDel({$item.aid});">删除</button>
+                                {if condition="@checkAuth('/admin/SinglePage/singleDel')"}
+                                <button type="button" class="btn btn-default" onclick="singleDel({$item.id});">删除</button>
                                 {/if}
                             </td>
                         </tr>
@@ -64,16 +64,15 @@
 {block name="footer_js"}
 <script src="{$Think.config.system_static}plugins/datatables/js/jquery.datatables.min.js"></script>
 <script src="{$Think.config.system_static}plugins/x-editable/bootstrap3-editable/js/bootstrap-editable.js"></script>
+<!-- 编辑器 -->
+<script src="{$Think.config.system_static}plugins/kindeditor/kindeditor-all-min.js"></script>
 <!-- dropify上传插件 -->
 <script src="{$Think.config.system_static}plugins/dropify/js/dropify.js"></script>
 <!-- viewer图片查看器 -->
 <script src="{$Think.config.system_static}plugins/viewer/viewer-jquery.min.js"></script>
 <script type="application/javascript">
     $(function(){
-        $('#list_body').viewer({
-            url:"data-original"
-        });
-        $('#advertTables').DataTable({
+        $('#cateTables').DataTable({
             paging: false,
             info: false,
             ordering:false,
@@ -81,41 +80,45 @@
             language:lang
         });
     });
-    {if condition="@checkAuth('/admin/Advert/advertAdd')"}
-    //新增广告
-    function advertAdd(id){
+    {if condition="@checkAuth('/admin/SinglePage/singleAdd')"}
+    //新增页面
+    function singleAdd(){
         $.myModal.open({
-            remote:'/admin/Advert/advertAdd',
+            remote:'/admin/SinglePage/singleAdd',
             backdrop: 'static',
+            style: {'min-width' : '80%'},
             keyboard: false,
             show:true,
             success:function(o){
                 init_upload() ;
-                advertValid();
+                init_editor() ;
+                singleValid() ;
             }
         }) ;
     }
     {/if}
-    {if condition="@checkAuth('/admin/Advert/advertEdit')"}
-    //修改广告
-    function advertEdit(id){
+    {if condition="@checkAuth('/admin/SinglePage/singleEdit')"}
+    //修改页面
+    function singleEdit(id){
         $.myModal.open({
-            remote:'/admin/Advert/advertEdit?aid='+ id,
+            remote:'/admin/SinglePage/singleEdit?id='+ id,
             backdrop: 'static',
+            style: {'min-width' : '80%'},
             keyboard: false,
             show:true,
             success:function(o){
                 init_upload() ;
-                advertValid();
+                init_editor() ;
+                singleValid() ;
             }
         }) ;
     }
     {/if}
-    {if condition="@checkAuth('/admin/Advert/advertDel')"}
-    //修改广告
-    function advertDel(id){
+    {if condition="@checkAuth('/admin/SinglePage/singleDel')"}
+    //删除页面
+    function singleDel(id){
         $.myModal.open({
-            remote:'/admin/Advert/advertDel?aid='+ id,
+            remote:'/admin/SinglePage/singleDel?id='+ id,
             backdrop: 'static',
             keyboard: false,
             show:true,

@@ -21,18 +21,17 @@ class Advert extends Base
         $orderby = 'a.sort ASC,a.aid DESC' ;
         $feild = 'a.aid,a.a_title,a.a_desc,a.a_pic,a.status,a.sort,a.create_time,ac.c_name' ;
         $join[] = ['advert_category as ac','ac.cid = a.category_id'] ;
-        $advertList = Db::name('advert')
+        $list = Db::name('advert')
             ->alias('a')
             ->join($join)
             ->where($where)
             ->field($feild)
             ->order($orderby)
-            ->select() ;
-        if($advertList === false){
+            ->paginate(10,false,["query"=>$this->request->param()]) ;
+        if($list === false){
             $this->error('获取数据失败') ;
-        }else{
-            $this->assign('advertList',$advertList) ;
         }
+        $this->assign('list',$list) ;
         return $this->fetch() ;
     }
 

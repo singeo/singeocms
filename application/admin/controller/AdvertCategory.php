@@ -17,16 +17,18 @@ class AdvertCategory extends Base
      * 分类列表
      */
     public function index(){
-        $categorymodel = new \app\admin\model\AdvertCategory() ;
         $where['status'] = 1 ;
         $orderby = 'sort ASC,cid DESC' ;
         $feild = 'cid,c_name,c_desc,status,sort,create_time' ;
-        $catelist = $categorymodel->getList($where,$feild,null,$orderby) ;
-        if($catelist === false){
-            $this->error($categorymodel->getErrorMsg()) ;
-        }else{
-            $this->assign('catelist',$catelist) ;
+        $list = Db::name('advert_category')
+            ->where($where)
+            ->field($feild)
+            ->order($orderby)
+            ->paginate(10,false,["query"=>$this->request->param()]) ;
+        if($list === false){
+            $this->error('获取列表失败~') ;
         }
+        $this->assign('list',$list) ;
         return $this->fetch() ;
     }
 

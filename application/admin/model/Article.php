@@ -31,6 +31,12 @@ class Article extends Base
      * @return array
      */
     public function saveArticle($data,$file){
+        $validate = new Validate($this->rule, $this->message) ;
+        // 数据自动验证
+        if (!$validate->check($data)) {
+            $this->setErrorMsg($validate->getError()) ;
+            return false;
+        }
         if(!empty($file['article_pic'])){
             $uploadcls = new \app\admin\library\Upload() ;
             $uploadRes = $uploadcls->doUpload($file['article_pic'],'image') ;
@@ -40,12 +46,6 @@ class Article extends Base
             }else{
                 $data['article_pic'] = $uploadRes['url'] ;
             }
-        }
-        $validate = new Validate($this->rule, $this->message) ;
-        // 数据自动验证
-        if (!$validate->check($data)) {
-            $this->setErrorMsg($validate->getError()) ;
-            return false;
         }
         if (isset($data['token_hash'])){
             unset($data['token_hash']) ;
@@ -71,6 +71,12 @@ class Article extends Base
      * @return array
      */
     public function updateArticle($data,$file){
+        $validate = new Validate($this->rule, $this->message) ;
+        // 数据自动验证
+        if (!$validate->check($data)) {
+            $this->setErrorMsg($validate->getError()) ;
+            return false;
+        }
         if(!empty($file['article_pic'])){
             $uploadcls = new \app\admin\library\Upload() ;
             $uploadRes = $uploadcls->doUpload($file['article_pic'],'image') ;
@@ -80,12 +86,6 @@ class Article extends Base
             }else{
                 $data['article_pic'] = $uploadRes['url'] ;
             }
-        }
-        $validate = new Validate($this->rule, $this->message) ;
-        // 数据自动验证
-        if (!$validate->check($data)) {
-            $this->setErrorMsg($validate->getError()) ;
-            return false;
         }
         if (isset($data['token_hash'])){
             unset($data['token_hash']) ;

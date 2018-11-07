@@ -25,7 +25,7 @@
                         </tr>
                         </thead>
                         <tbody>
-                        {volist name="catelist" id="item"}
+                        {volist name="list" id="item"}
                         <tr>
                         <td>{$item.cid}</td>
                         <td>{$item.c_name}</td>
@@ -44,6 +44,9 @@
                         {/volist}
                         </tbody>
                     </table>
+                    <div class="text-center">
+                        {$list->render()}
+                    </div>
                 </div>
             </div>
         </div>

@@ -1,37 +1,38 @@
 <div class="modal-header">
     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-    <h4 class="modal-title" id="myModalLabel">修改广告</h4>
+    <h4 class="modal-title" id="myModalLabel">修改单页页面</h4>
 </div>
-<form class="form-horizontal" name="categoryForm" method="post" action="/admin/Advert/submitAdvertEdit" enctype="multipart/form-data">
-    <input type="hidden" name="aid" value="{$info.aid}">
+<form class="form-horizontal" name="singleForm" method="post" action="/admin/SinglePage/submitSingleEdit" enctype="multipart/form-data">
+    <input type="hidden" name="id" value="{$info.id}">
     <div class="modal-body">
         <div class="form-group">
-            <label for="a_title" class="col-sm-2 control-label">广告名称</label>
+            <label for="p_name" class="col-sm-2 control-label">单页名称</label>
             <div class="col-sm-8">
-                <input type="text" id="a_title" name="a_title" class="form-control" value="{$info.a_title}" dataType="s2-20" nullmsg="请输入广告名称" errormsg="广告名称为2-20位字符串" sucmsg=" " placeholder="请输入广告名称" maxlength="20"/>
+                <input type="text" id="p_name" name="p_name" class="form-control" value="{$info.p_name}" dataType="s2-20" nullmsg="请输入单页名称" errormsg="单页名称为2-20位字符串" sucmsg=" " placeholder="请输入单页名称" maxlength="20"/>
             </div>
         </div>
         <div class="form-group">
-            <label for="category_id" class="col-sm-2 control-label">所属栏目</label>
+            <label for="p_description" class="col-sm-2 control-label">单页描述</label>
             <div class="col-sm-8">
-                <select class="form-control" id="category_id" name="category_id" dataType="*" nullmsg="请选择广告栏目" errormsg="请选择广告栏目" sucmsg=" ">
-                    <option value="">请选择广告栏目</option>
-                    {volist name="catelist" id="cate"}
-                    <option value="{$cate.cid}" {if condition="$info.category_id eq $cate.cid"}selected{/if}>{$cate.c_name}</option>
-                    {/volist}
-                </select>
+                <textarea id="p_description" name="p_description" class="form-control">{$info.p_description}</textarea>
             </div>
         </div>
         <div class="form-group">
-            <label for="a_desc" class="col-sm-2 control-label">广告描述</label>
+            <label for="p_keyword" class="col-sm-2 control-label">页面关键字</label>
             <div class="col-sm-8">
-                <textarea id="a_desc" name="a_desc" class="form-control">{$info.a_desc}</textarea>
+                <input type="text" id="p_keyword" name="p_keyword" class="form-control" value="{$info.p_keyword}"/>
             </div>
         </div>
         <div class="form-group">
-            <label for="a_pic" class="col-sm-2 control-label">广告图片</label>
+            <label for="p_picurl" class="col-sm-2 control-label">页面图片</label>
             <div class="col-sm-8">
-                <input type="file" id="a_pic" name="a_pic" class="dropify" data-default-file="{$info.a_pic}" data-max-file-size="500K" data-max-file-size-preview="500K" data-allowed-file-extensions="jpg jpeg png gif"/>
+                <input type="file" id="p_picurl" name="p_picurl" class="dropify" data-default-file="{$info.p_picurl}" data-max-file-size="500K" data-max-file-size-preview="500K" data-allowed-file-extensions="jpg jpeg png gif"/>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="p_content" class="col-sm-2 control-label">页面内容</label>
+            <div class="col-sm-8">
+                <textarea id="p_content" name="p_content" class="form-control">{$info.p_content}</textarea>
             </div>
         </div>
         <div class="form-group">
@@ -71,9 +72,19 @@
             }
         }) ;
     }
+    //初始化编辑器
+    function init_editor() {
+        var editor = KindEditor.create('#p_content',{
+            uploadJson : '/admin/Webconfig/upload?dir=image' ,
+            fileManagerJson : '/admin/Webconfig/fileManager?dir=image',
+            allowFileManager : true,
+            formatUploadUrl : false,
+            height : '350px'
+        });
+    }
     //
-   function advertValid(){
-        $("form[name='categoryForm']").Validform({
+   function singleValid(){
+        $("form[name='singleForm']").Validform({
             tiptype: 3,
             ajaxPost: false,
             postonce: false,
