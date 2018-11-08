@@ -24,6 +24,7 @@
                             <th>广告名称</th>
                             <th>广告描述</th>
                             <th>广告图片</th>
+                            <th>链接地址</th>
                             <th>排序</th>
                             <th>创建时间</th>
                             <th>操作</th>
@@ -38,6 +39,7 @@
                             <td>{notempty name="item.a_pic"}
                                 <img src="{$item.a_pic}" data-original="{$item.a_pic}" class="img-thumbnail img-responsive img-thumb-small" />
                                 {else /}-{/notempty}</td>
+                            <td>{$item.link_url}</td>
                             <td>{$item.sort}</td>
                             <td>{$item.create_time|date="Y-m-d H:i:s",###}</td>
                             <td>

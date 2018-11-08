@@ -19,7 +19,7 @@ class Advert extends Base
     public function index(){
         $where['a.status'] = 1 ;
         $orderby = 'a.sort ASC,a.aid DESC' ;
-        $feild = 'a.aid,a.a_title,a.a_desc,a.a_pic,a.status,a.sort,a.create_time,ac.c_name' ;
+        $feild = 'a.aid,a.a_title,a.a_desc,a.a_pic,a.link_url,a.status,a.sort,a.create_time,ac.c_name' ;
         $join[] = ['advert_category as ac','ac.cid = a.category_id'] ;
         $list = Db::name('advert')
             ->alias('a')

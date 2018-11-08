@@ -10,10 +10,10 @@ class Index extends Controller
 {
     public function index()
     {
-        $draw = new \app\common\library\DrawAward() ;
-        $result = $draw->runDraw() ;
-        print_r($result) ;
-        //return $this->fetch() ;
+//        $draw = new \app\common\library\DrawAward() ;
+//        $result = $draw->runDraw() ;
+//        print_r($result) ;
+        return $this->fetch('/index') ;
     }
 
     public function testsubmit(){
