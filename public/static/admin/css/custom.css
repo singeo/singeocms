@@ -1,0 +1,152 @@
+/* Write your custom CSS here */
+/*授权页面样式*/
+.checkmod {
+    margin-bottom: 20px;
+    border: 1px solid #ebebeb;
+}
+.checkmod dt {
+    padding-left: 10px;
+    height: 30px;
+    line-height: 30px;
+    font-weight: bold;
+    border-bottom: 1px solid #ebebeb;
+    background-color: #ECECEC;
+}
+.checkmod dd {
+    padding: 10px;
+    line-height: 30px;
+}
+.checkmod dt.hd {
+    height: 35px;
+    line-height: 35px;
+}
+.checkmod dt.hd .checkbox{
+    height: 20px;
+    line-height: 20px;
+    padding-left:20px;
+    font-weight: 600 ;
+}
+.checkmod dd .checkbox {
+    display:inline-block ;
+    height: 20px;
+    line-height: 20px;
+    margin: 0 10px 0 0;
+    padding-left:20px;
+    font-size:12px;
+}
+.checkmod dd .divsion {
+    margin-right: 20px;
+}
+.cursor-pointer{
+    cursor: pointer;
+}
+.img-thumb-small{
+    width: 100px;
+    height: 60px;
+}
+
+/*
+修改信息table
+*/
+.edit-table{
+    width: 450px;
+    height: auto;
+    font-size:14px;
+}
+.edit-table tr{
+    height: 40px;
+    line-height: 40px;
+}
+/*
+修改信息table 左 td
+*/
+.edit-td{
+    width: 120px;
+    text-align: right;
+}
+/*
+修改信息input
+*/
+.edit-input{
+    margin-left: 20px;
+}
+/*
+车辆信息修改按钮
+*/
+.edit-edit{
+    margin-left: 10px;
+
+}
+
+#agent_box{
+    position: relative;
+}
+#agent_box .i-plus{
+    position: absolute;
+    right: 0;
+    top: 0;
+    font-size: 30px;
+    color:#0994ff;
+    z-index:999;
+}
+#agent_box .form-inline{
+    position: relative;
+    width: 100%;
+    z-index:99;
+}
+#agent_box .i-minus{
+    position: absolute;
+    right: 0;
+    top: 0;
+    font-size: 30px;
+    color:red;
+    z-index:999;
+}
+
+.form-group .input_line{
+    display: inline;
+}
+/*
+* 城市承包商  input 框
+*/
+.market_input{
+    width: 280px;
+}
+.market_margin{
+    margin-top:5px;
+}
+.market_left{
+   margin-left:15px;
+}
+
+.upload-img-box{
+    width:150px;
+    height:150px;
+    line-height:150px;
+    border:1px solid #dedede;
+    overflow:hidden;
+    position:relative;
+    text-align:center;
+}
+
+.upload-img-box p{
+    position:static;
+    +position:absolute;
+    top:50%;
+    vertical-align:middle
+}
+
+.upload-img-box p img{
+    position:static;
+    +position:relative;
+    top:-50%;
+    left:-50%;
+    vertical-align:middle
+}
+
+.p-v-7px{
+    padding-top:7px;
+    padding-bottom: 7px;
+}
+
+
