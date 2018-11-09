@@ -1,0 +1,14 @@
+<select class="form-control" name="model_cid">
+    <option disabled>文章分类</option>
+    {volist name="article_list" id="article"}
+    <option value="article|{$article.cid}" {if condition="$cur_category.model EQ 'article' AND $cur_category.cid EQ $article.cid"}selected{/if}>{$article.cate_title}</option>
+    {/volist}
+    <option disabled>单页</option>
+    {volist name="single_list" id="single"}
+    <option value="single|{$single.id}" {if condition="$cur_category.model EQ 'single' AND $cur_category.cid eq $single.id"}selected{/if}>{$single.p_name}</option>
+    {/volist}
+    <option disabled>广告分类</option>
+    {volist name="advert_list" id="advert"}
+    <option value="advert|{$advert.cid}" {if condition="$cur_category.model EQ 'advert' AND $cur_category.cid eq $advert.cid"}selected{/if}>{$advert.c_name}</option>
+    {/volist}
+</select>

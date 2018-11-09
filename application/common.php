@@ -72,30 +72,53 @@ if(!function_exists('array_multi2single')){
     }
 }
 
-/**
- * @param int $len
- * @return string
- */
-function getRandNum($len = 6){
-    return \think\helper\Str::random($len) ;
-}
-/**
- * 两个数组的笛卡尔积
- *
- * @param unknown_type $arr1
- * @param unknown_type $arr2
- */
-function combineArray($arr1,$arr2) {
-    $result = array();
-    foreach ($arr1 as $item1)
+
+
+if(!function_exists('getRandNum')) {
+    /**
+     * 获取随机数
+     * @param int $len
+     * @return string
+     */
+    function getRandNum($len = 6)
     {
-        foreach ($arr2 as $item2)
-        {
-            $temp = $item1;
-            $temp[] = $item2;
-            $result[] = $temp;
+        return \think\helper\Str::random($len);
+    }
+}
+
+if(!function_exists('combineArray')) {
+    /**
+     * 两个数组的笛卡尔积
+     * @param unknown_type $arr1
+     * @param unknown_type $arr2
+     */
+    function combineArray($arr1, $arr2)
+    {
+        $result = array();
+        foreach ($arr1 as $item1) {
+            foreach ($arr2 as $item2) {
+                $temp = $item1;
+                $temp[] = $item2;
+                $result[] = $temp;
+            }
+        }
+        return $result;
+    }
+}
+
+if(!function_exists('get_nav_link')){
+    /**
+     * 获取导航链接
+     * @param $navlink
+     * @return string
+     */
+    function get_nav_link($navlink){
+        $link = unserialize($navlink) ;
+        if($link == false){
+            return $navlink ;
+        }else{
+            return  $link['tpl'] . '?cid=' . $link['cid'] ;
         }
     }
-    return $result;
 }
 ?>

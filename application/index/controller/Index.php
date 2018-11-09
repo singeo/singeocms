@@ -10,10 +10,13 @@ class Index extends Controller
 {
     public function index()
     {
+        $tpl_dir = config('app_config.web_tpl_path') ;
+        $list = scandir($tpl_dir) ;
+        print_r($list) ;
 //        $draw = new \app\common\library\DrawAward() ;
 //        $result = $draw->runDraw() ;
 //        print_r($result) ;
-        return $this->fetch('/index') ;
+//        return $this->fetch('/index') ;
     }
 
     public function testsubmit(){

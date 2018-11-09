@@ -7,6 +7,7 @@
  */
 
 return [
+    //前端模板css及css
     'theme_static' => '/static/default/' ,
 
     'template'               => [// 模板路径

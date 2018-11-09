@@ -18,4 +18,4 @@ define('APP_PATH', __DIR__ . '/../application/');
 define('CONF_PATH', APP_PATH.'config/');
 
 // 加载框架引导文件
-require __DIR__ . '/../thinkphp/start.php';
+require __DIR__ . '/../core/start.php';
