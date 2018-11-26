@@ -57,7 +57,7 @@ trait LoginTrait
             ->update($loginData) ;
         unset($user['user_pass']) ;
         unset($user['user_pass_salt']) ;
-        session(config('admin_login_info'),$user) ;
+        cache(config('admin_login_info'),$user) ;
         $arr['status'] = 1 ;
         $arr['msg'] = '登录成功' ;
         return $arr ;
@@ -67,9 +67,9 @@ trait LoginTrait
      * 退出登录
      */
     public function logout(){
-        session(config('admin_login_info'),null) ;
-        session(config('admin_auth_menu'),null) ;
-        session(config('admin_auth_rules'),null) ;
+        cache(config('admin_login_info'),null) ;
+        cache(config('app_config.catch_keys_all')['admin_auth_menu'],null) ;
+        cache(config('app_config.catch_keys_all')['admin_auth_rules'],null) ;
         $this->success('成功退出',config('app_config.website')) ;
     }
 }

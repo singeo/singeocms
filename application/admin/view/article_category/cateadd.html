@@ -2,7 +2,7 @@
     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
     <h4 class="modal-title" id="myModalLabel">新增分类</h4>
 </div>
-<form class="form-horizontal" name="categoryForm" method="post" action="/admin/ArticleCategory/submitCateAdd">
+<form class="form-horizontal" name="categoryForm" method="post" action="/admin/ArticleCategory/submitCateAdd" enctype="multipart/form-data">
     <div class="modal-body">
         <div class="form-group">
             <label for="cate_title" class="col-sm-2 control-label">分类名称</label>
@@ -28,14 +28,21 @@
             </div>
         </div>
         <div class="form-group">
+            <label for="seo_keywords" class="col-sm-2 control-label">SEO关键字</label>
+            <div class="col-sm-8">
+                <input type="text" id="seo_keywords" name="seo_keywords" class="form-control" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="seo_desc" class="col-sm-2 control-label">SEO描述</label>
+            <div class="col-sm-8">
+                <textarea id="seo_desc" name="seo_desc" class="form-control"></textarea>
+            </div>
+        </div>
+        <div class="form-group">
             <label for="cate_pic" class="col-sm-2 control-label">分类图片</label>
             <div class="col-sm-8">
-                <div class="col-sm-10" style="padding: 0;">
-                    <input type="text" id="cate_pic" name="cate_pic" class="form-control ke_upload_url" value="" readonly />
-                </div>
-                <div class="col-sm-2">
-                    <input type="button" class="btn btn-primary ke_upload" value="上传"/>
-                </div>
+                <input type="file" id="cate_pic" name="cate_pic" class="dropify" data-max-file-size="500K" data-max-file-size-preview="500K" data-allowed-file-extensions="jpg jpeg png gif"/>
             </div>
         </div>
         <div class="form-group">
@@ -51,7 +58,7 @@
                     <input type="radio" name="status" value="1" checked>&nbsp;正常
                 </label>
                 <label class="checkbox-inline">
-                    <input type="radio" name="status" value="0">&nbsp;禁用
+                    <input type="radio" name="status" value="-1">&nbsp;禁用
                 </label>
             </div>
         </div>
@@ -66,24 +73,14 @@
 <script type="text/javascript">
     //上传图片
     function init_upload_kinder(){
-        var editor = KindEditor.editor({
-            uploadJson : '/admin/Webconfig/upload?dir=image' ,
-            fileManagerJson : '/admin/Webconfig/fileManager?dir=image',
-            allowFileManager : true,
-            formatUploadUrl : false,
-        });
-        KindEditor('.ke_upload').click(function() {
-            var url_field = $('#cate_pic') ;
-            editor.loadPlugin('image', function() {
-                editor.plugin.imageDialog({
-                    imageUrl : url_field.val(),
-                    clickFn : function(url, title, width, height, border, align) {
-                        url_field.val(url) ;
-                        editor.hideDialog();
-                    }
-                });
-            });
-        });
+        $('.dropify').dropify({
+            messages: {
+                'default': '点击或拖拽文件到这里',
+                'replace': '点击或拖拽文件到这里来替换文件',
+                'remove': '移除文件',
+                'error': '对不起，你上传的文件太大了',
+            }
+        }) ;
     }
 
     function menuValid(){

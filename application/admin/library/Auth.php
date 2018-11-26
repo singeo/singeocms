@@ -26,8 +26,8 @@ class Auth{
      */
     public function getAuthMenu($uid){
         if($uid != config('super_admin_uid')){//超级管理员
-            if(session('?'.config('admin_auth_menu'))){
-                return session(config('admin_auth_menu')) ;
+            if(cache(config('app_config.catch_keys_all')['admin_auth_menu'])){
+                return cache(config('app_config.catch_keys_all')['admin_auth_menu']) ;
             }
             //读取用户所属用户组
             $groups = $this->getGroups($uid);
@@ -57,7 +57,7 @@ class Auth{
         $menus = \think\Db::name($this->_config['auth_rule'])->where($map)->field($field)->order($order)->select();
 
         if($this->_config['auth_type'] == 2){
-            session(config('admin_auth_menu'),$menus) ;
+            cache(config('app_config.catch_keys_all')['admin_auth_menu'],$menus) ;
         }
         return $menus ;
     }
@@ -112,8 +112,8 @@ class Auth{
         static $_authList = array(); //保存用户验证通过的权限列表
 
         if( $this->_config['auth_type']==2){
-            if(session('?'.config('admin_auth_rules'))){
-                return session(config('admin_auth_rules')) ;
+            if(cache(config('app_config.catch_keys_all')['admin_auth_rules'])){
+                return cache(config('app_config.catch_keys_all')['admin_auth_rules']) ;
             }
         }
         //读取用户所属用户组
@@ -133,7 +133,7 @@ class Auth{
         //$_authList[$uid] = $authList;
         if($this->_config['auth_type']==2){
             //规则列表结果保存到session
-            session(config('admin_auth_rules'),$authList) ;
+            cache(config('app_config.catch_keys_all')['admin_auth_rules'],$authList) ;
         }
         return $authList ;
     }

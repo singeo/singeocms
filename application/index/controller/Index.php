@@ -1,4 +1,5 @@
 <?php
+
 namespace app\index\controller;
 
 use think\Controller;
@@ -10,13 +11,10 @@ class Index extends Controller
 {
     public function index()
     {
-        $tpl_dir = config('app_config.web_tpl_path') ;
-        $list = scandir($tpl_dir) ;
-        print_r($list) ;
-//        $draw = new \app\common\library\DrawAward() ;
-//        $result = $draw->runDraw() ;
-//        print_r($result) ;
-//        return $this->fetch('/index') ;
+//        session('name','aaaaaaaaaaaaa') ;
+//        print_r(session_id()) ;
+//        print_r(session('name')) ;
+        return $this->fetch('index') ;
     }
 
     public function testsubmit(){
@@ -84,4 +82,5 @@ class Index extends Controller
         }
         return $age;
     }
+
 }

@@ -1,0 +1,177 @@
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+    <h4 class="modal-title" id="myModalLabel">修改栏目</h4>
+</div>
+<form class="form-horizontal" name="columnForm" method="post" action="/admin/Arctype/submitColumnEdit" enctype="multipart/form-data">
+    <input type="hidden" id="cid" name="cid" value="{$info.cid}">
+    <div class="modal-body">
+        <ul class="nav nav-tabs">
+            <li class="active"><a href="#base_info" data-toggle="tab">基础信息</a></li>
+            <li><a href="#other_info" data-toggle="tab">其他信息</a></li>
+        </ul>
+        <div class="tab-content">
+            <div id="base_info" class="tab-pane fade in active">
+                <div class="form-group">
+                    <label for="c_name" class="col-sm-3 control-label">栏目名称</label>
+                    <div class="col-sm-7">
+                        <input type="text" id="c_name" name="c_name" class="form-control" value="{$info.c_name}" dataType="s2-20" nullmsg="请输入栏目名称" errormsg="栏目名称为2-20位字符串" sucmsg=" " placeholder="请输入栏目名称" maxlength="20"/>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="pid" class="col-sm-3 control-label">所属栏目</label>
+                    <div class="col-sm-7">
+                        <select class="form-control" id="pid" name="pid">
+                            <option value="0">顶级分类</option>
+                            {volist name="cateTree" id="item"}
+                            <option value="{$item.cid}" {if condition="$item.cid eq $info.pid"}selected{/if}>{$item._name}</option>
+                            {/volist}
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="channel_type" class="col-sm-3 control-label">栏目模型</label>
+                    <div class="col-sm-7">
+                        <select class="form-control" id="channel_type" name="channel_type">
+                            {volist name="modelist" id="mode"}
+                            <option value="{$mode.id}" {if condition="$mode.id eq $info.channel_type"}selected{/if}>{$mode.m_title}</option>
+                            {/volist}
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="c_description" class="col-sm-3 control-label">栏目描述</label>
+                    <div class="col-sm-7">
+                        <textarea class="form-control" id="c_description" name="c_description">{$info.c_description}</textarea>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">链接属性</label>
+                    <div class="col-sm-7">
+                        <label class="checkbox-inline">
+                            <input type="radio" name="link_attr" value="1" {eq name="info.link_attr" value="1"}checked{/eq}>&nbsp;内部链接
+                        </label>
+                        <label class="checkbox-inline">
+                            <input type="radio" name="link_attr" value="2" {eq name="info.link_attr" value="2"}checked{/eq}>&nbsp;外部链接
+                        </label>
+                    </div>
+                </div>
+                <div class="form-group nav_link_box {eq name='info.link_attr' value='1'}hidden{/eq}">
+                    <label for="link_url" class="col-sm-3 control-label">外部链接地址</label>
+                    <div class="col-sm-7">
+                        <input type="text" id="link_url" name="link_url" class="form-control" value="{$info.link_url}" />
+                    </div>
+                </div>
+                <div class="form-group nav_link_cate {eq name='info.link_attr' value='2'}hidden{/eq}">
+                    <label class="col-sm-3 control-label">关联模板</label>
+                    <div class="col-sm-7">
+                        {:widget('NaviWidget/tpl_list',[$info.template_list,'template_list'])}
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="sort" class="col-sm-3 control-label">排序</label>
+                    <div class="col-sm-7">
+                        <input type="text" name="sort" id="sort" class="form-control" value="{$info.sort}"/>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">是否显示</label>
+                    <div class="col-sm-7">
+                        <label class="checkbox-inline">
+                            <input type="radio" name="is_show" value="1" {eq name="info.is_show" value="1"}checked{/eq}>&nbsp;显示
+                        </label>
+                        <label class="checkbox-inline">
+                            <input type="radio" name="is_show" value="0" {eq name="info.is_show" value="0"}checked{/eq}>&nbsp;隐藏
+                        </label>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">状态</label>
+                    <div class="col-sm-7">
+                        <label class="checkbox-inline">
+                            <input type="radio" name="status" value="1" {eq name="info.status" value="1"}checked{/eq}>&nbsp;正常
+                        </label>
+                        <label class="checkbox-inline">
+                            <input type="radio" name="status" value="-1" {eq name="info.status" value="-1"}checked{/eq}>&nbsp;禁用
+                        </label>
+                    </div>
+                </div>
+            </div>
+            <div id="other_info" class="tab-pane fade">
+                <div class="form-group">
+                    <label for="c_picurl" class="col-sm-3 control-label">栏目图片</label>
+                    <div class="col-sm-7">
+                        <input type="file" id="c_picurl" name="c_picurl" class="dropify" data-default-file="{$info.c_picurl}" data-max-file-size="500K" data-max-file-size-preview="500K" data-allowed-file-extensions="jpg jpeg png gif"/>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="seo_title" class="col-sm-3 control-label">栏目SEO标题</label>
+                    <div class="col-sm-7">
+                        <textarea class="form-control" id="seo_title" name="seo_title">{$info.seo_title}</textarea>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="seo_keywords" class="col-sm-3 control-label">栏目SEO关键字</label>
+                    <div class="col-sm-7">
+                        <textarea class="form-control" id="seo_keywords" name="seo_keywords">{$info.seo_keywords}</textarea>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="seo_description" class="col-sm-3 control-label">栏目SEO描述</label>
+                    <div class="col-sm-7">
+                        <textarea class="form-control" id="seo_description" name="seo_description">{$info.seo_description}</textarea>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+        <button type="submit" id="add-row" class="btn btn-success">保存</button>
+    </div>
+    {:token('token_hash')}
+</form>
+
+<script type="text/javascript">
+    //初始化modal
+    function init_modal() {
+        columnValid() ;
+        $('input[name="link_attr"]').on('change',function () {
+            var link_attr = $('input[name="link_attr"]:checked').val() ;
+            link_attr_change(link_attr) ;
+        }) ;
+        init_upload() ;
+    }
+    //链接属性变化
+    function link_attr_change($attr_val) {
+        if($attr_val == 1){
+            $('.nav_link_cate').removeClass('hidden') ;
+            $('.nav_link_box').addClass('hidden') ;
+        }else{
+            $('.nav_link_cate').addClass('hidden') ;
+            $('.nav_link_box').removeClass('hidden') ;
+        }
+    }
+    //上传图片
+    function init_upload(){
+        $('.dropify').dropify({
+            messages: {
+                'default': '点击或拖拽文件到这里',
+                'replace': '点击或拖拽文件到这里来替换文件',
+                'remove': '移除文件',
+                'error': '对不起，你上传的文件太大了',
+            }
+        }) ;
+    }
+    //验证数据有效性
+    function columnValid(){
+        $("form[name='categoryForm']").Validform({
+            tiptype: 3,
+            ajaxPost: false,
+            postonce: false,
+            callback: function(data){
+                //执行登录
+                return true ;
+            }
+        });
+    }
+</script>

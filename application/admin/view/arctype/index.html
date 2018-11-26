@@ -1,0 +1,144 @@
+{extend name="common/base" /}
+{block name="style"}
+<!-- dropify.min.css -->
+<link href="{$Think.config.system_static}plugins/dropify/css/dropify.min.css" rel="stylesheet" type="text/css"/>
+{/block}
+{block name="main"}
+<div class="page-inner">
+    <div class="page-title">
+        <h3>{$title}</h3>
+    </div>
+    <div id="main-wrapper">
+        <div class="row">
+            <div class="panel panel-body">
+                <form class="form-inline" role="form">
+                    {if condition="@checkAuth('/admin/Arctype/columnAdd')"}
+                    <div class="form-group">
+                        <input type="button" class="btn btn-success" onclick="columnAdd('');" value="新增栏目"/>
+                    </div>
+                    {/if}
+                </form>
+                <div class="table-responsive">
+                    <div class="dataTables_wrapper">
+                        <table id="menusTables" class="display table" style="width: 100%; cellspacing: 0;">
+                            <thead>
+                            <tr>
+                                <th>栏目名称</th>
+                                <th>栏目模型</th>
+                                <th>显示/隐藏</th>
+                                <th>状态</th>
+                                <th>排序</th>
+                                <th>操作</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {volist name="list" id="item"}
+                            <tr data-id="{$item.cid}" data-pid="{$item.pid}" {neq name="item._level" value="1"}class="hide"{/neq}>
+                                <td>
+                                    {:str_repeat('&emsp;',$item['_level'])}{eq name="item._child" value="true"}<span class="fold f-s-14 fa fa-plus-square-o"></span>{else /}<span class="fold f-s-14 fa fa-minus-square-o"></span>{/eq} {$item._name}
+                                </td>
+                                <td>{$item.m_title}</td>
+                                <td>{switch name="item.is_show"}
+                                    {case value="1"}显示{/case}
+                                    {case value="0"}<span class="text-danger">隐藏</span>{/case}
+                                    {/switch}</td>
+                                <td>{switch name="item.status"}
+                                    {case value="1"}正常{/case}
+                                    {case value="-1"}<span class="text-danger">禁用</span>{/case}
+                                    {/switch}</td>
+                                <td>{$item.sort}</td>
+                                <td>
+                                    {if condition="@checkAuth($item.m_act)"}
+                                    <button type="button" class="btn btn-warning" onclick="location.href='{$item.m_act}?cid={$item.cid}';">内容</button>
+                                    {/if}
+                                    {if condition="@checkAuth('/admin/Arctype/columnAdd')"}
+                                    <button type="button" class="btn btn-success" onclick="columnAdd({$item.cid})">添加子栏目</button>
+                                    {/if}
+                                    {if condition="@checkAuth('/admin/Arctype/columnEdit')"}
+                                    <button type="button" class="btn btn-info" onclick="columnEdit({$item.cid});">修改</button>
+                                    {/if}
+                                    {if condition="@checkAuth('/admin/Arctype/columnDel')"}
+                                    <button type="button" class="btn btn-default" onclick="columnDel({$item.cid});">删除</button>
+                                    {/if}
+                                </td>
+                            </tr>
+                            {/volist}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{/block}
+{block name="footer_js"}
+<script src="{$Think.config.system_static}plugins/datatables/js/jquery.datatables.min.js"></script>
+<script src="{$Think.config.system_static}plugins/x-editable/bootstrap3-editable/js/bootstrap-editable.js"></script>
+<!-- dropify上传插件 -->
+<script src="{$Think.config.system_static}plugins/dropify/js/dropify.js"></script>
+<script type="application/javascript">
+    $(function(){
+        $('#menusTables').DataTable({
+            paging: false,
+            info: false,
+            ordering:false,
+            searching:false,
+            language:lang
+        });
+        //折叠器,显示隐藏
+        $('#menusTables').on('click','.fold',function(){
+            var theTrObj = $(this).parents('tr') ;
+            var foldpid = theTrObj.attr('data-id') ;
+            if($(this).hasClass('fa-plus-square-o')){
+                theTrObj.siblings('tr[data-pid="'+ foldpid +'"]').removeClass('hide') ;
+                $(this).removeClass('fa-plus-square-o').addClass('fa-minus-square-o') ;
+            }else{
+                if($('tr[data-pid="'+ foldpid +'"]').length > 0){
+                    theTrObj.siblings('tr[data-pid="'+ foldpid +'"]').addClass('hide') ;
+                    $(this).removeClass('fa-minus-square-o').addClass('fa-plus-square-o') ;
+                }
+            }
+        });
+    });
+    {if condition="@checkAuth('/admin/Arctype/columnAdd')"}
+    //新增栏目
+    function columnAdd(cid){
+        $.myModal.open({
+            remote:'/admin/Arctype/columnAdd?cid='+cid,
+            backdrop: 'static',
+            keyboard: false,
+            show:true,
+            success:function(o){
+                init_modal() ;
+            }
+        }) ;
+    }
+    {/if}
+    {if condition="@checkAuth('/admin/Arctype/columnEdit')"}
+    //修改栏目
+    function columnEdit(cid){
+        $.myModal.open({
+            remote:'/admin/Arctype/columnEdit?cid='+ cid,
+            backdrop: 'static',
+            keyboard: false,
+            show:true,
+            success:function(o){
+                init_modal() ;
+            }
+        }) ;
+    }
+    {/if}
+    {if condition="@checkAuth('/admin/Arctype/columnDel')"}
+    //删除栏目
+    function columnDel(cid){
+        $.myModal.open({
+            remote:'/admin/Arctype/columnDel?cid='+ cid,
+            backdrop: 'static',
+            keyboard: false,
+            show:true,
+        }) ;
+    }
+    {/if}
+</script>
+{/block}

@@ -1,0 +1,5 @@
+<select class="form-control" name="{$channel_field}">
+    {volist name="tpl_list" id="tpl"}
+    <option value="{$tpl}" {if condition="$tpl eq $cur_tpl"}selected{/if}>{$tpl}</option>
+    {/volist}
+</select>

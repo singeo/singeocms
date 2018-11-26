@@ -10,7 +10,6 @@ namespace app\admin\controller;
 
 
 use app\admin\library\Backup;
-use app\library\Lib;
 use think\Db;
 use think\Exception;
 
@@ -24,11 +23,11 @@ class Datas extends Base
         $tables = $backup->dataList() ;
         $total = 0 ;
         foreach ($tables as &$item){
-            $item['size'] = Lib::format_bytes($item['data_length'] + $item['index_length']);
+            $item['size'] = format_bytes($item['data_length'] + $item['index_length']);
             $total += $item['data_length'] + $item['index_length'];
         }
         $this->assign('list', $tables);
-        $this->assign('total', Lib::format_bytes($total));
+        $this->assign('total', format_bytes($total));
         $this->assign('tableNum', count($tables));
         return $this->fetch();
     }
@@ -161,11 +160,11 @@ class Datas extends Base
         if(!empty($filelist)){
             foreach ($filelist as &$item){
                 $totalSize += $item['size'] ;
-                $item['size'] = Lib::format_bytes($item['size']) ;
+                $item['size'] = format_bytes($item['size']) ;
             }
         }
-        $filelist = Lib::list_sort_by($filelist,'time','desc') ;
-        $this->assign('totalSize',Lib::format_bytes($totalSize)) ;
+        $filelist = array_sort($filelist,'time','desc') ;
+        $this->assign('totalSize',format_bytes($totalSize)) ;
         $this->assign('totalNum',count($filelist)) ;
         $this->assign('list',$filelist) ;
         return $this->fetch() ;

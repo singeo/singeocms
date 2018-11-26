@@ -13,10 +13,6 @@ return [
     'system_static' => '/static/admin/',
     //后台存放登录用户的session名称
     'admin_login_info' => 'wqeudkicxcqe8i' ,
-    //后台存放菜单地址的session名称
-    'admin_auth_menu' => '19ksdk2nmsd12he',
-    //后台存放权限的session名称
-    'admin_auth_rules' => 'ksoiqewqemnnxakk',
     //超级管理员ID
     'super_admin_uid' => 1 ,
     //不进行权限验证的菜单
@@ -24,6 +20,8 @@ return [
         '/admin/Index/index',
         '/admin/Index/authclear' //清除权限缓存
     ],
+    //后台登录地址
+    'admin_login_url' => '/console/login',
     //数据库备份路径
     'data_backup_path' => './uploads/sqlbackup/',
     //数据库备份卷大小

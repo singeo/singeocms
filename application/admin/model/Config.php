@@ -118,7 +118,7 @@ class Config extends Base
                 $rel_config[$item['c_key']] = $item['c_value'] ;
             }
             //更新完成将配置写入到缓存中去
-            Cache::set('web_config', $rel_config) ;
+            Cache::set(config('web_config_catch'), $rel_config) ;
             return true ;
         }
     }

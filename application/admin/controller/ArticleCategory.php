@@ -55,8 +55,9 @@ class ArticleCategory extends Base
      */
     public function submitCateAdd(){
         $param = $this->request->param() ;
+        $file = $this->request->file() ;
         $categorymodel = new \app\admin\model\ArticleCategory() ;
-        $result = $categorymodel->saveArticleCategory($param) ;
+        $result = $categorymodel->saveArticleCategory($param,$file) ;
         if(!$result){
             $this->error($categorymodel->getErrorMsg()) ;
         }else{
@@ -80,7 +81,7 @@ class ArticleCategory extends Base
         $catelist = TreeShape::tree($catelist,'cate_title','cid', 'pid') ;
         $this->assign('cateTree',$catelist) ;
         $where = null ;
-        $field = 'cid,pid,cate_title,cate_desc,cate_pic,status,sort' ;
+        $field = 'cid,pid,cate_title,cate_desc,seo_keywords,seo_desc,cate_pic,status,sort' ;
         $where['cid'] = $cate_id ;
         $cateinfo = Db::name('article_category')
             ->where($where)

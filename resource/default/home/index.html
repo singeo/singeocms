@@ -1,0 +1,24 @@
+{extend name="common/base" /}
+{block name="style"}{/block}
+{block name="banner"}
+{:widget('PartsWidgets/index_banner')}
+{/block}
+{block name="main"}
+<div class="blogs">
+    <ul>
+        {sg:article id="item"}
+        {assign name="url" value=":get_content_link($item.id,$item.link_attr,$item.link_url,$item.template_view)" /}
+        <li><span class="blogpic"><a href="{$url}" title="{$item.article_title}"><img src="{$item.article_pic}"></a></span>
+            <h3 class="blogtitle"><a href="{$url}" title="{$item.article_title}">{$item.article_title|getSubstr=###,0,30}</a></h3>
+            <div class="bloginfo">
+                <p>{$item.article_desc|getSubstr=###,0,255}</p>
+            </div>
+            <div class="autor"><span class="lm"><a href="{:get_nav_link($item.cid,$item.lm_link_attr,$item.lm_link_url,$item.template_list)}" title="{$item.c_name}" target="_blank" class="classname">{$item.c_name}</a></span><span class="dtime">{$item.publish_time|date="Y-m-d",###}</span><span class="viewnum">浏览（{$item.view_num}）</span><span class="readmore"><a href="{$url}">阅读原文</a></span></div>
+        </li>
+        {/sg:article}
+    </ul>
+</div>
+{/block}
+{block name="right_bar"}
+{:widget('PartsWidgets/index_right_bar')}
+{/block}

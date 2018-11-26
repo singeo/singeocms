@@ -80,12 +80,65 @@ final class TreeShape
             if ($v[$fieldPid] == $pid) {
                 $v['_level'] = $level;
                 $v['_html'] = str_repeat($html, $level - 1);
-                array_push($arr, $v);
                 $tmp = self::_channelList($data, $id, $html, $fieldPri, $fieldPid, $level + 1);
+                $v['_child'] = empty($tmp) ?  false : true ;
+                array_push($arr, $v);
                 $arr = array_merge($arr, $tmp);
             }
         }
         return $arr;
+    }
+
+    /**
+     * 获取子分类 只提供给childList使用
+     * @param $data
+     * @param int $pid
+     * @param string $fieldPri
+     * @param string $fieldPid
+     * @param int $level
+     * @return array
+     */
+    private static function _childList($data, $pid = 0,$fieldPri = 'cid', $fieldPid = 'pid',$level = 1){
+        if (empty($data))
+            return array();
+        $arr = array();
+        foreach ($data as $v) {
+            $id = $v[$fieldPri];
+            if ($v[$fieldPid] == $pid) {
+                $tmp = self::_childList($data, $id, $fieldPri, $fieldPid, $level + 1);
+                array_push($arr, $v);
+                $arr = array_merge($arr, $tmp);
+            }
+        }
+        return $arr;
+    }
+
+    /**
+     * 获取子分类
+     * @param $data
+     * @param int $pid
+     * @param string $fieldPri
+     * @param string $fieldPid
+     * @param int $level
+     * @param bool $has_self
+     * @return array
+     */
+    public static function childList($data, $pid = 0,$fieldPri = 'cid', $fieldPid = 'pid',$level = 1,$has_self = true){
+        if (empty($data)) return array();
+        $category = array();
+        if($has_self){
+            foreach ($data as $v) {
+                if($v[$fieldPri] == $pid){
+                    $category[$v[$fieldPri]] = $v ;
+                }
+            }
+        }
+        $data = self::_childList($data, $pid, $fieldPri, $fieldPid, $level) ;
+        if (empty($data)) return $category;
+        foreach ($data as $v) {
+            $category[$v[$fieldPri]] = $v ;
+        }
+        return $category ;
     }
 
     /**

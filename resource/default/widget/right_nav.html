@@ -1,0 +1,19 @@
+{foreach name="treelist" id="tree"}
+<li><a href="{:get_nav_link($tree.cid,$tree.link_attr,$tree.link_url,$tree.template_list)}">{$tree.c_name}</a>
+{notempty name="tree._data"}
+    <ul>
+        {foreach name="tree._data"" id="subtree"}
+        <li><a href="{:get_nav_link($subtree.cid,$subtree.link_attr,$subtree.link_url,$subtree.template_list)}">{$subtree.c_name}</a>
+            {notempty name="subtree._data"}
+            <ul>
+                {foreach name="subtree._data"" id="ntree"}
+                <li><a href="{:get_nav_link($ntree.cid,$ntree.link_attr,$ntree.link_url,$ntree.template_list)}">{$ntree.c_name}</a></li>
+                {/foreach}
+            </ul>
+            {/notempty}
+        </li>
+        {/foreach}
+    </ul>
+</li>
+{/notempty}
+{/foreach}

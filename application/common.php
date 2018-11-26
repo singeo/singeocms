@@ -106,18 +106,222 @@ if(!function_exists('combineArray')) {
     }
 }
 
+if (!function_exists('is_serialized')){
+    /**
+     * 判断是否是序列化字符串
+     * @param $data
+     * @return bool
+     */
+    function is_serialized($data) {
+        $data = trim( $data );
+        if ( 'N;' == $data )
+            return true;
+        if ( !preg_match( '/^([adObis]):/', $data, $badions ) )
+            return false;
+        switch ( $badions[1] ) {
+            case 'a' :
+            case 'O' :
+            case 's' :
+                if ( preg_match( "/^{$badions[1]}:[0-9]+:.*[;}]\$/s", $data ) )
+                    return true;
+                break;
+            case 'b' :
+            case 'i' :
+            case 'd' :
+                if ( preg_match( "/^{$badions[1]}:[0-9.E-]+;\$/", $data ) )
+                    return true;
+                break;
+        }
+        return false;
+    }
+}
+
 if(!function_exists('get_nav_link')){
     /**
      * 获取导航链接
      * @param $navlink
      * @return string
      */
-    function get_nav_link($navlink){
-        $link = unserialize($navlink) ;
-        if($link == false){
-            return $navlink ;
-        }else{
-            return  $link['tpl'] . '?cid=' . $link['cid'] ;
+    function get_nav_link($cid,$attr,$url,$tpl){
+        if($attr == 1){
+            return '/'.$tpl . '?cid=' .$cid ;
+        }elseif($attr == 2){
+            if(strpos($url,'http') === 0){
+                return $url ;
+            }else{
+                return '/'.$url ;
+            }
+        }
+    }
+}
+
+if(!function_exists('get_content_link')){
+    /**
+     * 获取内容页链接
+     * @param $navlink
+     * @return string
+     */
+    function get_content_link($id,$attr,$url,$tpl){
+        if($attr == 1){
+            return '/'.$tpl . '?id=' .$id ;
+        }elseif($attr == 2){
+            if(strpos($url,'http') === 0){
+                return $url ;
+            }else{
+                return '/'.$url ;
+            }
+        }
+    }
+}
+
+if(!function_exists('get_tags_link')){
+    /**
+     * 获取标签链接
+     * @param $navlink
+     * @return string
+     */
+    function get_tags_link($tagid){
+        return '/seach_tags.html?tagid=' .$tagid ;
+    }
+}
+
+if(!function_exists('scan_files')) {
+    /**
+     * 获取path目录下的文件，不获取当前目录下文件夹的文件
+     * @param $path
+     * @return array
+     */
+    function scan_files($path)
+    {
+        $filelist = [] ;
+        $resource = opendir($path);
+        while ($rows = readdir($resource)) {
+            if (!is_dir($path . '/' . $rows) && $rows != "." && $rows != "..") {
+                $filelist[] = $rows ;
+            }
+        }
+        return $filelist ;
+    }
+}
+
+if(!function_exists('scan_all_files')) {
+    /**
+     * 获取当前path目录下的所有文件
+     * @param $path
+     * @param string $curdir
+     * @return array
+     */
+    function scan_all_files($path, $curdir = '')
+    {
+        $filelist = [];
+        $resource = opendir($path);
+        while ($rows = readdir($resource)) {
+            if (is_dir($path . '/' . $rows) && $rows != "." && $rows != "..") {
+                $filelist = array_merge($filelist, scan_all_files($path . '/' . $rows, $rows));
+            } elseif ($rows != "." && $rows != "..") {
+                $filelist[] = $curdir !== '' ? $curdir . '/' . $rows : $rows;
+            }
+        }
+        return $filelist;
+    }
+}
+
+if(!function_exists('getSubstr')) {
+    /**
+     * 实现中文字串截取无乱码的方法
+     *
+     * @param string $string 字符串
+     * @param intval $start 起始位置
+     * @param intval $length 截取长度
+     * @return string
+     */
+    function getSubstr($string, $start, $length)
+    {
+        if (mb_strlen($string, 'utf-8') > $length) {
+            $str = msubstr($string, $start, $length, true, 'utf-8');
+            return $str;
+        } else {
+            return $string;
+        }
+    }
+}
+
+if(!function_exists('msubstr')) {
+    /**
+     * 字符串截取，支持中文和其他编码
+     *
+     * @param string $str 需要转换的字符串
+     * @param string $start 开始位置
+     * @param string $length 截取长度
+     * @param string $suffix 截断显示字符
+     * @param string $charset 编码格式
+     * @return string
+     */
+    function msubstr($str, $start = 0, $length, $suffix = false, $charset = "utf-8")
+    {
+        if (function_exists("mb_substr"))
+            $slice = mb_substr($str, $start, $length, $charset);
+        elseif (function_exists('iconv_substr')) {
+            $slice = iconv_substr($str, $start, $length, $charset);
+            if (false === $slice) {
+                $slice = '';
+            }
+        } else {
+            $re['utf-8'] = "/[\x01-\x7f]|[\xc2-\xdf][\x80-\xbf]|[\xe0-\xef][\x80-\xbf]{2}|[\xf0-\xff][\x80-\xbf]{3}/";
+            $re['gb2312'] = "/[\x01-\x7f]|[\xb0-\xf7][\xa0-\xfe]/";
+            $re['gbk'] = "/[\x01-\x7f]|[\x81-\xfe][\x40-\xfe]/";
+            $re['big5'] = "/[\x01-\x7f]|[\x81-\xfe]([\x40-\x7e]|\xa1-\xfe])/";
+            preg_match_all($re[$charset], $str, $match);
+            $slice = join("", array_slice($match[0], $start, $length));
+        }
+
+        $str_len = strlen($str); // 原字符串长度
+        $slice_len = strlen($slice); // 截取字符串的长度
+        if ($slice_len < $str_len) {
+            $slice = $suffix ? $slice . '...' : $slice;
+        }
+
+        return $slice;
+    }
+}
+
+if(!function_exists('getPagelist')){
+    /**
+     * 获取列表分页代码
+     */
+    function getPagelist($pages, $listitem = '', $listsize = '')
+    {
+        if (empty($pages)) {
+            echo '标签pagelist报错：只适用在标签list之后。';
+            return false;
+        }
+        $listitem = !empty($listitem) ? $listitem : 'info,index,end,pre,next,pageno';
+        $listsize = !empty($listsize) ? $listsize : '3';
+
+        $value = $pages->render($listitem, $listsize);
+
+        return $value;
+    }
+}
+if(!function_exists('getAuthor')) {
+    /**
+     * 获取文章作者
+     * @param $author_id 作者ID
+     * @return mixed|string
+     */
+    function getAuthor($author_id)
+    {
+        if (empty($author_id)) {
+            return '系统管理员';
+        } else {
+            $author_name = \think\Db::name('article_author')
+                ->where(['id' => $author_id, 'status' => 1])
+                ->value('author_name');
+            if (empty($author_name)) {
+                return '系统管理员';
+            } else {
+                return $author_name;
+            }
         }
     }
 }

@@ -9,8 +9,12 @@
 return [
     //前端模板css及css
     'theme_static' => '/static/default/' ,
-
-    'template'               => [// 模板路径
-        'view_path'    => '../resource/default/',     // 就是这里
+    'template'               => [
+        // 模板路径
+        'view_path'    => '../resource/default/',
+        //标签缓存
+        'cache_time'    => -1,
+        //Singeo标签库
+        'taglib_pre_load' => 'app\common\taglib\Sg',
     ]
 ] ;

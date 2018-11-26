@@ -21,7 +21,7 @@ class Index extends Base {
      * 清除数据缓存
      */
     public function authclear(){
-        session(config('admin_auth_menu'), null) ;
+        cache(config('app_config.catch_keys_all')['admin_auth_menu'], null) ;
         return $this->success('缓存清除成功') ;
     }
 }

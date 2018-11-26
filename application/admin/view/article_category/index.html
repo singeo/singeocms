@@ -1,6 +1,7 @@
 {extend name="common/base" /}
 {block name="style"}
-<link href="{$Think.config.system_static}plugins/kindeditor/themes/default/default.css" rel="stylesheet" type="text/css"/>
+<!-- dropify.min.css -->
+<link href="{$Think.config.system_static}plugins/dropify/css/dropify.min.css" rel="stylesheet" type="text/css"/>
 {/block}
 {block name="main"}
 <div class="page-inner">
@@ -57,7 +58,8 @@
 {block name="footer_js"}
 <script src="{$Think.config.system_static}plugins/datatables/js/jquery.datatables.min.js"></script>
 <script src="{$Think.config.system_static}plugins/x-editable/bootstrap3-editable/js/bootstrap-editable.js"></script>
-<script src="{$Think.config.system_static}plugins/kindeditor/kindeditor-all-min.js"></script>
+<!-- dropify上传插件 -->
+<script src="{$Think.config.system_static}plugins/dropify/js/dropify.js"></script>
 <script type="application/javascript">
     $(function(){
         $('#menusTables').DataTable({

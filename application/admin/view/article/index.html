@@ -14,9 +14,23 @@
     <div id="main-wrapper">
         <div class="row">
             <div class="panel panel-body panel-white">
-                {if condition="@checkAuth('/admin/Article/articleAdd')"}
-                <button type="button" class="btn btn-success m-b-sm" onclick="articleAdd();">新增</button>
-                {/if}
+                <form class="form-inline" role="form">
+                    {if condition="@checkAuth('/admin/Article/articleAdd')"}
+                    <button type="button" class="btn btn-success" onclick="articleAdd({$cid});">新增文章</button>
+                    {/if}
+                    <div class="form-group">
+                        <select class="form-control" name="cid">
+                            <option value="0">所有文章</option>
+                            {volist name="cateTree" id="cate"}
+                            <option value="{$cate.cid}" {if condition="$cate.cid eq $cid"}selected{/if}>{$cate._name}</option>
+                            {/volist}
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <input type="text" name="keys" class="form-control" value='{present name="Think.get.keys"}{$Think.get.keys}{/present}'/>
+                    </div>
+                    <button type="submit" class="btn btn-info">搜索</button>
+                </form>
                 <div class="table-responsive">
                     <div class="dataTables_wrapper">
                         <table id="userTables" class="display table" style="width: 100%; cellspacing: 0;">
@@ -39,7 +53,7 @@
                             <tr>
                                 <td>{$item.id}</td>
                                 <td>{$item.article_title}</td>
-                                <td>{$item.cate_title}</td>
+                                <td>{$item.c_name}</td>
                                 <td>{notempty name="item.article_pic"}
                                     <img src="{$item.article_pic}" data-original="{$item.article_pic}" class="img-thumbnail img-responsive img-thumb-small" />
                                     {else /}-{/notempty}</td>
@@ -100,24 +114,22 @@
         });
     });
     {if condition="@checkAuth('/admin/Article/articleAdd')"}
-    //新增用户
-    function articleAdd(){
+    //新增文章
+    function articleAdd(cid){
         $.myModal.open({
-            remote:'/admin/Article/articleAdd',
+            remote:'/admin/Article/articleAdd?cid='+cid,
             backdrop: 'static',
             style: {'min-width' : '80%'},
             keyboard: false,
             show:true,
             success:function(o){
-                init_upload_kinder() ;
-                init_editor() ;
-                articleValid();
+                init_modal() ;
             }
         }) ;
     }
     {/if}
     {if condition="@checkAuth('/admin/Article/articleEdit')"}
-    //修改用户
+    //修改文章
     function articleEdit(id){
         $.myModal.open({
             remote:'/admin/Article/articleEdit?aid='+ id,
@@ -126,15 +138,13 @@
             keyboard: false,
             show:true,
             success:function(o){
-                init_upload_kinder() ;
-                init_editor() ;
-                articleValid();
+                init_modal() ;
             }
         }) ;
     }
     {/if}
     {if condition="@checkAuth('/admin/Article/articleDel')"}
-    //修改用户
+    //删除文章
     function articleDel(id){
         $.myModal.open({
             remote:'/admin/Article/articleDel?aid='+ id,

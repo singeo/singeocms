@@ -15,25 +15,32 @@
                         <table id="menusTables" class="display table" style="width: 100%; cellspacing: 0;">
                             <thead>
                             <tr>
-                                <th>&emsp;折叠</th>
+                                <!--<th>&emsp;折叠</th>-->
                                 <th>权限名称</th>
                                 <th>权限</th>
                                 <th>类型</th>
                                 <th>排序</th>
+                                <th>状态</th>
                                 <th>操作</th>
                             </tr>
                             </thead>
                             <tbody>
                             {volist name="menulist" id="item"}
                             <tr data-id="{$item.id}" data-pid="{$item.parent_id}" {neq name="item._level" value="1"}class="hide"{/neq}>
-                                <td><neq name="item._level" value="3">{:str_repeat('&emsp;',$item['_level'])}<span class="fold fa fa-plus"></span></neq></td>
-                                <td>{$item._name}</td>
+
+                                <td>
+                                    {:str_repeat('&emsp;',$item['_level'])}{eq name="item._child" value="true"}<span class="fold f-s-14 fa fa-plus-square-o"></span>{else /}<span class="fold f-s-14 fa fa-minus-square-o"></span>{/eq} {$item._name}
+                                </td>
                                 <td>{$item.menu_url}</td>
                                 <td>{switch name="item.type"}
                                     {case value="1"}菜单{/case}
                                     {case value="2"}操作{/case}
                                     {/switch}</td>
                                 <td>{$item.sort}</td>
+                                <td>{switch name="item.status"}
+                                    {case value="1"}正常{/case}
+                                    {case value="-1"}<span class="text-danger">禁用</span>{/case}
+                                    {/switch}</td>
                                 <td>
                                     {if condition="@checkAuth('/admin/Consolemenu/menuAdd')"}
                                     <button type="button" class="btn btn-success" onclick="menuAdd({$item.id})">添加子菜单</button>
@@ -72,12 +79,14 @@
         $('#menusTables').on('click','.fold',function(){
             var theTrObj = $(this).parents('tr') ;
             var foldpid = theTrObj.attr('data-id') ;
-            if($(this).hasClass('fa-plus')){
+            if($(this).hasClass('fa-plus-square-o')){
                 theTrObj.siblings('tr[data-pid="'+ foldpid +'"]').removeClass('hide') ;
-                $(this).removeClass('fa-plus').addClass('fa-minus') ;
+                $(this).removeClass('fa-plus-square-o').addClass('fa-minus-square-o') ;
             }else{
-                theTrObj.siblings('tr[data-pid="'+ foldpid +'"]').addClass('hide') ;
-                $(this).removeClass('fa-minus').addClass('fa-plus') ;
+                if($('tr[data-pid="'+ foldpid +'"]').length > 0){
+                    theTrObj.siblings('tr[data-pid="'+ foldpid +'"]').addClass('hide') ;
+                    $(this).removeClass('fa-minus-square-o').addClass('fa-plus-square-o') ;
+                }
             }
         });
     });

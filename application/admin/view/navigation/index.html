@@ -1,6 +1,5 @@
 {extend name="common/base" /}
 {block name="style"}
-<link href="{$Think.config.system_static}plugins/kindeditor/themes/default/default.css" rel="stylesheet" type="text/css"/>
 {/block}
 {block name="main"}
 <div class="page-inner">
@@ -9,16 +8,26 @@
     </div>
     <div id="main-wrapper">
         <div class="row">
-            <div class="panel panel-body panel-white">
-                {if condition="@checkAuth('/admin/Navigation/navAdd')"}
-                <button type="button" class="btn btn-success m-b-sm" onclick="navAdd({$navcate_id},'');">新增导航</button>
-                {/if}
+            <div class="panel panel-body">
+                <form class="form-inline" role="form">
+                    {if condition="@checkAuth('/admin/Navigation/navAdd')"}
+                    <div class="form-group">
+                        <input type="button" class="btn btn-success" onclick="navAdd({$navcate_id},'');" value="新增导航"/>
+                    </div>
+                    {/if}
+                    <div class="form-group">
+                        <select class="form-control" name="cate_id">
+                            {volist name="catelist" id="cate"}
+                            <option value="{$cate.cate_id}" {if condition="$cate.cate_id eq $navcate_id"}selected{/if}>{$cate.cate_name}</option>
+                            {/volist}
+                        </select>
+                    </div>
+                </form>
                 <div class="table-responsive">
                     <div class="dataTables_wrapper">
                         <table id="menusTables" class="display table" style="width: 100%; cellspacing: 0;">
                             <thead>
                             <tr>
-                                <th>&emsp;折叠</th>
                                 <th>分类名称</th>
                                 <th>分类跳转</th>
                                 <th>排序</th>
@@ -26,21 +35,20 @@
                             </tr>
                             </thead>
                             <tbody>
-                            {volist name="catelist" id="item"}
-                            <tr data-id="{$item.cid}" data-pid="{$item.pid}" {neq name="item._level" value="1"}class="hide"{/neq}>
-                            <td><neq name="item._level" value="3">{:str_repeat('&emsp;',$item['_level'])}<span class="fold fa fa-plus"></span></neq></td>
+                            {volist name="$list" id="item"}
+                            <tr>
                             <td>{$item._name}</td>
                             <td>{:get_nav_link($item.nav_link)}</td>
                             <td>{$item.sort}</td>
                             <td>
                                 {if condition="@checkAuth('/admin/Navigation/navAdd')"}
-                                <button type="button" class="btn btn-success" onclick="cateAdd({$item.cid})">添加子导航</button>
+                                <button type="button" class="btn btn-success" onclick="navAdd({$navcate_id},{$item.nav_id})">添加子导航</button>
                                 {/if}
                                 {if condition="@checkAuth('/admin/Navigation/navEdit')"}
-                                <button type="button" class="btn btn-info" onclick="cateEdit({$item.cid});">修改</button>
+                                <button type="button" class="btn btn-info" onclick="navEdit({$item.nav_id});">修改</button>
                                 {/if}
                                 {if condition="@checkAuth('/admin/Navigation/navDel')"}
-                                <button type="button" class="btn btn-default" onclick="cateDel({$item.cid});">删除</button>
+                                <button type="button" class="btn btn-default" onclick="navDel({$item.nav_id});">删除</button>
                                 {/if}
                             </td>
                             </tr>
@@ -57,7 +65,6 @@
 {block name="footer_js"}
 <script src="{$Think.config.system_static}plugins/datatables/js/jquery.datatables.min.js"></script>
 <script src="{$Think.config.system_static}plugins/x-editable/bootstrap3-editable/js/bootstrap-editable.js"></script>
-<script src="{$Think.config.system_static}plugins/kindeditor/kindeditor-all-min.js"></script>
 <script type="application/javascript">
     $(function(){
         $('#menusTables').DataTable({
@@ -67,18 +74,9 @@
             searching:false,
             language:lang
         });
-        //折叠器,显示隐藏
-        $('#menusTables').on('click','.fold',function(){
-            var theTrObj = $(this).parents('tr') ;
-            var foldpid = theTrObj.attr('data-id') ;
-            if($(this).hasClass('fa-plus')){
-                theTrObj.siblings('tr[data-pid="'+ foldpid +'"]').removeClass('hide') ;
-                $(this).removeClass('fa-plus').addClass('fa-minus') ;
-            }else{
-                theTrObj.siblings('tr[data-pid="'+ foldpid +'"]').addClass('hide') ;
-                $(this).removeClass('fa-minus').addClass('fa-plus') ;
-            }
-        });
+        $('select[name="cate_id"]').on('change',function () {
+            location.href = '/admin/Navigation/index?cate_id='+ $(this).val() ;
+        }) ;
     });
     {if condition="@checkAuth('/admin/Navigation/navAdd')"}
     //新增导航
@@ -105,8 +103,7 @@
             keyboard: false,
             show:true,
             success:function(o){
-                menuValid();
-                init_upload_kinder() ;
+                init_modal() ;
             }
         }) ;
     }

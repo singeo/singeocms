@@ -36,7 +36,14 @@ class NaviWidget extends \think\Controller
         $advertOrderby = 'sort,cid DESC' ;
         $advert_list = $advertcategorymodel->getList($advertWhere,$advertField,null,$advertOrderby) ;
         $this->assign('advert_list',$advert_list) ;
-        $cur_category = unserialize($cur_category) ;
+        $isserialized = is_serialized($cur_category) ;
+        if($isserialized) {
+            $cur_category = unserialize($cur_category) ;
+        }else{
+            $cur_category = null ;
+            $cur_category['model'] = '' ;
+            $cur_category['cid'] = '' ;
+        }
         $this->assign('cur_category',$cur_category) ;//当前分类
         return $this->fetch('widget/category_list') ;
     }
@@ -46,8 +53,12 @@ class NaviWidget extends \think\Controller
      * @param $cur_tpl
      * @return mixed
      */
-    public function tpl_list($cur_tpl){
-//        $tpl_dir = config('app_config.') ;
+    public function tpl_list($cur_tpl = "",$channel_field = ""){
+        $tpl_dir = config('app_config.web_tpl_path') ;
+        $tpl_list = scan_files($tpl_dir) ;
+        $this->assign('tpl_list',$tpl_list) ;
+        $this->assign('cur_tpl',$cur_tpl) ;
+        $this->assign('channel_field',$channel_field) ;
         return $this->fetch('widget/tpl_list') ;
     }
 }

@@ -1,7 +1,7 @@
 <?php
 /**
- * Created by PhpStorm.
- * User: Administrator
+ * 后台路由配置
+ * User: singeo
  * Date: 2018/4/25 0025
  * Time: 下午 2:02
  */

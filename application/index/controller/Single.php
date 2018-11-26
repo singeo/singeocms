@@ -8,8 +8,7 @@
 
 namespace app\index\controller;
 
-use think\Controller;
-class Single extends Controller
+class Single extends Base
 {
     /**
      * 单页index

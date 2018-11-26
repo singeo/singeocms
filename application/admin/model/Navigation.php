@@ -34,6 +34,19 @@ class Navigation extends Base
             $this->setErrorMsg($validate->getError()) ;
             return false;
         }
+        $link_attr =  $data['link_attr'] ;
+        if($link_attr == 1){
+            $model_cid = $data['model_cid'] ;
+            $tpl = $data['tpl'] ;
+            $modelStr = explode('|',$model_cid) ;
+            $linktpl['model'] = $modelStr[0] ;
+            $linktpl['cid'] = $modelStr[1] ;
+            $linktpl['tpl'] = $tpl ;
+            $data['nav_link'] = serialize($linktpl) ;
+        }
+        unset($data['link_attr']) ;
+        unset($data['model_cid']) ;
+        unset($data['tpl']) ;
         if (isset($data['token_hash'])){
             unset($data['token_hash']) ;
         }
@@ -59,6 +72,19 @@ class Navigation extends Base
             $this->setErrorMsg($validate->getError()) ;
             return false;
         }
+        $link_attr =  $data['link_attr'] ;
+        if($link_attr == 1){
+            $model_cid = $data['model_cid'] ;
+            $tpl = $data['tpl'] ;
+            $modelStr = explode('|',$model_cid) ;
+            $linktpl['model'] = $modelStr[0] ;
+            $linktpl['cid'] = $modelStr[1] ;
+            $linktpl['tpl'] = $tpl ;
+            $data['nav_link'] = serialize($linktpl) ;
+        }
+        unset($data['link_attr']) ;
+        unset($data['model_cid']) ;
+        unset($data['tpl']) ;
         if (isset($data['token_hash'])){
             unset($data['token_hash']) ;
         }

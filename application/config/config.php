@@ -93,7 +93,7 @@ return [
     // 是否开启路由
     'url_route_on'           => true,
     // 路由配置文件（支持配置多个）
-    'route_config_file'      => ['route','admin/console_route'],
+    'route_config_file'      => ['route','admin/console_route','index/index_route'],
     // 是否强制使用路由
     'url_route_must'         => false,
     // 域名部署
@@ -128,10 +128,6 @@ return [
         'taglib_begin' => '{',
         // 标签库标签结束标记
         'taglib_end'   => '}',
-        //Singeo标签库
-        'taglib_pre_load' => 'app\\common\\library\\Singeo',
-        //标签缓存
-        'cache_time'    => -1
     ],
 
     // 视图输出字符串内容替换

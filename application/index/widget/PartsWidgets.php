@@ -13,6 +13,23 @@ use think\Db;
 class PartsWidgets extends Controller
 {
     /**
+     * 获取主导航
+     */
+    public function main_nav($pid = 0){
+        $navWhere['status'] = 1 ;
+        $navWhere['pid'] = $pid ;
+        $field = 'cid,c_name,link_attr,link_url,template_list' ;
+        $orderby = 'sort,cid DESC' ;
+        $navlist = Db::name('arctype')
+            ->where($navWhere)
+            ->field($field)
+            ->order($orderby)
+            ->select() ;
+        $this->assign('navlist',$navlist) ;
+        return $this->fetch('widget/main_nav') ;
+    }
+
+    /**
      * 首页banner
      * @return mixed
      */
@@ -26,6 +43,17 @@ class PartsWidgets extends Controller
             ->select() ;
         $this->assign('banner_list',$banner_list) ;
         return $this->fetch('widget/index_banner') ;
+    }
+
+    /**
+     * 获取主导航
+     */
+    public function right_nav(){
+        $arctypemodel = new \app\common\model\Arctype() ;
+        $list = $arctypemodel->getAllColumu() ;
+        $treelist = \app\admin\library\TreeShape::channelLevel($list, 0) ;
+        $this->assign('treelist',$treelist) ;
+        return $this->fetch('widget/right_nav') ;
     }
 
     /**

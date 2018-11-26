@@ -30,12 +30,22 @@ class ArticleCategory extends Base
      * @param $data
      * @return array
      */
-    public function saveArticleCategory($data){
+    public function saveArticleCategory($data,$file){
         $validate = new Validate($this->rule, $this->message) ;
         // 数据自动验证
         if (!$validate->check($data)) {
             $this->setErrorMsg($validate->getError()) ;
             return false;
+        }
+        if(!empty($file['cate_pic'])){
+            $uploadcls = new \app\admin\library\Upload() ;
+            $uploadRes = $uploadcls->doUpload($file['cate_pic'],'image') ;
+            if($uploadRes['status'] == 0){
+                $this->setErrorMsg($uploadRes['msg']) ;
+                return false;
+            }else{
+                $data['cate_pic'] = $uploadRes['url'] ;
+            }
         }
         if (isset($data['token_hash'])){
             unset($data['token_hash']) ;

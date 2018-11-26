@@ -8,16 +8,20 @@
 
 namespace app\index\controller;
 
-
-use think\Controller;
-
-class Article extends Controller
+class Article extends Base
 {
     /**
      * 列表页
      */
-    public function lists(){
+    public function index(){
         return $this->fetch('/lists') ;
+    }
+
+    /**
+     * 瀑布流
+     */
+    public function water_flow(){
+        return $this->fetch('/water_flow') ;
     }
 
     public function show(){

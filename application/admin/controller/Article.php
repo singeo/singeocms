@@ -17,14 +17,36 @@ class Article extends Base
      * 文章列表页
      */
     public function index(){
+        $cid = $this->request->param('cid/d',0) ;
+        $keys = $this->request->param('keys','') ;
+        //分类
+        $where['status'] = 1 ;
+        $orderby = 'sort ASC,cid DESC' ;
+        $feild = 'cid,pid,c_name' ;
+        $catelist = Db::name('arctype')
+            ->field($feild)
+            ->order($orderby)
+            ->select() ;
+        $cateTree = TreeShape::tree($catelist,'c_name','cid', 'pid') ;
+        $this->assign('cateTree',$cateTree) ;
+
         $field = 'a.id,a.cid,a.article_title,a.article_desc,a.article_pic,'
                 .'a.view_num,a.publish_time,a.sort,a.status,a.is_head,a.is_recom,a.is_top,'
-                .'ac.cate_title,aa.author_name,ar.source_name' ;
+                .'at.c_name,aa.author_name,ar.source_name' ;
         $orderby = 'a.sort ASC,publish_time DESC,a.id DESC' ;
-        $join[] = ['article_category as ac','ac.cid = a.cid'] ;
+        $join[] = ['arctype as at','at.cid = a.cid'] ;
         $join[] = ['article_author as aa','aa.id = a.author','LEFT'] ;
         $join[] = ['article_source as ar','ar.id = a.source','LEFT'] ;
+        $where = [] ;
         $where['a.status'] = 1 ;
+        if($keys != ''){
+            $where['a.article_title'] = ['like','%'.$keys.'%'] ;
+        }
+        if($cid != 0){
+            $curr_son_column = TreeShape::childList($catelist,$cid) ;
+            $curr_column = array_column($curr_son_column,'cid') ;
+            $where['a.cid'] = ['in',$curr_column] ;
+        }
         $list = Db::name('article')
             ->alias('a')
             ->join($join)
@@ -33,6 +55,8 @@ class Article extends Base
             ->order($orderby)
             ->paginate(10,false,["query"=>$this->request->param()]) ;
         $this->assign('list',$list) ;
+
+        $this->assign('cid',$cid) ;
         return $this->fetch() ;
     }
 
@@ -40,15 +64,16 @@ class Article extends Base
      * 添加文章页
      */
     public function articleAdd(){
-        $field = 'cid,pid,cate_title' ;
+        $cid = $this->request->param('cid/d',0) ;
+        $field = 'cid,pid,c_name' ;
         $where['status'] = 1 ;// 正常
         $orderby = 'sort ASC,cid DESC' ;
-        $catelist = Db::name('article_category')
+        $catelist = Db::name('arctype')
             ->where($where)
             ->field($field)
             ->order($orderby)
             ->select() ;
-        $catelist = TreeShape::tree($catelist,'cate_title','cid', 'pid') ;
+        $catelist = TreeShape::tree($catelist,'c_name','cid', 'pid') ;
         $this->assign('cateTree',$catelist) ;
         //获取文章作者
         $authorlist = Db::name('article_author')->where(['status'=>1])->field('id,author_name')->select() ;
@@ -56,6 +81,8 @@ class Article extends Base
         //获取文章来源列表
         $sourcelist = Db::name('article_source')->where(['status'=>1])->field('id,source_name')->select() ;
         $this->assign('sourcelist',$sourcelist) ;
+        //cid
+        $this->assign('cid',$cid) ;
         echo $this->fetch() ;
     }
 
@@ -82,15 +109,15 @@ class Article extends Base
         $info = Db::name('article')
             ->where(['id'=>$aid])
             ->find() ;
-        $field = 'cid,pid,cate_title' ;
+        $field = 'cid,pid,c_name' ;
         $where['status'] = 1 ;// 正常
         $orderby = 'sort ASC,cid DESC' ;
-        $catelist = Db::name('article_category')
+        $catelist = Db::name('arctype')
             ->where($where)
             ->field($field)
             ->order($orderby)
             ->select() ;
-        $catelist = TreeShape::tree($catelist,'cate_title','cid', 'pid') ;
+        $catelist = TreeShape::tree($catelist,'c_name','cid', 'pid') ;
         $this->assign('cateTree',$catelist) ;
         //获取文章作者
         $authorlist = Db::name('article_author')

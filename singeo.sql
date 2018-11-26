@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50617
 File Encoding         : 65001
 
-Date: 2018-11-07 09:31:46
+Date: 2018-11-13 14:36:42
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -25,17 +25,22 @@ CREATE TABLE `g_advert` (
   `a_title` varchar(50) DEFAULT NULL COMMENT '广告名称',
   `a_desc` varchar(255) DEFAULT NULL COMMENT '广告描述',
   `a_pic` varchar(100) DEFAULT NULL COMMENT '广告图片',
+  `link_url` varchar(150) DEFAULT NULL COMMENT '跳转链接',
   `sort` smallint(6) DEFAULT '50' COMMENT '排序',
   `status` tinyint(1) DEFAULT '1' COMMENT '状态1正常，0失效',
   `create_time` int(10) DEFAULT '0' COMMENT '创建时间',
   `update_time` int(10) DEFAULT '0' COMMENT '更新时间',
   PRIMARY KEY (`aid`)
-) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COMMENT='广告';
+) ENGINE=MyISAM AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 COMMENT='广告';
 
 -- ----------------------------
 -- Records of g_advert
 -- ----------------------------
-INSERT INTO `g_advert` VALUES ('1', '1', '测试1123', '测试1测试1测试13', '/uploads/image/20181106/e0ea0c1f62554.jpg', '20', '-1', '1541494461', '1541495373');
+INSERT INTO `g_advert` VALUES ('1', '1', '测试1123', '测试1测试1测试13', '/uploads/image/20181106/e0ea0c1f62554.jpg', null, '20', '-1', '1541494461', '1541495373');
+INSERT INTO `g_advert` VALUES ('2', '2', '个人博客模板《早安》', '个人博客模板《早安》', '/uploads/image/20181108/6b23e91536269.jpg', 'http://www.baidu.com', '10', '1', '1541647568', '1541648931');
+INSERT INTO `g_advert` VALUES ('3', '2', '个人博客模板《早安》', '个人博客模板《早安》', '/uploads/image/20181108/b1a2be1956c87.jpg', null, '20', '1', '1541647584', '0');
+INSERT INTO `g_advert` VALUES ('4', '2', '个人博客模板《早安》', '个人博客模板《早安》', '/uploads/image/20181108/6b2ee0f355fd4.jpg', null, '30', '1', '1541647600', '0');
+INSERT INTO `g_advert` VALUES ('5', '2', '个人博客模板《早安》', '个人博客模板《早安》', '/uploads/image/20181108/d351c616255db.jpg', null, '40', '1', '1541647618', '0');
 
 -- ----------------------------
 -- Table structure for g_advert_category
@@ -45,6 +50,8 @@ CREATE TABLE `g_advert_category` (
   `cid` tinyint(3) NOT NULL AUTO_INCREMENT COMMENT '主键',
   `c_name` varchar(20) DEFAULT NULL COMMENT '分类名称',
   `c_desc` varchar(255) DEFAULT NULL COMMENT '分类描述',
+  `seo_keywords` varchar(100) DEFAULT NULL COMMENT 'SEO关键词信息',
+  `seo_desc` varchar(255) DEFAULT NULL COMMENT 'SEO描述',
   `sort` tinyint(3) DEFAULT '10' COMMENT '排序',
   `status` tinyint(1) DEFAULT '1' COMMENT '状态1启用，0不启用',
   `create_time` int(10) DEFAULT NULL COMMENT '创建时间',
@@ -55,8 +62,8 @@ CREATE TABLE `g_advert_category` (
 -- ----------------------------
 -- Records of g_advert_category
 -- ----------------------------
-INSERT INTO `g_advert_category` VALUES ('1', '网站banner1', '首页显示banner2', '30', '1', '1541138512', null);
-INSERT INTO `g_advert_category` VALUES ('2', '网站首页banner3', '网站首页banner2', '10', '1', '1541139164', '1541139174');
+INSERT INTO `g_advert_category` VALUES ('1', '网站banner1', '首页显示banner2', null, null, '30', '1', '1541138512', null);
+INSERT INTO `g_advert_category` VALUES ('2', '网站首页banner', '网站首页banner', null, null, '10', '1', '1541139164', '1541644443');
 
 -- ----------------------------
 -- Table structure for g_area
@@ -3546,20 +3553,22 @@ CREATE TABLE `g_article_category` (
   `cid` int(11) NOT NULL AUTO_INCREMENT COMMENT '主键',
   `pid` int(11) DEFAULT NULL COMMENT '父栏目ID',
   `cate_title` varchar(50) DEFAULT NULL COMMENT '栏目名称',
+  `seo_keywords` varchar(100) DEFAULT NULL COMMENT 'SEO关键字',
+  `seo_desc` varchar(255) DEFAULT NULL COMMENT 'SEO描述',
   `cate_desc` text COMMENT '分类描述',
   `cate_pic` varchar(100) DEFAULT NULL COMMENT '栏目图片',
   `status` tinyint(1) DEFAULT '1' COMMENT '状态，1正常，0关闭',
   `sort` smallint(6) DEFAULT '50' COMMENT '排序',
   `create_time` int(10) DEFAULT NULL COMMENT '创建时间',
   PRIMARY KEY (`cid`)
-) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COMMENT='网站分类管理';
+) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COMMENT='网站分类管理';
 
 -- ----------------------------
 -- Records of g_article_category
 -- ----------------------------
-INSERT INTO `g_article_category` VALUES ('1', '0', '文章列表aaa', '文章列表aaa', '/uploads/image/20180829/915dc30eebe70b35d05bd67a1ab6cbb5.jpg', '1', '25', null);
-INSERT INTO `g_article_category` VALUES ('3', '0', '文章列表bbb', '文章列表bbb', '', '1', '50', '1540868368');
-INSERT INTO `g_article_category` VALUES ('4', '0', '文章列表ccc', 'aaaa', '', '1', '50', '1541054117');
+INSERT INTO `g_article_category` VALUES ('1', '0', '学无止境', '学无止境', '学无止境', '学无止境', null, '1', '10', '1542003179');
+INSERT INTO `g_article_category` VALUES ('2', '0', '趣味杂谈', '趣味杂谈', '趣味杂谈', '趣味杂谈', null, '1', '20', '1542003202');
+INSERT INTO `g_article_category` VALUES ('3', '0', '偶遇佳句', '偶遇佳句', '偶遇佳句', '偶遇佳句', null, '1', '30', '1542003249');
 
 -- ----------------------------
 -- Table structure for g_article_picture
@@ -3632,7 +3641,7 @@ CREATE TABLE `g_config` (
   `remark` varchar(255) DEFAULT NULL COMMENT '备注',
   PRIMARY KEY (`id`),
   UNIQUE KEY `c_key_uniq` (`c_key`) USING BTREE
-) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COMMENT='网站配置项';
+) ENGINE=MyISAM AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 COMMENT='网站配置项';
 
 -- ----------------------------
 -- Records of g_config
@@ -3640,6 +3649,8 @@ CREATE TABLE `g_config` (
 INSERT INTO `g_config` VALUES ('1', '1', 'input', '网站名称', 'web_title', 'www.singeo.com', '', '10', '1', '网站显示的名称');
 INSERT INTO `g_config` VALUES ('2', '1', 'input', '网站网址', 'web_url', 'www.singeo.com', '', '60', '1', '网站访问地址');
 INSERT INTO `g_config` VALUES ('3', '1', 'file', '网站logo', 'web_logo', '/uploads/image/20180809/86e34695ed326a828e50ee2c0e1cb2bf.jpg', '', '30', '1', '网站LOGO');
+INSERT INTO `g_config` VALUES ('4', '1', 'input', '网站SEO关键字', 'web_keywords', 'php技术,分享,IT技术分享', '', '15', '1', '网站SEO关键字，有利于SEO优化');
+INSERT INTO `g_config` VALUES ('5', '1', 'input', '网站SEO描述', 'web_description', '关于IT技术的分享', '', '20', '1', '网站描述，有利于SEO优化');
 
 -- ----------------------------
 -- Table structure for g_console_menu
@@ -3659,7 +3670,7 @@ CREATE TABLE `g_console_menu` (
   UNIQUE KEY `menu_url_unique` (`menu_url`) USING BTREE,
   KEY `status` (`status`),
   KEY `parentid` (`parent_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=44 DEFAULT CHARSET=utf8 COMMENT='后台菜单表';
+) ENGINE=MyISAM AUTO_INCREMENT=48 DEFAULT CHARSET=utf8 COMMENT='后台菜单表';
 
 -- ----------------------------
 -- Records of g_console_menu
@@ -3704,6 +3715,10 @@ INSERT INTO `g_console_menu` VALUES ('40', '39', '1', '1', '文章列表', '', '
 INSERT INTO `g_console_menu` VALUES ('41', '37', '1', '1', '广告管理', '', '/admin/Advert/', '20', '1541123379');
 INSERT INTO `g_console_menu` VALUES ('42', '41', '1', '1', '广告分类', '', '/admin/AdvertCategory/index', '10', '1541123478');
 INSERT INTO `g_console_menu` VALUES ('43', '41', '1', '1', '广告列表', '', '/admin/Advert/index', '20', '1541123801');
+INSERT INTO `g_console_menu` VALUES ('44', '37', '1', '1', '单页管理', '', '/admin/SinglePage/index', '30', '1541572306');
+INSERT INTO `g_console_menu` VALUES ('45', '37', '1', '1', '前台导航管理', '', '/admin/SiteNavigation/', '5', '1541663191');
+INSERT INTO `g_console_menu` VALUES ('46', '45', '1', '1', '导航分类', '', '/admin/NavigationCategory/index', '10', '1541663268');
+INSERT INTO `g_console_menu` VALUES ('47', '45', '1', '1', '导航菜单', '', '/admin/Navigation/index', '20', '1541663348');
 
 -- ----------------------------
 -- Table structure for g_console_role
@@ -3771,8 +3786,53 @@ CREATE TABLE `g_console_user` (
 -- ----------------------------
 -- Records of g_console_user
 -- ----------------------------
-INSERT INTO `g_console_user` VALUES ('1', 'master', '81281e7e666729f69d62134b814e11bd', 'R6Y8d2', '超级管理员', '123@123.com', '', '', '1524807887', '1', '38', '1541553898', '127.0.0.1');
+INSERT INTO `g_console_user` VALUES ('1', 'master', '81281e7e666729f69d62134b814e11bd', 'R6Y8d2', '超级管理员', '123@123.com', '', '', '1524807887', '1', '42', '1542074959', '127.0.0.1');
 INSERT INTO `g_console_user` VALUES ('18', 'test_01', '29338382855cf9d3ab6fb6e773eab437', 'CIinom', 'aaaaa', '', '', '', '1527576831', '1', '3', '1531297909', '127.0.0.1');
+
+-- ----------------------------
+-- Table structure for g_navigation
+-- ----------------------------
+DROP TABLE IF EXISTS `g_navigation`;
+CREATE TABLE `g_navigation` (
+  `nav_id` int(11) NOT NULL AUTO_INCREMENT COMMENT '主键',
+  `nav_cate_id` int(11) DEFAULT '0' COMMENT '导航分类ID',
+  `pid` int(11) DEFAULT '0' COMMENT '导航父ID',
+  `nav_name` varchar(30) DEFAULT NULL COMMENT '导航名称',
+  `nav_link` varchar(150) DEFAULT NULL COMMENT '跳转链接',
+  `sort` smallint(6) DEFAULT NULL COMMENT '排序',
+  `status` tinyint(1) DEFAULT '1' COMMENT '状态1正常，-1失效',
+  `create_time` int(10) DEFAULT NULL COMMENT '创建时间',
+  PRIMARY KEY (`nav_id`)
+) ENGINE=MyISAM AUTO_INCREMENT=7 DEFAULT CHARSET=utf8 COMMENT='前台导航表';
+
+-- ----------------------------
+-- Records of g_navigation
+-- ----------------------------
+INSERT INTO `g_navigation` VALUES ('1', '1', '0', '网站首页', 'index.html', '10', '1', '1541987613');
+INSERT INTO `g_navigation` VALUES ('2', '1', '0', '学无止境', 'a:3:{s:5:\"model\";s:7:\"article\";s:3:\"cid\";s:1:\"1\";s:3:\"tpl\";s:10:\"lists.html\";}', '20', '1', '1542003694');
+INSERT INTO `g_navigation` VALUES ('3', '1', '0', '趣味杂谈', 'a:3:{s:5:\"model\";s:7:\"article\";s:3:\"cid\";s:1:\"2\";s:3:\"tpl\";s:10:\"lists.html\";}', '30', '1', '1542003741');
+INSERT INTO `g_navigation` VALUES ('4', '1', '0', '偶遇佳句', 'a:3:{s:5:\"model\";s:7:\"article\";s:3:\"cid\";s:1:\"3\";s:3:\"tpl\";s:10:\"lists.html\";}', '40', '1', '1542003765');
+INSERT INTO `g_navigation` VALUES ('5', '1', '0', '标签云', 'tags_cloud.html', '50', '1', '1542003865');
+INSERT INTO `g_navigation` VALUES ('6', '1', '0', '关于博主', 'a:3:{s:5:\"model\";s:6:\"single\";s:3:\"cid\";s:1:\"1\";s:3:\"tpl\";s:11:\"single.html\";}', '60', '1', '1542003891');
+
+-- ----------------------------
+-- Table structure for g_navigation_category
+-- ----------------------------
+DROP TABLE IF EXISTS `g_navigation_category`;
+CREATE TABLE `g_navigation_category` (
+  `cate_id` int(11) NOT NULL AUTO_INCREMENT COMMENT '主键',
+  `cate_name` varchar(30) DEFAULT NULL COMMENT '导航名称',
+  `remark` varchar(100) DEFAULT NULL COMMENT '备注',
+  `status` tinyint(1) DEFAULT NULL COMMENT '状态1正常，-1删除',
+  `create_time` int(10) DEFAULT NULL COMMENT '创建时间',
+  PRIMARY KEY (`cate_id`)
+) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COMMENT='前台导航分类';
+
+-- ----------------------------
+-- Records of g_navigation_category
+-- ----------------------------
+INSERT INTO `g_navigation_category` VALUES ('1', '主导航', '网站前端主导航', '1', '1541666481');
+INSERT INTO `g_navigation_category` VALUES ('2', '页脚导航', '页脚导航', '1', '1541741862');
 
 -- ----------------------------
 -- Table structure for g_reward_activity
@@ -3835,6 +3895,30 @@ INSERT INTO `g_reward_set` VALUES ('1', '1', '奖品1', '0', '10', '10', '10.00'
 INSERT INTO `g_reward_set` VALUES ('2', '1', '奖品2', '0', '10', '10', '30.00', '1', '1541400736');
 INSERT INTO `g_reward_set` VALUES ('3', '1', '奖品3', '0', '10', '10', '30.00', '1', '1541400736');
 INSERT INTO `g_reward_set` VALUES ('4', '1', '奖品4', '0', '10', '10', '30.00', '1', '1541400736');
+
+-- ----------------------------
+-- Table structure for g_single_page
+-- ----------------------------
+DROP TABLE IF EXISTS `g_single_page`;
+CREATE TABLE `g_single_page` (
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '主键',
+  `p_name` varchar(100) DEFAULT NULL COMMENT '页面名称',
+  `p_description` varchar(255) DEFAULT NULL COMMENT '页面描述',
+  `p_keyword` varchar(255) DEFAULT NULL COMMENT '页面关键词',
+  `p_picurl` varchar(100) DEFAULT NULL COMMENT '页面图片',
+  `p_content` text COMMENT '页面内容',
+  `sort` smallint(6) DEFAULT NULL COMMENT '排序',
+  `status` tinyint(1) DEFAULT NULL COMMENT '状态1正常，-1失效',
+  `create_time` int(10) DEFAULT NULL COMMENT '创建时间',
+  `update_time` int(10) DEFAULT NULL COMMENT '更新时间',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COMMENT='单页页面表';
+
+-- ----------------------------
+-- Records of g_single_page
+-- ----------------------------
+INSERT INTO `g_single_page` VALUES ('1', '关于博主', '关于博主', '关于博主', null, '关于博主', '10', '1', '1541575340', '1542003347');
+INSERT INTO `g_single_page` VALUES ('2', '联系方式1', '联系方式3', '联系方式4', '/uploads/image/20181107/f460a25d89400.jpg', '联系方式联系方式2', '15', '-1', '1541575614', '1541576827');
 
 -- ----------------------------
 -- Table structure for g_tags

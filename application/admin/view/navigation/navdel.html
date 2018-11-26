@@ -1,0 +1,10 @@
+<form class="form-horizontal" name="ruleForm" method="post" action="/admin/Navigation/submitNavDel">
+    <input type="hidden" id="nav_id" name="nav_id" value="{$info.nav_id}" />
+    <div class="modal-body">
+        确认要删除<span class="f-red">{$info.nav_name}</span>吗?
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+        <button type="submit" id="add-row" class="btn btn-success">确认</button>
+    </div>
+</form>

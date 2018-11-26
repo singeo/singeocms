@@ -1,0 +1,41 @@
+{extend name="common/base" /}
+{block name="main"}
+<h1 class="t_nav">{sg:Breadcrumb cid="$cur_column_id"}</h1>
+<div class="water_flow">
+    <div id="gallery-wrapper">
+        {sg:articlelist id="item" cid="$cur_column_id" pagesize="10"}
+        {assign name="url" value=":get_content_link($item.id,$item.link_attr,$item.link_url,$item.template_view)" /}
+        <div class="white-panel">
+            <div style="white-panel-box">
+                <a href="{$url}"><img src="{$item.article_pic}" class="thumb"></a>
+                <div class="picinfo">
+                    <h3><a href="{$url}">{$item.article_title|getSubstr=###,0,12}</a></h3>
+                    <p>{$item.article_desc|getSubstr=###,0,60}</p>
+                </div>
+            </div>
+        </div>
+        {/sg:articlelist}
+    </div>
+    {sg:pagelist listitem="index,end,pre,next" listsize="2"/}
+</div>
+{:widget('PartsWidgets/inner_right_bar')}
+{/block}
+{block name="footer_js"}
+<script type="text/javascript" src="{$Think.config.theme_static}js/jquery.masonry.min.js"></script>
+<script type="text/javascript">
+    $(function () {
+        $(window).resize(function () {
+            $('#gallery-wrapper').masonry({
+                itemSelector: '.white-panel',
+                isFitWidth: true,
+                columnWidth: 12 //两列间的空隙
+            });
+        }) ;
+        $('#gallery-wrapper').masonry({
+            itemSelector: '.white-panel',
+            isFitWidth: true,
+            columnWidth: 12 //两列间的空隙
+        });
+    }) ;
+</script>
+{/block}

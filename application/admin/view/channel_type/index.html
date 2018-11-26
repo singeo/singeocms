@@ -1,0 +1,111 @@
+{extend name="common/base" /}
+{block name="style"}
+{/block}
+{block name="main"}
+<div class="page-inner">
+    <div class="page-title">
+        <h3>{$title}</h3>
+    </div>
+    <div id="main-wrapper">
+        <div class="row">
+            <div class="panel panel-body">
+                {if condition="@checkAuth('/admin/ChannelType/channelAdd')"}
+                <div class="form-group">
+                    <input type="button" class="btn btn-success" onclick="channelAdd();" value="新增模型"/>
+                </div>
+                {/if}
+                <div class="table-responsive">
+                    <div class="dataTables_wrapper">
+                        <table id="menusTables" class="display table" style="width: 100%; cellspacing: 0;">
+                            <thead>
+                            <tr>
+                                <th>模型名称</th>
+                                <th>模型操作</th>
+                                <th>排序</th>
+                                <th>状态</th>
+                                <th>操作</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {volist name="list" id="item"}
+                            <tr>
+                                <td>{$item.m_title}</td>
+                                <td>{$item.m_act}</td>
+                                <td>{$item.sort}</td>
+                                <td>{switch name="item.status"}
+                                    {case value="1"}正常{/case}
+                                    {case value="-1"}<span class="text-danger">禁用</span>{/case}
+                                    {/switch}</td>
+                                <td>
+                                    {if condition="@checkAuth('/admin/ChannelType/channelEdit')"}
+                                    <button type="button" class="btn btn-info" onclick="channelEdit({$item.id});">修改</button>
+                                    {/if}
+                                    {if condition="@checkAuth('/admin/ChannelType/channelDel')"}
+                                    <button type="button" class="btn btn-default" onclick="channelDel({$item.id});">删除</button>
+                                    {/if}
+                                </td>
+                            </tr>
+                            {/volist}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{/block}
+{block name="footer_js"}
+<script src="{$Think.config.system_static}plugins/datatables/js/jquery.datatables.min.js"></script>
+<script src="{$Think.config.system_static}plugins/x-editable/bootstrap3-editable/js/bootstrap-editable.js"></script>
+<script type="application/javascript">
+    $(function(){
+        $('#menusTables').DataTable({
+            paging: false,
+            info: false,
+            ordering:false,
+            searching:false,
+            language:lang
+        });
+    });
+    {if condition="@checkAuth('/admin/ChannelType/channelAdd')"}
+    //新增导航
+    function channelAdd(){
+        $.myModal.open({
+            remote:'/admin/ChannelType/channelAdd',
+            backdrop: 'static',
+            keyboard: false,
+            show:true,
+            success:function(o){
+                init_modal() ;
+            }
+        }) ;
+    }
+    {/if}
+    {if condition="@checkAuth('/admin/ChannelType/channelEdit')"}
+    //修改用户
+    function channelEdit(id){
+        $.myModal.open({
+            remote:'/admin/ChannelType/channelEdit?id='+ id,
+            backdrop: 'static',
+            keyboard: false,
+            show:true,
+            success:function(o){
+                init_modal() ;
+            }
+        }) ;
+    }
+    {/if}
+    {if condition="@checkAuth('/admin/ChannelType/channelDel')"}
+    //修改用户
+    function channelDel(id){
+        $.myModal.open({
+            remote:'/admin/ChannelType/channelDel?id='+ id,
+            backdrop: 'static',
+            keyboard: false,
+            show:true,
+        }) ;
+    }
+    {/if}
+</script>
+{/block}
