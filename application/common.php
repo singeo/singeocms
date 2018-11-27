@@ -303,6 +303,7 @@ if(!function_exists('getPagelist')){
         return $value;
     }
 }
+
 if(!function_exists('getAuthor')) {
     /**
      * 获取文章作者
@@ -323,6 +324,17 @@ if(!function_exists('getAuthor')) {
                 return $author_name;
             }
         }
+    }
+}
+
+if(!function_exists('getWebconfig')) {
+    /**
+     * 获取网站某个参数配置的值
+     * @param $key
+     * @return mixed|string
+     */
+    function getWebconfig($key){
+        return cache(config('web_config_catch'))[$key] ;
     }
 }
 ?>
