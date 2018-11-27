@@ -20,7 +20,8 @@ class Sg extends TagLib
         'tagsarticle' => ['attr'=>'aid,limit,empty','close'=>1] ,
         'taglist' => ['attr'=>'row,key,id,order,empty','close'=>1],
         'pagelist' => ['attr' => 'listitem,listsize', 'close' => 0],
-        'breadcrumb'=> ['attr' => 'cid', 'close' => 0]
+        'breadcrumb'=> ['attr' => 'cid', 'close' => 0],
+        'singleinfo'=> ['attr' => 'cid,id,empty','close'=>1],
     ] ;
 
     /**
@@ -242,6 +243,27 @@ class Sg extends TagLib
         $parseStr .= 'endif ; endforeach ;' ;
         $parseStr .= 'echo "<a href=\"/index.html\" class=\"n1\">网站首页</a>" . $crumb_str ;';
         $parseStr .= '?>' ;
+        return $parseStr ;
+    }
+
+    /**
+     * 获取单页内容
+     * @param $tags
+     */
+    public function tagSingleinfo($tags,$content){
+        if(empty($tags['cid'])){
+            echo '标签错误，当前栏目ID不存在。' ;
+        }
+        $cid = $tags['cid'] ;
+        $idname = empty($tags['id']) ? 'info' : $tags['id'] ;
+        $empty = empty($tags['empty']) ? '没有数据' : $tags['empty'] ;
+        $parseStr = ' <?php ';
+        $parseStr .= '$singlepagemodel = new \app\common\model\SinglePage() ;' ;
+        $parseStr .= '$'.$idname.' = $singlepagemodel->getSingleInfo('.$cid.') ;' ;
+        $parseStr .= 'if(empty($info)): echo \''.$empty.'\' ;' ;
+        $parseStr .= 'else: ?>' ;
+        $parseStr .= $content ;
+        $parseStr .= '<?php endif ;?>' ;
         return $parseStr ;
     }
 }

@@ -50,10 +50,9 @@ AScpylDYym0aKTDYXwIDAQAB
      * @return string
      */
     public function makeSign($data) {
-        if (array_key_exists('sign', $data) === false) {
-            return false ;
+        if (isset($data['sign'])) {
+            unset($data['sign']);
         }
-        unset($data['sign']);
         if (count($data) >= 1) {
             //参数字典排序
             ksort($data);
@@ -78,10 +77,16 @@ AScpylDYym0aKTDYXwIDAQAB
      * @return bool
      */
     public function decryptRSA($enStr){
-        if($enStr) return false ;
+        if(!$enStr) return false ;
 //        $hex_encrypt_data = trim($enStr); //十六进制数据
 //        $encrypt_data = pack("H*", $hex_encrypt_data);//对十六进制数据进行转换
-        openssl_private_decrypt($encrypt_data, $decrypt_data, $this->private_key);
+        openssl_private_decrypt($enStr, $decrypt_data, $this->private_key);
         return $decrypt_data ;
+    }
+
+    public function encryptRSA($str){
+        if(!$str) return false ;
+        openssl_public_encrypt($str,$encrypt_data,$this->public_key) ;
+        return base64_encode($encrypt_data) ;
     }
 }

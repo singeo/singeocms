@@ -45,9 +45,6 @@ class SinglePage extends Base
      * 提交修改单页页面
      */
     public function submitSingleEdit(){
-        $file = $this->request->file() ;
-        print_r($file);
-        exit ;
         $param = $this->request->param() ;
         $singlemodel = new \app\admin\model\SinglePage() ;
         $result = $singlemodel->saveSinglePage($param) ;

@@ -45,7 +45,7 @@ class Advert extends Base
         $orderby = 'sort ASC,cid DESC' ;
         $catelist = $categorymodel->getList($where, $field,null, $orderby) ;
         $this->assign('catelist',$catelist) ;
-        echo $this->fetch() ;
+        echo $this->fetch('advertadd') ;
     }
 
     /**
@@ -78,7 +78,7 @@ class Advert extends Base
         $catelist = $categorymodel->getList($where, $field,null, $orderby) ;
         $this->assign('catelist',$catelist) ;
         $this->assign('info',$info) ;
-        echo $this->fetch() ;
+        echo $this->fetch('advertedit') ;
     }
 
     /**
@@ -106,7 +106,7 @@ class Advert extends Base
             ->field('aid,a_title')
             ->find() ;
         $this->assign('info',$info) ;
-        echo $this->fetch() ;
+        echo $this->fetch('advertdel') ;
     }
 
     /**
