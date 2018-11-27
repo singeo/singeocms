@@ -33,7 +33,7 @@ class Consoleuser extends Base
      * 新增管理员
      */
     public function userAdd(){
-        echo $this->fetch() ;
+        echo $this->fetch('useradd') ;
     }
 
     /**
@@ -64,7 +64,7 @@ class Consoleuser extends Base
         $field = 'id,user_login,user_nickname,user_email,mobile,user_status' ;
         $userInfo = $consoleUser->find($where,$field) ;
         $this->assign('info',$userInfo) ;
-        echo $this->fetch() ;
+        echo $this->fetch('useredit') ;
     }
 
     /**
@@ -107,7 +107,7 @@ class Consoleuser extends Base
         }
         $this->assign('userRole',$userRole) ;
         $this->assign('user_id',$user_id) ;
-        echo $this->fetch() ;
+        echo $this->fetch('userrole') ;
     }
 
     /**

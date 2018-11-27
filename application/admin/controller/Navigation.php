@@ -69,7 +69,7 @@ class Navigation extends Base
         $this->assign('cateTree',$navlist) ;
         $this->assign('navcate_id',$navcate_id) ;
         $this->assign('nav_id',$nav_id) ;
-        echo $this->fetch() ;
+        echo $this->fetch('navadd') ;
     }
 
     /**
@@ -128,7 +128,7 @@ class Navigation extends Base
         $this->assign('info',$navi_info) ;
         $this->assign('navcate_id',$navi_info['nav_cate_id']) ;
         $this->assign('nav_id',$nav_id) ;
-        echo $this->fetch() ;
+        echo $this->fetch('navedit') ;
     }
 
     /**
@@ -160,7 +160,7 @@ class Navigation extends Base
             ->field($field)
             ->find() ;
         $this->assign('info',$navInfo) ;
-        echo $this->fetch() ;
+        echo $this->fetch('navdel') ;
     }
 
     /**

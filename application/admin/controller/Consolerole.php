@@ -29,7 +29,7 @@ class Consolerole extends Base
      * 新增角色
      */
     public function roleAdd(){
-        echo $this->fetch() ;
+        echo $this->fetch('roleadd') ;
     }
 
     /**
@@ -60,7 +60,7 @@ class Consolerole extends Base
         $field = 'id,status,role_name,sort' ;
         $roleInfo = $consoleUser->find($where,$field) ;
         $this->assign('info',$roleInfo) ;
-        echo $this->fetch() ;
+        echo $this->fetch('roleedit') ;
     }
 
     /**
@@ -104,7 +104,7 @@ class Consolerole extends Base
             ->select() ;
         $menuTree = \app\admin\library\TreeShape::channelLevel($menulist,0,'','id','parent_id') ;
         $this->assign('menuTree',$menuTree) ;
-        echo $this->fetch() ;
+        echo $this->fetch('rolerule') ;
     }
 
     /**

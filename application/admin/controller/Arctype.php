@@ -57,7 +57,7 @@ class Arctype extends Base
         $this->assign('modelist',$modelist) ;
 
         $this->assign('cid',$cid) ;
-        echo $this->fetch() ;
+        echo $this->fetch('columnadd') ;
     }
 
     /**
@@ -105,7 +105,7 @@ class Arctype extends Base
         $this->assign('modelist',$modelist) ;
 
         $this->assign('cid',$cid) ;
-        echo $this->fetch() ;
+        echo $this->fetch('columnedit') ;
     }
 
     /**
@@ -138,7 +138,7 @@ class Arctype extends Base
             ->field($field)
             ->find() ;
         $this->assign('info',$info) ;
-        echo $this->fetch() ;
+        echo $this->fetch('columndel') ;
     }
 
     /**

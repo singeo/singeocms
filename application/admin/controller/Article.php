@@ -83,7 +83,7 @@ class Article extends Base
         $this->assign('sourcelist',$sourcelist) ;
         //cid
         $this->assign('cid',$cid) ;
-        echo $this->fetch() ;
+        echo $this->fetch('articleadd') ;
     }
 
     /**
@@ -141,7 +141,7 @@ class Article extends Base
             $info['article_tags'] = '' ;
         }
         $this->assign('info',$info) ;
-        echo $this->fetch() ;
+        echo $this->fetch('articleedit') ;
     }
 
     /**
@@ -169,7 +169,7 @@ class Article extends Base
             ->field('id,article_title')
             ->find() ;
         $this->assign('info',$info) ;
-        echo $this->fetch() ;
+        echo $this->fetch('articledel') ;
     }
 
     /**

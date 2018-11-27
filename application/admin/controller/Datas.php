@@ -273,7 +273,7 @@ class Datas extends Base
         $files = glob($path) ;
         $this->assign('time', $time) ;
         $this->assign('files', $files) ;
-        echo $this->fetch() ;
+        echo $this->fetch('delfile') ;
     }
 
     /**

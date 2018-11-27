@@ -47,7 +47,7 @@ class Consolemenu extends Base
         $menulist = TreeShape::tree($menulist,'menu_name','id', 'parent_id') ;
         $this->assign('menuTree',$menulist) ;
         $this->assign('curMenuID',$menu_id) ;
-        echo $this->fetch() ;
+        echo $this->fetch('menuadd') ;
     }
 
     /**
@@ -94,7 +94,7 @@ class Consolemenu extends Base
             ->find() ;
         $this->assign('info',$menuInfo) ;
         $this->assign('curMenuID',$menuInfo['parent_id']) ;
-        echo $this->fetch() ;
+        echo $this->fetch('menuedit') ;
     }
 
     /**
@@ -126,7 +126,7 @@ class Consolemenu extends Base
             ->field($field)
             ->find() ;
         $this->assign('info',$menuInfo) ;
-        echo $this->fetch() ;
+        echo $this->fetch('menudel') ;
     }
 
     /**

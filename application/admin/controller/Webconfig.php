@@ -60,7 +60,7 @@ class Webconfig extends Base
     public function configAdd(){
         $this->assign('config_group',config('web_config_group')) ;
         $this->assign('onfig_field_type',config('web_config_field_type')) ;
-        echo $this->fetch() ;
+        echo $this->fetch('configadd') ;
     }
 
     /**
@@ -95,7 +95,7 @@ class Webconfig extends Base
         $this->assign('info',$info) ;
         $this->assign('config_group',config('web_config_group')) ;
         $this->assign('onfig_field_type',config('web_config_field_type')) ;
-        echo $this->fetch() ;
+        echo $this->fetch('configedit') ;
     }
 
     /**

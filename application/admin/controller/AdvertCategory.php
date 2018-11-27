@@ -99,7 +99,7 @@ class AdvertCategory extends Base
             ->field($field)
             ->find() ;
         $this->assign('info',$cateInfo) ;
-        echo $this->fetch() ;
+        echo $this->fetch('catedel') ;
     }
 
     /**

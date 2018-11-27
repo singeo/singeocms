@@ -30,7 +30,7 @@ class ChannelType extends Base
      * 新增模型接口
      */
     public function channelAdd(){
-        echo $this->fetch() ;
+        echo $this->fetch('channeladd') ;
     }
 
     /**
@@ -60,7 +60,7 @@ class ChannelType extends Base
         $field = 'id,m_title,m_act,sort,status' ;
         $info = $channelmodel->find($chWhere,$field) ;
         $this->assign('info',$info) ;
-        echo $this->fetch() ;
+        echo $this->fetch('channeledit') ;
     }
 
     /**
@@ -92,7 +92,7 @@ class ChannelType extends Base
             ->field($field)
             ->find() ;
         $this->assign('info',$cateInfo) ;
-        echo $this->fetch() ;
+        echo $this->fetch('channeldel') ;
     }
 
     /**
