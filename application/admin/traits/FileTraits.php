@@ -34,6 +34,27 @@ trait FileTraits
     }
 
     /**
+     * wangEdit上传图片接口方法
+     */
+    public function wangUpload(){
+        $file = request()->file('imgFile');
+        $dir = request()->param('dir') ;
+        $uploadcls = new \app\admin\library\Upload() ;
+        $uploadRes = $uploadcls->doUpload($file,$dir) ;
+        if($uploadRes['status'] == 0){
+            $result['error'] = 1 ;
+            $result['message'] = $uploadRes['msg'] ;
+            echo json_encode($result) ;
+            exit ;
+        }else{
+            $result['error'] = 0 ;
+            $result['url'] = $uploadRes['url'] ;
+            echo json_encode($result) ;
+            exit ;
+        }
+    }
+
+    /**
      * 文件管理方法
      */
     public function fileManager()

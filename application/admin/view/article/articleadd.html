@@ -46,7 +46,8 @@
                 <div class="form-group">
                     <label for="content" class="col-sm-2 control-label">文章内容</label>
                     <div class="col-sm-8">
-                        <textarea id="content" name="content" class="form-control"></textarea>
+                        <div id="content"></div>
+                        <textarea name="content" class="form-control hidden"></textarea>
                     </div>
                 </div>
                 <div class="form-group">
@@ -175,12 +176,12 @@
             format: 'yyyy-mm-dd hh:ii:ss'
         });
         init_upload() ;
-        init_editor() ;
         articleValid() ;
+        initWangEditor('#content',$('textarea[name="content"]')) ; //初始化编辑器
     }
     //链接属性变化
-    function link_attr_change($attr_val) {
-        if($attr_val == 1){
+    function link_attr_change(attr_val) {
+        if(attr_val == 1){
             $('.nav_link_cate').removeClass('hidden') ;
             $('.nav_link_box').addClass('hidden') ;
         }else{
@@ -200,16 +201,6 @@
         }) ;
     }
 
-    //初始化编辑器
-    function init_editor() {
-        var editor = KindEditor.create('#content',{
-            uploadJson : '/admin/Webconfig/upload?dir=image' ,
-            fileManagerJson : '/admin/Webconfig/fileManager?dir=image',
-            allowFileManager : true,
-            formatUploadUrl : false,
-            height : '350px'
-        });
-    }
 
     //初始化验证器
     function articleValid(){

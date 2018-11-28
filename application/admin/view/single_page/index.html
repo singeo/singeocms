@@ -34,7 +34,8 @@
                     <div class="form-group">
                         <label for="p_content" class="col-sm-2 control-label">页面内容</label>
                         <div class="col-sm-8">
-                            <textarea id="p_content" name="p_content" class="form-control">{$info.p_content}</textarea>
+                            <div id="p_content"></div>
+                            <textarea name="p_content" class="form-control hidden">{$info.p_content}</textarea>
                         </div>
                     </div>
                     <div class="form-group">
@@ -53,8 +54,8 @@
 {block name="footer_js"}
 <script src="{$Think.config.system_static}plugins/datatables/js/jquery.datatables.min.js"></script>
 <script src="{$Think.config.system_static}plugins/x-editable/bootstrap3-editable/js/bootstrap-editable.js"></script>
-<!-- 编辑器 -->
-<script src="{$Think.config.system_static}plugins/kindeditor/kindeditor-all-min.js"></script>
+<!-- wangEditoer.js编辑器 -->
+<script src="{$Think.config.app_config.plugins_static}wangEditor/wangEditor.min.js"></script>
 <script src="{$Think.config.app_config.plugins_static}dropzone/dropzone.min.js"></script>
 <!-- viewer图片查看器 -->
 <script src="{$Think.config.system_static}plugins/viewer/viewer-jquery.min.js"></script>
@@ -67,18 +68,8 @@
             searching:false,
             language:lang
         });
-        init_editor() ;
+        initWangEditor('#p_content',$('textarea[name="p_content"]')) ;
     });
 
-    //初始化编辑器
-    function init_editor() {
-        var editor = KindEditor.create('#p_content',{
-            uploadJson : '/admin/Webconfig/upload?dir=image' ,
-            fileManagerJson : '/admin/Webconfig/fileManager?dir=image',
-            allowFileManager : true,
-            formatUploadUrl : false,
-            height : '350px'
-        });
-    }
 </script>
 {/block}
