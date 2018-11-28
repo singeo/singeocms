@@ -129,6 +129,8 @@ h3.blogtitle { line-height: 30px; height: 30px; margin: 10px 0; }
 .news_infos { line-height: 24px; text-align: justify; }
 .news_infos p { margin-bottom: 10px }
 .news_infos img { max-width: 650px; height: auto; }
+.news_infos pre{background-color: #f7f7f7; border: 0;border-radius: 3px;font-family: Consolas,Monaco,Andale Mono,Ubuntu Mono,monospace;line-height: 1.45;overflow: auto;padding: 16px;}
+.news_infos pre code{background-color: transparent;border: 0;display: inline;line-height: inherit;margin: 0;max-width: 100%;overflow: initial;padding: 0;tab-size: 4;}
 .share { padding: 20px; }
 .nextinfo { line-height: 24px; width: 100%; background: #FFF; border-radius: 10px; overflow: hidden; margin: 20px 0 }/*��һƪ��һƪ*/
 .nextinfo p { padding: 4px 10px; border-radius: 5px; }
