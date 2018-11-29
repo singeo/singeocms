@@ -5,7 +5,7 @@
 {/block}
 {block name="main"}
 <div class="blogs">
-    <ul>
+    <ul class="list-body">
         {sg:article id="item"}
         {assign name="url" value=":get_content_link($item.id,$item.link_attr,$item.link_url,$item.template_view)" /}
         <li><span class="blogpic"><a href="{$url}" title="{$item.article_title}"><img src="{$item.article_pic}"></a></span>
