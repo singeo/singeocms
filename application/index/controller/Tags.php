@@ -15,7 +15,10 @@ class Tags extends Base
      * 标签展示
      */
     public function index(){
-        echo $this->column_id ;
         return $this->fetch('/tags') ;
+    }
+
+    public function search(){
+        return $this->fetch('/search_tags') ;
     }
 }

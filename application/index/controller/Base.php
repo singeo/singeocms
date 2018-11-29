@@ -19,24 +19,29 @@ class Base extends Controller
      * 栏目ID
      * @var
      */
-    public $column_id = 0 ;
+    protected $column_id = 0 ;
 
     /**
      * 文章ID
      */
-    public $article_id = 0 ;
+    protected $article_id = 0 ;
+
+    /**
+     * 标签ID
+     */
+    protected $tags_id = 0 ;
 
     /**
      * 当前栏目信息
      * @var array
      */
-    public $cur_column_info = [] ;
+    protected $cur_column_info = [] ;
 
     /**
      * 网站配置信息
      * @var array
      */
-    public $web_config = [] ;
+    protected $web_config = [] ;
 
 
     /**
@@ -63,13 +68,25 @@ class Base extends Controller
         if($title == ""){
             $cid = $this->request->param('cid/d',0) ;
             $article_id = $this->request->param('id/d',0) ;
+            $tags_id = $this->request->param('tagid/d',0) ;
             $this->column_id = $cid ;
             $this->article_id = $article_id ;
+            $this->tags_id = $tags_id ;
             if($this->column_id == 0){ //如果栏目ID为空
                 if($this->article_id == 0){
-                    $seo['title'] = $this->web_config['web_title'] ;
-                    $seo['keywords'] = $this->web_config['web_keywords'] ;
-                    $seo['description'] = $this->web_config['web_description'] ;
+                    if($this->tags_id == 0){
+                        $seo['title'] = $this->web_config['web_title'] ;
+                        $seo['keywords'] = $this->web_config['web_keywords'] ;
+                        $seo['description'] = $this->web_config['web_description'] ;
+                    }else{
+                        $tagsmodel = new \app\common\model\Tags() ;
+                        $tagsmodel->updateHitNum($tags_id) ;
+                        $info = $tagsmodel->getTagsInfo($tags_id) ;
+                        $seo['title'] = $info['tags_name'] .'-'.$this->web_config['web_title']  ;
+                        $seo['keywords'] = $info['tags_name'] .','. $this->web_config['web_keywords'] ;
+                        $seo['description'] = $this->web_config['web_description']  ;
+                        $this->assign('article_info',$info) ;
+                    }
                 }else{
                     $articlemodel = new \app\common\model\Article() ;
                     $articlemodel->updateViewnum($this->article_id) ; //更新点击量
@@ -80,7 +97,7 @@ class Base extends Controller
                     $this->column_id = $info['cid'] ;
                     $seo['title'] = $info['article_title'] .'-'.$this->web_config['web_title']  ;
                     $seo['keywords'] = empty($info['seo_keywords']) ? $this->web_config['web_keywords'] : $info['seo_keywords'] ;
-                    $seo['description'] = empty($info['seo_desc']) ? (empty($info['article_desc']) ? $this->web_config['seo_desc'] : $info['article_desc']) : $info['seo_desc'] ;
+                    $seo['description'] = empty($info['seo_desc']) ? (empty($info['article_desc']) ? $this->web_config['web_description'] : $info['article_desc']) : $info['seo_desc'] ;
                     $this->assign('article_info',$info) ;
                 }
             }else{

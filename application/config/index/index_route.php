@@ -14,4 +14,5 @@ return [
     'single' =>  'index/Single/index', //单页路由
     'show'  =>  'index/Article/show', //文章内容页
     'tags_cloud' =>  'index/Tags/index?cid=4', //标签页
+    'search_tags' =>  'index/Tags/search', //搜索标签页
 ] ;

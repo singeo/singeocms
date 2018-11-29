@@ -181,7 +181,7 @@ if(!function_exists('get_tags_link')){
      * @return string
      */
     function get_tags_link($tagid){
-        return '/seach_tags.html?tagid=' .$tagid ;
+        return '/search_tags.html?tagid=' .$tagid ;
     }
 }
 

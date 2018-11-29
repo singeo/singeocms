@@ -12,7 +12,7 @@
         <h2 class="hometitle">标签云</h2>
         <ul>
             {sg:taglist row="20" id="item"}
-            <a href="{:get_tags_link($item.tags_id)}">{$item.tags_name}</a>
+            <a href="{:get_tags_link($item.tags_id)}">{$item.tags_name}({$item.hits_total_num})</a>
             {/sg:taglist}
         </ul>
     </div>

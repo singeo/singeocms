@@ -104,14 +104,14 @@ class Sg extends TagLib
      * @param $content
      */
     public function tagTaglist($tags,$content){
-        $row = isset($tags['row']) ? $tags['row'] : 10 ;
+        $row = isset($tags['row']) ? $tags['row'] : '' ;
         $key    = !empty($tags['key']) ? $tags['key'] : 'i';
         $id     = isset($tags['id']) ? $tags['id'] : 'field';
         $orderby    = isset($tags['orderby']) ? $tags['orderby'] : '';
         $empty    = isset($tags['empty']) ? $tags['empty'] : '没有数据';
         $parseStr = '<?php ' ;
         $parseStr .= '$tagmodel = new \app\common\model\Tags ;' ;
-        $parseStr .= '$tags = $tagmodel->getTagslist('.$row.',"'.$orderby.'") ;' ;
+        $parseStr .= '$tags = $tagmodel->getTagslist(\''.$row.'\',"'.$orderby.'") ;' ;
         $parseStr .= 'if(empty($tags)): echo "'.$empty .'" ; else: ' ;
         $parseStr .= 'foreach($tags as $'.$key.'=>$'.$id.') : ?>' ;
         $parseStr .= $content ;

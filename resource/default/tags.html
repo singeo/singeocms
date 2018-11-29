@@ -1,0 +1,14 @@
+{extend name="common/base" /}
+{block name="main"}
+<h1 class="t_nav">{sg:Breadcrumb cid="$cur_column_id"}</h1>
+<div class="infos">
+    <div class="cloud">
+        <ul>
+            {sg:taglist id="item"}
+            <a href="{:get_tags_link($item.tags_id)}">{$item.tags_name}({$item.hits_total_num})</a>
+            {/sg:taglist}
+        </ul>
+    </div>
+</div>
+{:widget('PartsWidgets/inner_right_bar')}
+{/block}
