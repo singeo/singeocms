@@ -17,7 +17,20 @@ class Advert extends Base
      * 广告列表
      */
     public function index(){
+        $cid = $this->request->param('cid/d', 0) ;
+        $where['status'] = 1 ;
+        $cateTree = Db::name('advert_category')
+            ->where($where)
+            ->field('cid,c_name')
+            ->order('sort ASC,cid DESC')
+            ->select() ;
+        $this->assign('cateTree',$cateTree) ;
+
+        $where = null ;
         $where['a.status'] = 1 ;
+        if($cid != 0){
+            $where['ac.cid'] = $cid ;
+        }
         $orderby = 'a.sort ASC,a.aid DESC' ;
         $feild = 'a.aid,a.a_title,a.a_desc,a.a_pic,a.link_url,a.status,a.sort,a.create_time,ac.c_name' ;
         $join[] = ['advert_category as ac','ac.cid = a.category_id'] ;
@@ -31,6 +44,7 @@ class Advert extends Base
         if($list === false){
             $this->error('获取数据失败') ;
         }
+        $this->assign('cid',$cid) ;
         $this->assign('list',$list) ;
         return $this->fetch() ;
     }

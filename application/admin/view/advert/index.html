@@ -13,15 +13,27 @@
     <div id="main-wrapper">
         <div class="row">
             <div class="panel panel-body panel-white">
-                {if condition="@checkAuth('/admin/Advert/advertAdd')"}
-                <button type="button" class="btn btn-success m-b-sm" onclick="advertAdd('');">新增广告</button>
-                {/if}
+                <form class="form-inline" role="form">
+                    {if condition="@checkAuth('/admin/Advert/advertAdd')"}
+                    <button type="button" class="btn btn-success" onclick="advertAdd('');">新增广告</button>
+                    {/if}
+                    <div class="form-group">
+                        <select class="form-control" name="cid">
+                            <option value="0">所有广告</option>
+                            {volist name="cateTree" id="cate"}
+                            <option value="{$cate.cid}" {if condition="$cate.cid eq $cid"}selected{/if}>{$cate.c_name}</option>
+                            {/volist}
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-info">搜索</button>
+                </form>
                 <div class="table-responsive">
                     <table id="advertTables" class="display table" style="width: 100%; cellspacing: 0;">
                         <thead>
                         <tr>
                             <th>ID</th>
                             <th>广告名称</th>
+                            <th>广告分类</th>
                             <th>广告描述</th>
                             <th>广告图片</th>
                             <th>链接地址</th>
@@ -35,6 +47,7 @@
                         <tr>
                             <td>{$item.aid}</td>
                             <td>{$item.a_title}</td>
+                            <td>{$item.c_name}</td>
                             <td>{$item.a_desc}</td>
                             <td>{notempty name="item.a_pic"}
                                 <img src="{$item.a_pic}" data-original="{$item.a_pic}" class="img-thumbnail img-responsive img-thumb-small" />
