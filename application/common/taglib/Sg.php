@@ -19,6 +19,7 @@ class Sg extends TagLib
         'prevornext' => ['attr'=>'aid,cid,flag','close' => 0] ,
         'tagsarticle' => ['attr'=>'aid,limit,empty','close'=>1] ,
         'taglist' => ['attr'=>'row,key,id,order,empty','close'=>1],
+        'tagspage' => ['attr'=>'tagid,pagesize,id,key','close'=>1],
         'pagelist' => ['attr' => 'listitem,listsize', 'close' => 0],
         'breadcrumb'=> ['attr' => 'cid', 'close' => 0],
         'singleinfo'=> ['attr' => 'cid,id,empty','close'=>1],
@@ -195,6 +196,33 @@ class Sg extends TagLib
         $parseStr .= 'foreach($list as $item): ?>' ;
         $parseStr .= $content ;
         $parseStr .= '<?php endforeach ;endif ;?>' ;
+        return $parseStr ;
+    }
+
+    /**
+     * 获取含有tags标签的列表
+     * @param $tags
+     * @param $content
+     */
+    public function tagTagspage($tags,$content){
+        if(empty($tags['tagid'])){
+            echo '标签错误，当前标签ID不存在。' ;
+        }
+        $tagid = $tags['tagid'] ;
+        $pagesize = empty($tags['pagesize']) ? 10 : $tags['pagesize'] ;
+        $id     = isset($tags['id']) ? $tags['id'] : 'field';
+        $key    = !empty($tags['key']) ? $tags['key'] : 'i';
+        $empty = empty($tags['empty']) ? '没有数据' : $tags['empty'] ;
+        $parseStr = '<?php ';
+        $parseStr .= '$articlemodel = new \app\common\model\Article() ;';
+        $parseStr .= '$res = $articlemodel->getTagsPageList('.$tagid.','.$pagesize.') ;' ;
+        $parseStr .= '$__LIST__ = $res["list"] ;' ;
+        $parseStr .= '$__PAGES__ = $res["pages"] ;' ;
+        $parseStr .= 'foreach($__LIST__ as $'.$key.'=>$'.$id.'):  ' ;
+        $parseStr .= 'if(empty($'.$id.'["article_pic"]) || !file_exists($_SERVER["DOCUMENT_ROOT"].$'.$id.'["article_pic"])): $'.$id.'["article_pic"] = cache(config("web_config_catch"))["web_no_pic"] ;endif;' ;
+        $parseStr .= ' ?>' ;
+        $parseStr .= $content ;
+        $parseStr .= '<?php endforeach ;?>' ;
         return $parseStr ;
     }
 

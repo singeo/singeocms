@@ -233,4 +233,28 @@ class Article extends Base
         return $list ;
     }
 
+    /**
+     * 标签文章列表
+     * @param $tags_id
+     * @param int $pagesize
+     * @return array
+     */
+    public function getTagsPageList($tags_id, $pagesize = 10){
+        $where['at.tags_id'] = $tags_id ;
+        $field = 'a.id,article_title,article_desc,article_pic,a.seo_keywords,a.seo_desc,view_num,a.link_attr,'
+                .'a.link_url,a.template_view,publish_time,is_head,is_recom,is_top,ar.cid,ar.c_name,ar.link_attr as lm_link_attr,'
+                .'ar.link_url as lm_link_url,ar.template_list' ;
+        $join[] = ['article as a','a.id = at.aid'] ;
+        $join[] = ['arctype as ar','a.cid = ar.cid'] ;
+        $list = Db::name('article_tags')
+            ->alias('at')
+            ->join($join)
+            ->where($where)
+            ->field($field)
+            ->order('a.sort ASC ,a.id DESC')
+            ->paginate($pagesize,false,['query'=>request()->param()]) ;
+        $result['list'] = $list->toArray()['data'] ;
+        $result['pages'] = $list ;
+        return $result ;
+    }
 }

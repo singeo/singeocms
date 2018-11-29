@@ -85,7 +85,7 @@ class Base extends Controller
                         $seo['title'] = $info['tags_name'] .'-'.$this->web_config['web_title']  ;
                         $seo['keywords'] = $info['tags_name'] .','. $this->web_config['web_keywords'] ;
                         $seo['description'] = $this->web_config['web_description']  ;
-                        $this->assign('article_info',$info) ;
+                        $this->assign('tagsinfo',$info) ;
                     }
                 }else{
                     $articlemodel = new \app\common\model\Article() ;
