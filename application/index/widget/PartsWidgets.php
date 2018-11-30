@@ -18,6 +18,7 @@ class PartsWidgets extends Controller
     public function main_nav($pid = 0){
         $navWhere['status'] = 1 ;
         $navWhere['pid'] = $pid ;
+        $navWhere['is_show'] = 1 ;
         $field = 'cid,c_name,link_attr,link_url,template_list' ;
         $orderby = 'sort,cid DESC' ;
         $navlist = Db::name('arctype')

@@ -23,7 +23,7 @@ class Arctype extends Base
         if(empty($result)){
             $orderby = 'pid ASC,sort ASC,cid' ;
             $result = Db::name('arctype')
-                ->where(null)
+                ->where(['is_show'=>1])
                 ->order($orderby)
                 ->cache(true,SINGEO_CACHE_TIME,'arctype')
                 ->select() ;
