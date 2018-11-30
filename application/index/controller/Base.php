@@ -96,7 +96,7 @@ class Base extends Controller
                     }
                     $this->column_id = $info['cid'] ;
                     $seo['title'] = $info['article_title'] .'-'.$this->web_config['web_title']  ;
-                    $seo['keywords'] = empty($info['seo_keywords']) ? $this->web_config['web_keywords'] : $info['seo_keywords'] ;
+                    $seo['keywords'] = empty($info['seo_keywords']) ? $this->web_config['web_keywords'] : $info['seo_keywords'].','.$this->web_config['web_keywords'] ;
                     $seo['description'] = empty($info['seo_desc']) ? (empty($info['article_desc']) ? $this->web_config['web_description'] : $info['article_desc']) : $info['seo_desc'] ;
                     $this->assign('article_info',$info) ;
                 }
