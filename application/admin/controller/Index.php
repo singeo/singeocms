@@ -7,6 +7,8 @@
  */
 namespace app\admin\controller;
 
+use think\Cache;
+
 class Index extends Base {
 
     /**
@@ -21,7 +23,7 @@ class Index extends Base {
      * 清除数据缓存
      */
     public function authclear(){
-        cache(config('app_config.catch_keys_all')['admin_auth_menu'], null) ;
+        Cache::clear() ;
         return $this->success('缓存清除成功') ;
     }
 }
