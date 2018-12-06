@@ -25,8 +25,9 @@ h3.blogtitle { line-height: 30px; height: 30px; margin: 10px 0; }
 .dtime { background: url(../images/newsbg02.png) no-repeat left center }
 .viewnum { background: url(../images/newsbg04.png) no-repeat left center }
 .pingl { background: url(../images/newsbg03.png) no-repeat left center }
-.blogpic img { height: 100%;width: auto;position: absolute;top: 0;left: 50%;transform: translateX(-50%);}
-.bloginfo p { color: #888; line-height: 24px }
+.blogpic img { height: 100%;width: auto;position: absolute;top: 0;left: 50%;transform: translateX(-50%);-moz-transition: all .5s ease;-webkit-transition: all .5s ease;transition: all .5s ease;}
+.blogs .list-body li:hover .blogpic img{transform: translateX(-50%) scale(1.5)}
+ .bloginfo p { color: #888; line-height: 24px }
 .more { font-size: 14px; }
 .pages { padding: 0 60px 25px; text-align: right }
 .pages span { background: #B29C77; color: #fff; }
@@ -73,7 +74,7 @@ h3.blogtitle { line-height: 30px; height: 30px; margin: 10px 0; }
 .paihang ul li:hover b a { color: #000; }
 .paihang li i { width: 100px; height: 90px; overflow: hidden; display: block; border: #efefef 1px solid; float: left; margin-right: 10px }
 .paihang li img { height: 100%; margin: auto; -moz-transition: all .5s ease; -webkit-transition: all .5s ease; transition: all .5s ease; }
-.paihang ul li:hover i img { transform: scale(1.1) }
+.paihang ul li:hover i img { transform: scale(1.5) }
 /*links*/
 .links { width: 100%; background: #FFF; overflow: hidden; }
 .links ul { padding: 20px; overflow: hidden }
