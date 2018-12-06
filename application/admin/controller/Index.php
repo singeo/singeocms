@@ -24,6 +24,6 @@ class Index extends Base {
      */
     public function authclear(){
         Cache::clear() ;
-        return $this->success('缓存清除成功') ;
+        $this->success('缓存清除成功') ;
     }
 }
