@@ -1,5 +1,5 @@
 <ul>
-    <li><a href="/index.html">网站首页</a></li>
+    <li><a href="{:getWebconfig('web_url')}/index.html">网站首页</a></li>
     {volist name="navlist" id="nav"}
     <li><a href="{:get_nav_link($nav.cid,$nav.link_attr,$nav.link_url,$nav.template_list)}">{$nav.c_name}</a></li>
     {/volist}
