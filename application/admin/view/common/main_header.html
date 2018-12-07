@@ -32,7 +32,7 @@
                             <img class="img-circle avatar" src="{$Think.config.system_static}images/head.png" width="40" height="40"alt="">
                         </a>
                         <ul class="dropdown-menu dropdown-list" role="menu">
-                            <li role="presentation"><a href="{:cache(config('web_config_catch'))['web_url']}" target="_blank"><i class="fa fa-home"></i>网站首页</a></li>
+                            <li role="presentation"><a href="{:getWebconfig('web_url')}" target="_blank"><i class="fa fa-home"></i>网站首页</a></li>
                             <li role="presentation"><a href="/admin/Index/authclear"><i class="fa fa-eraser"></i>清除网站缓存</a></li>
                             <li role="presentation"><a href="/admin/Index/siteMap"><i class="fa fa-sitemap"></i>生成网站地图</a></li>
                             <li role="presentation"><a href="javascript:editPassword()"><i class="fa fa-user"></i>修改密码</a></li>
