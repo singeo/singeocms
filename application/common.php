@@ -143,13 +143,14 @@ if(!function_exists('get_nav_link')){
      * @return string
      */
     function get_nav_link($cid,$attr,$url,$tpl){
+        $domain = cache(config('web_config_catch'))['web_url'] ;
         if($attr == 1){
-            return '/'.$tpl . '?cid=' .$cid ;
+            return $domain.'/'.$tpl . '?cid=' .$cid ;
         }elseif($attr == 2){
             if(strpos($url,'http') === 0){
                 return $url ;
             }else{
-                return '/'.$url ;
+                return $domain.'/'.$url ;
             }
         }
     }
@@ -162,13 +163,14 @@ if(!function_exists('get_content_link')){
      * @return string
      */
     function get_content_link($id,$attr,$url,$tpl){
+        $domain = cache(config('web_config_catch'))['web_url'] ;
         if($attr == 1){
-            return '/'.$tpl . '?id=' .$id ;
+            return $domain.'/'.$tpl . '?id=' .$id ;
         }elseif($attr == 2){
             if(strpos($url,'http') === 0){
                 return $url ;
             }else{
-                return '/'.$url ;
+                return $domain.'/'.$url ;
             }
         }
     }
@@ -181,7 +183,8 @@ if(!function_exists('get_tags_link')){
      * @return string
      */
     function get_tags_link($tagid){
-        return '/search_tags.html?tagid=' .$tagid ;
+        $domain = cache(config('web_config_catch'))['web_url'] ;
+        return $domain.'/search_tags.html?tagid=' .$tagid ;
     }
 }
 
