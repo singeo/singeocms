@@ -21,6 +21,7 @@ class Advert extends Base
      */
     public function getAdvertList($cid,$order = 'sort ASC, aid DESC',$limit = null){
         $where['category_id'] = $cid ;
+        $where['status'] = 1 ;
         $field = 'aid,a_title,a_pic,link_url' ;
         $list = Db::name('advert')
             ->where($where)
