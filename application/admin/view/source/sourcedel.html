@@ -1,0 +1,10 @@
+<form class="form-horizontal" name="ruleForm" method="post" action="/admin/Source/submitSourceDel">
+    <input type="hidden" id="source_id" name="source_id" value="{$info.id}" />
+    <div class="modal-body">
+        确认要删除<span class="f-red">{$info.source_name}</span>吗?
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+        <button type="submit" id="add-row" class="btn btn-success">确认</button>
+    </div>
+</form>

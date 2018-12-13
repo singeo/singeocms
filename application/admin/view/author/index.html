@@ -1,0 +1,112 @@
+{extend name="common/base" /}
+{block name="style"}
+{/block}
+{block name="main"}
+<div class="page-inner">
+    <div class="page-title">
+        <h3>{$title}</h3>
+    </div>
+    <div id="main-wrapper">
+        <div class="row">
+            <div class="panel panel-body panel-white">
+                {if condition="@checkAuth('/admin/Author/authorAdd')"}
+                <button type="button" class="btn btn-success" onclick="authorAdd();">新增作者</button>
+                {/if}
+                <div class="table-responsive">
+                    <table id="advertTables" class="display table" style="width: 100%; cellspacing: 0;">
+                        <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>作者名称</th>
+                            <th>作者简介</th>
+                            <th>状态</th>
+                            <th>创建时间</th>
+                            <th>操作</th>
+                        </tr>
+                        </thead>
+                        <tbody id="list_body">
+                        {volist name="list" id="item"}
+                        <tr>
+                            <td>{$item.id}</td>
+                            <td>{$item.author_name}</td>
+                            <td>{$item.author_breif}</td>
+                            <td>{switch name="item.status"}
+                                {case value="1"}正常{/case}
+                                {case value="-1"}<span class="text-danger">禁用</span>{/case}
+                                {/switch}</td>
+                            <td>{$item.create_time|date="Y-m-d H:i:s",###}</td>
+                            <td>
+                                {if condition="@checkAuth('/admin/Author/authorEdit')"}
+                                <button type="button" class="btn btn-info" onclick="authorEdit({$item.id});">修改</button>
+                                {/if}
+                                {if condition="@checkAuth('/admin/Author/AuthorDel')"}
+                                <button type="button" class="btn btn-default" onclick="authorDel({$item.id});">删除</button>
+                                {/if}
+                            </td>
+                        </tr>
+                        {/volist}
+                        </tbody>
+                    </table>
+                    <div class="text-center">
+                        {$list->render()}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{/block}
+{block name="footer_js"}
+<script src="{$Think.config.system_static}plugins/datatables/js/jquery.datatables.min.js"></script>
+<script src="{$Think.config.system_static}plugins/x-editable/bootstrap3-editable/js/bootstrap-editable.js"></script>
+<script type="application/javascript">
+    $(function(){
+        $('#advertTables').DataTable({
+            paging: false,
+            info: false,
+            ordering:false,
+            searching:false,
+            language:lang
+        });
+    });
+    {if condition="@checkAuth('/admin/Author/authorAdd')"}
+    //新增作者
+    function authorAdd(id){
+        $.myModal.open({
+            remote:'/admin/Author/authorAdd',
+            backdrop: 'static',
+            keyboard: false,
+            show:true,
+            success:function(o){
+                authorValid();
+            }
+        }) ;
+    }
+    {/if}
+    {if condition="@checkAuth('/admin/Author/authorEdit')"}
+    //修改作者
+    function authorEdit(id){
+        $.myModal.open({
+            remote:'/admin/Author/authorEdit?id='+ id,
+            backdrop: 'static',
+            keyboard: false,
+            show:true,
+            success:function(o){
+                authorValid();
+            }
+        }) ;
+    }
+    {/if}
+    {if condition="@checkAuth('/admin/Author/authorDel')"}
+    //删除作者
+    function authorDel(id){
+        $.myModal.open({
+            remote:'/admin/Author/authorDel?id='+ id,
+            backdrop: 'static',
+            keyboard: false,
+            show:true,
+        }) ;
+    }
+    {/if}
+</script>
+{/block}

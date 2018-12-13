@@ -1,0 +1,10 @@
+<form class="form-horizontal" name="ruleForm" method="post" action="/admin/Tags/submitTagsDel">
+    <input type="hidden" id="tags_id" name="tags_id" value="{$info.tags_id}" />
+    <div class="modal-body">
+        确认要删除<span class="f-red">标签：[{$info.tags_name}]，以及关联的文章</span>吗?
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+        <button type="submit" id="add-row" class="btn btn-success">确认</button>
+    </div>
+</form>

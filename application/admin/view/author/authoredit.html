@@ -1,0 +1,49 @@
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+    <h4 class="modal-title" id="myModalLabel">编辑作者</h4>
+</div>
+<form class="form-horizontal" name="authorForm" method="post" action="/admin/Author/submitAuthorEdit.html">
+    <input type="hidden" name="author_id" value="{$info.id}">
+    <div class="modal-body">
+        <div class="form-group">
+            <label for="author_name" class="col-sm-2 control-label">作者名称</label>
+            <div class="col-sm-8">
+                <input type="text" id="author_name" name="author_name" class="form-control" value="{$info.author_name}" datatype="s2-30" nullmsg="请输入作者名称" errormsg="作者名称为2-30位字符串" sucmsg=" " placeholder="请输入作者名称" maxlength="30">
+                <span class="Validform_checktip"></span></div>
+        </div>
+        <div class="form-group">
+            <label for="author_breif" class="col-sm-2 control-label">作者简介</label>
+            <div class="col-sm-8">
+                <textarea id="author_breif" name="author_breif" class="form-control">{$info.author_breif}</textarea>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label">状态</label>
+            <div class="col-sm-8">
+                <label class="checkbox-inline">
+                    <input type="radio" name="status" value="1" {eq name="info.status" value="1"}checked{/eq}>&nbsp;正常
+                </label>
+                <label class="checkbox-inline">
+                    <input type="radio" name="status" value="-1" {eq name="info.status" value="-1"}checked{/eq}>&nbsp;禁用
+                </label>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+        <button type="submit" id="add-row" class="btn btn-success">保存</button>
+    </div>
+    {:token('token_hash')}
+</form>
+<script type="text/javascript">
+    function authorValid(){
+        $("form[name='authorForm']").Validform({
+            tiptype: 3,
+            ajaxPost: false,
+            postonce: false,
+            callback: function(data){
+                return true ;
+            }
+        });
+    }
+</script>
