@@ -70,6 +70,7 @@ class Arctype extends Base
             $this->setErrorMsg($validate->getError()) ;
             return false;
         }
+        $cid = $data['cid'] ;
         if(!empty($file['c_picurl'])){
             $uploadcls = new \app\admin\library\Upload() ;
             $uploadRes = $uploadcls->doUpload($file['c_picurl'],'image') ;
@@ -79,16 +80,20 @@ class Arctype extends Base
             }else{
                 $data['c_picurl'] = $uploadRes['url'] ;
             }
+            //读取之前的图片，删除之，节省空间。
+            $old_pic = Db::name('advert')->where(['cid'=>$cid])->value('c_picurl') ;
         }
         if (isset($data['token_hash'])){
             unset($data['token_hash']) ;
         }
-        $cid = $data['cid'] ;
         $where['cid'] = $cid ;
         unset($data['cid']) ;
         $data['update_time'] = time() ;
         $rst = Db::name('arctype')->where($where)->update($data) ;
         if($rst){
+            if(!empty($old_pic)){
+                @unlink($_SERVER['DOCUMENT_ROOT'] . $old_pic) ;
+            }
             return true ;
         }else{
             $this->setErrorMsg('fail') ;

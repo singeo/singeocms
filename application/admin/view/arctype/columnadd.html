@@ -99,7 +99,7 @@
                 <div class="form-group">
                     <label for="c_picurl" class="col-sm-3 control-label">栏目图片</label>
                     <div class="col-sm-7">
-                        <input type="file" id="c_picurl" name="c_picurl" class="dropify" data-max-file-size="500K" data-max-file-size-preview="500K" data-allowed-file-extensions="jpg jpeg png gif"/>
+                        <input type="file" id="c_picurl" name="c_picurl" class="dropify" data-max-file-size="{:getWebconfig('max_pic_size')}K" data-max-file-size-preview="{:getWebconfig('max_pic_size')}K" data-allowed-file-extensions="{:getWebconfig('allow_pic_ext')}"/>
                     </div>
                 </div>
                 <div class="form-group">

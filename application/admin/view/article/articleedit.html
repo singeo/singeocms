@@ -73,7 +73,7 @@
                 <div class="form-group">
                     <label for="article_pic" class="col-sm-2 control-label">文章缩略图图片</label>
                     <div class="col-sm-8">
-                        <input type="file" id="article_pic" name="article_pic" class="dropify" data-default-file="{$info.article_pic}" data-max-file-size="500K" data-max-file-size-preview="500K" data-allowed-file-extensions="jpg jpeg png gif"/>
+                        <input type="file" id="article_pic" name="article_pic" class="dropify" data-default-file="{$info.article_pic}" data-max-file-size="{:getWebconfig('max_pic_size')}K" data-max-file-size-preview="{:getWebconfig('max_pic_size')}K" data-allowed-file-extensions="{:getWebconfig('allow_pic_ext')}"/>
                     </div>
                 </div>
             </div>

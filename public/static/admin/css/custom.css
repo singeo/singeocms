@@ -45,108 +45,49 @@
     height: 60px;
 }
 
-/*
-修改信息table
-*/
-.edit-table{
-    width: 450px;
-    height: auto;
-    font-size:14px;
+/**#快捷方式**/
+.shortcut{
+    margin-bottom: 15px;
+    text-align: center;
 }
-.edit-table tr{
-    height: 40px;
-    line-height: 40px;
+.shortcut a{
+    text-decoration: none;
 }
-/*
-修改信息table 左 td
-*/
-.edit-td{
-    width: 120px;
-    text-align: right;
-}
-/*
-修改信息input
-*/
-.edit-input{
-    margin-left: 20px;
-}
-/*
-车辆信息修改按钮
-*/
-.edit-edit{
-    margin-left: 10px;
-
-}
-
-#agent_box{
-    position: relative;
-}
-#agent_box .i-plus{
-    position: absolute;
-    right: 0;
-    top: 0;
-    font-size: 30px;
-    color:#0994ff;
-    z-index:999;
-}
-#agent_box .form-inline{
-    position: relative;
+.shortcut i{
+    display: block;
     width: 100%;
-    z-index:99;
+    height: 60px;
+    line-height: 60px;
+    background-color: #f8f8f8;
 }
-#agent_box .i-minus{
-    position: absolute;
-    right: 0;
-    top: 0;
+.shortcut span{
+    display: block;
+    height: 24px;
+    line-height: 24px;
+    margin-top: 5px;
+}
+
+/**统计管理**/
+.admin-census{
+    padding-left: 15px;
+    margin-bottom: 15px;
+}
+.admin-census a{
+    display: block;
+    padding:5px 10px;
+    background-color: #f8f8f8;
+    text-decoration: none;
+}
+.admin-census h2{
+    font-size: 1em ;
+}
+.admin-census span{
+    display: block;
+    height: 35px;
+    line-height: 35px;
     font-size: 30px;
-    color:red;
-    z-index:999;
+    color: #009688;
 }
 
-.form-group .input_line{
-    display: inline;
-}
-/*
-* 城市承包商  input 框
-*/
-.market_input{
-    width: 280px;
-}
-.market_margin{
-    margin-top:5px;
-}
-.market_left{
-   margin-left:15px;
-}
-
-.upload-img-box{
-    width:150px;
-    height:150px;
-    line-height:150px;
-    border:1px solid #dedede;
-    overflow:hidden;
-    position:relative;
-    text-align:center;
-}
-
-.upload-img-box p{
-    position:static;
-    +position:absolute;
-    top:50%;
-    vertical-align:middle
-}
-
-.upload-img-box p img{
-    position:static;
-    +position:relative;
-    top:-50%;
-    left:-50%;
-    vertical-align:middle
-}
-
-.p-v-7px{
-    padding-top:7px;
-    padding-bottom: 7px;
-}
 
 

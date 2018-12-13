@@ -77,6 +77,7 @@ class Article extends Base
             $this->setErrorMsg($validate->getError()) ;
             return false;
         }
+        $aid = $data['aid'] ;
         if(!empty($file['article_pic'])){
             $uploadcls = new \app\admin\library\Upload() ;
             $uploadRes = $uploadcls->doUpload($file['article_pic'],'image') ;
@@ -86,11 +87,12 @@ class Article extends Base
             }else{
                 $data['article_pic'] = $uploadRes['url'] ;
             }
+            //读取之前的图片，删除之，节省空间。
+            $old_pic = Db::name('advert')->where(['id'=>$aid])->value('article_pic') ;
         }
         if (isset($data['token_hash'])){
             unset($data['token_hash']) ;
         }
-        $aid = $data['aid'] ;
         $where['id'] = $aid ;
         unset($data['aid']) ;
         $data['publish_time'] = strtotime($data['publish_time']) ;
@@ -99,6 +101,9 @@ class Article extends Base
         unset($data['article_tags']) ;
         $rst = Db::name('article')->where($where)->update($data) ;
         if($rst){
+            if(!empty($old_pic)){
+                @unlink($_SERVER['DOCUMENT_ROOT'] . $old_pic) ;
+            }
             $articleTagsModel = new \app\admin\model\ArticleTags() ;
             $articleTagsModel->saveArticleTags($article_tags,$aid) ;
             return true ;

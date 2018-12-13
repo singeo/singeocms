@@ -90,7 +90,7 @@ class Config extends Base
             $this->setErrorMsg('没有可保存的数据') ;
             return false;
         }
-        $field = 'c_key,c_value' ;
+        $field = 'c_key,c_value,c_type' ;
         $stored = Db::name('Config')
             ->where(['c_group'=>$group_id,'status'=>1])
             ->field($field)
@@ -99,14 +99,20 @@ class Config extends Base
             $this->setErrorMsg('没有可保存的数据') ;
             return false;
         }else{
-            $c_stored = [] ;
-            foreach ($stored as $item){
+            $c_stored = array_combine(array_column($stored,'c_key'),$stored) ;
+            /**foreach ($stored as $item){
                 $c_stored[$item['c_key']] = $item['c_value'] ;
-            }
+                if($item['c_type'] == 'file' && !empty($item['c_value'])){
+                    @unlink($_SERVER['DOCUMENT_ROOT'] . $item['c_value']) ;
+                }
+            }**/
             foreach ($data as $key=>$datum) {
-                if($c_stored[$key] != $datum){
+                if($c_stored[$key]['c_value'] != $datum){
                     $c_data['c_value'] = $datum ;
                     Db::name('Config')->where(['c_key'=>$key])->update($c_data) ;
+                    if($c_stored[$key]['c_type'] == 'file'){
+                        @unlink($_SERVER['DOCUMENT_ROOT'].$c_stored[$key]['c_value']) ;
+                    }
                 }
             }
             $config = Db::name('Config')

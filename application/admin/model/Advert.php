@@ -72,6 +72,7 @@ class Advert extends Base
             $this->setErrorMsg($validate->getError()) ;
             return false;
         }
+        $aid = $data['aid'] ;
         if(!empty($file['a_pic'])){
             $uploadcls = new \app\admin\library\Upload() ;
             $uploadRes = $uploadcls->doUpload($file['a_pic'],'image') ;
@@ -81,16 +82,20 @@ class Advert extends Base
             }else{
                 $data['a_pic'] = $uploadRes['url'] ;
             }
+            //读取之前的图片，删除之，节省空间。
+            $old_pic = Db::name('advert')->where(['aid'=>$aid])->value('a_pic') ;
         }
         if (isset($data['token_hash'])){
             unset($data['token_hash']) ;
         }
-        $aid = $data['aid'] ;
         $where['aid'] = $aid ;
         unset($data['aid']) ;
         $data['update_time'] = time() ;
         $rst = Db::name('advert')->where($where)->update($data) ;
         if($rst){
+            if(!empty($old_pic)){
+                @unlink($_SERVER['DOCUMENT_ROOT'] . $old_pic) ;
+            }
             return true ;
         }else{
             $this->setErrorMsg('fail') ;
