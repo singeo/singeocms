@@ -18,7 +18,13 @@ class Tags extends Base
      * @return mixed
      */
     public function index(){
+        $keys = $this->request->param('keys/s') ;
+        $where = [] ;
+        if(!empty($keys)){
+            $where['tags_name'] = ['like','%'.$keys.'%'] ;
+        }
         $list = Db::name('tags')
+            ->where($where)
             ->order('tags_id DESC')
             ->paginate(10,false,["query"=>$this->request->param()]) ;
         $this->assign('list',$list) ;

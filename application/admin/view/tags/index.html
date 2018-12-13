@@ -9,6 +9,12 @@
     <div id="main-wrapper">
         <div class="row">
             <div class="panel panel-body panel-white">
+                <form class="form-inline" role="form">
+                    <div class="form-group">
+                        <input type="text" name="keys" class="form-control" value='{present name="Think.get.keys"}{$Think.get.keys}{/present}'/>
+                    </div>
+                    <button type="submit" class="btn btn-info">搜索</button>
+                </form>
                 <div class="table-responsive">
                     <table id="advertTables" class="display table" style="width: 100%; cellspacing: 0;">
                         <thead>
