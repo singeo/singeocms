@@ -41,7 +41,9 @@
     <div class="links">
         <h2 class="hometitle">友情链接</h2>
         <ul>
-            <li><a href="http://www.baidu.com" title="百度一下,你就知道" target="_blank"></a></li>
+            {sg:advertlist id="item" cid="1"}
+            <li><a href="{$item.link_url}" title="{$item.a_title}" target="_blank">{$item.a_title}</a></li>
+            {/sg:advertlist}
         </ul>
     </div>
 </div>

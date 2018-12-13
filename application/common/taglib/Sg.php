@@ -23,6 +23,7 @@ class Sg extends TagLib
         'pagelist' => ['attr' => 'listitem,listsize', 'close' => 0],
         'breadcrumb'=> ['attr' => 'cid', 'close' => 0],
         'singleinfo'=> ['attr' => 'cid,id,empty','close'=>1],
+        'advertlist'=> ['attr' => 'cid,id,empty,orderby,limit','close'=>1]
     ] ;
 
     /**
@@ -292,6 +293,30 @@ class Sg extends TagLib
         $parseStr .= 'else: ?>' ;
         $parseStr .= $content ;
         $parseStr .= '<?php endif ;?>' ;
+        return $parseStr ;
+    }
+
+    /**
+     * 获取单页内容
+     * @param $tags
+     */
+    public function tagAdvertlist($tags,$content){
+        if(empty($tags['cid'])){
+            echo '标签错误，广告栏目ID不存在。' ;
+        }
+        $cid = $tags['cid'] ;
+        $idname = empty($tags['id']) ? 'item' : $tags['id'] ;
+        $empty = empty($tags['empty']) ? '' : $tags['empty'] ;
+        $orderby = empty($tags['orderby']) ? '' : $tags['orderby'] ;
+        $limit = empty($tags['limit']) ? '' : $tags['limit'] ;
+        $parseStr = ' <?php ';
+        $parseStr .= '$advertmodel = new \app\common\model\Advert() ;' ;
+        $parseStr .= '$list = $advertmodel->getAdvertList("'.$cid.'","'.$orderby.'","'.$limit.'") ;' ;
+        $parseStr .= 'if(empty($list)): echo \''.$empty.'\' ;' ;
+        $parseStr .= 'else: ' ;
+        $parseStr .= 'foreach($list as $'.$idname.') : ?>' ;
+        $parseStr .= $content ;
+        $parseStr .= '<?php endforeach ; endif ;?>' ;
         return $parseStr ;
     }
 }
