@@ -26,11 +26,4 @@ class Index extends Base {
         Cache::clear() ;
         $this->success('缓存清除成功') ;
     }
-
-    /**
-     * 生成网站地图
-     */
-    public function siteMap(){
-        echo '生成网站地图' ;
-    }
 }

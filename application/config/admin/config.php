@@ -44,4 +44,8 @@ return [
         'checkbox'=>'复选框',
         'radio'=>'单选框',
     ],
+
+    // 默认跳转页面对应的模板文件
+    'dispatch_success_tmpl'  => APP_PATH.'admin/view/common/dispatch_jump.html',
+    'dispatch_error_tmpl'    => APP_PATH.'admin/view/common/dispatch_jump.html',
 ] ;
