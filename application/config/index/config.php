@@ -16,5 +16,9 @@ return [
         'cache_time'    => -1,
         //Singeo标签库
         'taglib_pre_load' => 'app\common\taglib\Sg',
-    ]
+    ],
+
+    // 默认跳转页面对应的模板文件
+    'dispatch_success_tmpl'  => APP_PATH.'admin/view/common/dispatch_jump.html',
+    'dispatch_error_tmpl'    => APP_PATH.'admin/view/common/dispatch_jump.html',
 ] ;
