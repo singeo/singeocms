@@ -88,7 +88,7 @@ class Article extends Base
                 $data['article_pic'] = $uploadRes['url'] ;
             }
             //读取之前的图片，删除之，节省空间。
-            $old_pic = Db::name('advert')->where(['id'=>$aid])->value('article_pic') ;
+            $old_pic = Db::name('article')->where(['id'=>$aid])->value('article_pic') ;
         }
         if (isset($data['token_hash'])){
             unset($data['token_hash']) ;
