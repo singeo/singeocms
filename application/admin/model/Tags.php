@@ -30,7 +30,7 @@ class Tags extends Base
                     $tagsId[] = $tags_id ;
                 }else{
                     $tagsData['tags_name'] = $t ;
-                    $tagsData['add_time'] = time() ;
+                    $tagsData['create_time'] = time() ;
                     $tagsId[] = Db::name('tags')->insertGetId($tagsData) ;
                 }
             }
