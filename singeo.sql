@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50617
 File Encoding         : 65001
 
-Date: 2018-11-26 14:15:05
+Date: 2018-12-14 17:17:16
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -31,16 +31,17 @@ CREATE TABLE `g_advert` (
   `create_time` int(10) DEFAULT '0' COMMENT '创建时间',
   `update_time` int(10) DEFAULT '0' COMMENT '更新时间',
   PRIMARY KEY (`aid`)
-) ENGINE=MyISAM AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 COMMENT='广告';
+) ENGINE=MyISAM AUTO_INCREMENT=7 DEFAULT CHARSET=utf8 COMMENT='广告';
 
 -- ----------------------------
 -- Records of g_advert
 -- ----------------------------
 INSERT INTO `g_advert` VALUES ('1', '1', '测试1123', '测试1测试1测试13', '/uploads/image/20181106/e0ea0c1f62554.jpg', null, '20', '-1', '1541494461', '1541495373');
-INSERT INTO `g_advert` VALUES ('2', '2', '个人博客模板《早安》', '个人博客模板《早安》', '/uploads/image/20181108/6b23e91536269.jpg', 'http://www.baidu.com', '10', '1', '1541647568', '1541648931');
+INSERT INTO `g_advert` VALUES ('2', '2', '个人博客模板《早安》', '个人博客模板《早安》', '/uploads/image/20181213/0b8eb263d034d.jpg', 'http://www.baidu.com', '10', '1', '1541647568', '1544672167');
 INSERT INTO `g_advert` VALUES ('3', '2', '个人博客模板《早安》', '个人博客模板《早安》', '/uploads/image/20181108/b1a2be1956c87.jpg', null, '20', '1', '1541647584', '0');
 INSERT INTO `g_advert` VALUES ('4', '2', '个人博客模板《早安》', '个人博客模板《早安》', '/uploads/image/20181108/6b2ee0f355fd4.jpg', null, '30', '1', '1541647600', '0');
 INSERT INTO `g_advert` VALUES ('5', '2', '个人博客模板《早安》', '个人博客模板《早安》', '/uploads/image/20181108/d351c616255db.jpg', null, '40', '1', '1541647618', '0');
+INSERT INTO `g_advert` VALUES ('6', '1', 'singeo博客', '友情链接', null, 'https://www.singeo.cn', '50', '1', '1544693276', '1544693540');
 
 -- ----------------------------
 -- Table structure for g_advert_category
@@ -62,8 +63,8 @@ CREATE TABLE `g_advert_category` (
 -- ----------------------------
 -- Records of g_advert_category
 -- ----------------------------
-INSERT INTO `g_advert_category` VALUES ('1', '网站banner1', '首页显示banner2', null, null, '30', '1', '1541138512', null);
-INSERT INTO `g_advert_category` VALUES ('2', '网站首页banner', '网站首页banner', null, null, '10', '1', '1541139164', '1541644443');
+INSERT INTO `g_advert_category` VALUES ('1', '友情链接', '友情链接', null, null, '30', '1', '1541138512', '1544693528');
+INSERT INTO `g_advert_category` VALUES ('2', '网站首页banner', '网站首页banner', null, null, '10', '1', '1541139164', '1544693513');
 
 -- ----------------------------
 -- Table structure for g_arctype
@@ -88,7 +89,7 @@ CREATE TABLE `g_arctype` (
   `create_time` int(10) DEFAULT NULL COMMENT '创建时间',
   `update_time` int(10) DEFAULT NULL COMMENT '更新时间',
   PRIMARY KEY (`cid`)
-) ENGINE=MyISAM AUTO_INCREMENT=9 DEFAULT CHARSET=utf8 COMMENT='文档栏目表';
+) ENGINE=MyISAM AUTO_INCREMENT=10 DEFAULT CHARSET=utf8 COMMENT='文档栏目表';
 
 -- ----------------------------
 -- Records of g_arctype
@@ -97,10 +98,11 @@ INSERT INTO `g_arctype` VALUES ('1', '0', '1', '学无止境', '', null, '', '',
 INSERT INTO `g_arctype` VALUES ('3', '0', '1', '偶遇佳句', '', null, '', '', '', '1', '', 'water_flow.html', '30', '1', '1', '1542266405', '1542267492');
 INSERT INTO `g_arctype` VALUES ('2', '0', '1', '趣味杂谈', '', null, '', '', '', '1', '', 'lists.html', '20', '1', '1', '1542266333', null);
 INSERT INTO `g_arctype` VALUES ('4', '0', '1', '标签云', '', null, '', '', '', '2', 'tags_cloud.html', 'lists.html', '40', '1', '1', '1542266440', '1542267627');
-INSERT INTO `g_arctype` VALUES ('5', '0', '2', '关于博主', '', null, '', '', '', '1', '', 'single.html', '50', '1', '1', '1542266469', '1542270884');
+INSERT INTO `g_arctype` VALUES ('5', '0', '2', '关于博主', '', null, '关于博主', '关于博主', '关于博主', '1', '', 'single.html', '50', '1', '1', '1542266469', '1543214096');
 INSERT INTO `g_arctype` VALUES ('6', '1', '1', 'PHP技术', 'PHP技术', null, '', '', '', '1', '', 'lists.html', '10', '1', '1', '1542339487', null);
 INSERT INTO `g_arctype` VALUES ('7', '6', '1', '缓存技术', '缓存技术', null, '', '', '', '1', '', 'lists.html', '10', '1', '1', '1542339515', null);
 INSERT INTO `g_arctype` VALUES ('8', '1', '1', '前端开发', '前端开发', null, '', '', '', '1', '', 'lists.html', '20', '1', '1', '1542339546', null);
+INSERT INTO `g_arctype` VALUES ('9', '0', '1', 'Python', '', null, '', '', '', '1', '', 'lists.html', '35', '1', '1', '1544690529', null);
 
 -- ----------------------------
 -- Table structure for g_area
@@ -3565,7 +3567,7 @@ CREATE TABLE `g_article` (
 INSERT INTO `g_article` VALUES ('1', '1', '测试', '测试', null, '', '', '测试', '0', '0', '0', '1', '', 'show.html', '1542352032', '1542352012', null, '0', '0', '0', '50', '1');
 INSERT INTO `g_article` VALUES ('2', '7', '测试', '测试', null, '', '', '测试', '0', '0', '4', '1', '', 'show.html', '1542352060', '1542352040', null, '0', '0', '0', '50', '1');
 INSERT INTO `g_article` VALUES ('3', '1', '测试', '测试', '', '', '', '测试', '0', '0', '0', '1', '', 'show.html', '1542352032', '1542352012', null, '0', '0', '0', '50', '1');
-INSERT INTO `g_article` VALUES ('4', '1', '测试', '测试', '', '', '', '测试', '0', '0', '10', '1', '', 'show.html', '1542352032', '1542352012', null, '0', '0', '0', '50', '1');
+INSERT INTO `g_article` VALUES ('4', '1', '测试', '测试', '', '', '', '测试', '0', '0', '11', '1', '', 'show.html', '1542352032', '1542352012', null, '0', '0', '0', '50', '1');
 INSERT INTO `g_article` VALUES ('5', '1', '测试', '测试', '', '', '', '测试', '0', '0', '0', '1', '', 'show.html', '1542352032', '1542352012', null, '0', '0', '0', '50', '1');
 INSERT INTO `g_article` VALUES ('6', '1', '测试', '测试', '', '', '', '测试', '0', '0', '0', '1', '', 'show.html', '1542352032', '1542352012', null, '0', '0', '0', '50', '1');
 INSERT INTO `g_article` VALUES ('7', '1', '测试', '测试', '', '', '', '测试', '0', '0', '0', '1', '', 'show.html', '1542352032', '1542352012', null, '0', '0', '0', '50', '1');
@@ -3575,7 +3577,7 @@ INSERT INTO `g_article` VALUES ('10', '3', '习近平同巴勒斯坦总统阿巴
 INSERT INTO `g_article` VALUES ('11', '3', '刘强东财富腰斩 身价缩水跌至不足50亿美元', '11月21日，彭博亿万富翁指数显示，京东创始人刘强东目前的身价为47.3亿美元，今年以来已经缩水了46.9亿美元，降幅高达49.5%。', '/uploads/image/20181121/be3e411830f5e.jpg', '', '', '11月21日，彭博亿万富翁指数显示，京东创始人刘强东目前的身价为47.3亿美元，今年以来已经缩水了46.9亿美元，降幅高达49.5%。<br />\r\n<br />\r\n目前在榜单上，刘强东的排名下降到了346位，和他身家较为接近的是360创始人周鸿祎，后者的财富为46.9亿美元。<br />\r\n<br />\r\n围绕在刘强东身边的风波近日从未间断。此前，有传闻称，刘强东将宣布退出京东管理层，京东方面很快对这一消息进行了辟谣，称刘强东先生目前仍在集团正常工作，公司经营也并未受到影响；在此前的几年间，京东集团的成熟业务就均由管理团队负责。。<br />\r\n<br />\r\n11月19日晚，京东公司发布了2018年Q3的财报。财报显示，2018年Q3京东净收入1048亿元，同比增长25%；非美国通用会计准则下净利润为12亿元，去年同期为22亿元，同比下降45%。<br />', '0', '0', '4', '1', '', 'show.html', '1542793736', '1542793685', null, '0', '0', '0', '50', '1');
 INSERT INTO `g_article` VALUES ('12', '3', '中国城市创新竞争力排名出炉：北京上海深圳居前三', '中国科学技术交流中心、福建师范大学等单位21日联合发布最新出版的《中国城市创新竞争力发展报告》(下称《报告》)。', '/uploads/image/20181121/158ed9c8171eb.jpeg', '', '', '中新经纬客户端11月21日电 中国科学技术交流中心、福建师范大学等单位21日联合发布最新出版的《中国城市创新竞争力发展报告》(下称《报告》)。福建师范大学经济学院院长黄茂兴表示，在城市创新竞争力排名中，位居前三的依次分别为北京、上海和深圳。<br />\r\n<br />\r\n福建师范大学经济学院院长黄茂兴。中国网 宗超 摄<br />\r\n<br />\r\n黄茂兴介绍，根据数据的可获得性的基本原则，《报告》共选取274个城市作为样本，分为五个梯队。黄茂兴称，北京、上海、深圳分别为前三名。在前20名中，大部分城市位于东部沿海发达的省份，西部省份较少。从评价分值的情况来讲，总体不太均衡，274个城市当中有235个城市的创新竞争力在10分到30分之间，比重接近60%；30分到50分的接近7%，高于50分的占比为1.1%左右。<br />', '0', '0', '20', '1', '', 'show.html', '1542793827', '1542793780', '1542877910', '0', '0', '0', '50', '1');
 INSERT INTO `g_article` VALUES ('13', '3', '公交过站抢夺方向盘，53岁大妈被拘留10日', '18日下午，绵阳3路公交车上，一名大妈因公交车离站后要求下车，随后抢夺公交车方向盘(红星新闻曾报道)，20日晚11时许，绵阳警方发布通报，抢夺方向盘的大妈已被警方治安拘留10日。', '/uploads/image/20181121/c180ee69299c1.jpeg', '', '', '18日下午，绵阳3路公交车上，一名大妈因公交车离站后要求下车，随后抢夺公交车方向盘(红星新闻曾报道)，20日晚11时许，绵阳警方发布通报，抢夺方向盘的大妈已被警方治安拘留10日。<br />\r\n<br />\r\n绵阳涪城警方通报称，2018年11月18日下午2时许，绵阳市城区3路公交车上发生一起乘客抢夺方向盘事件。接到公交公司报警后，涪城分局城北派出所迅速开展调查工作并依法将违法嫌疑人张某某（女，53岁，雅安市名山区人）传唤至派出所，张某某如实交代了自己因急于下车一时冲动而抢夺方向盘的违法事实，同时表示后悔和自责，希望得到公众谅解。<br />\r\n<br />\r\n目前，涪城警方依据《中华人民共和国治安管理处罚法》相关规定对张某某处以治安拘留10日的处罚。<br />', '0', '0', '3', '1', '', 'show.html', '1542793946', '1542793887', '1542793963', '0', '0', '0', '50', '1');
-INSERT INTO `g_article` VALUES ('14', '3', '成都一小区电梯故障2个月没修好 居民天天爬楼都要累瘫了', '电梯坏了2个月。大家都签字同意了，房屋维修基金咋还没到位？', '/uploads/image/20181121/6e6df325fa54a.jpg', '', '', '小区住户<br />\r\n<br />\r\n电梯坏了2个月。大家都签字同意了，房屋维修基金咋还没到位？<br />\r\n<br />\r\n物业公司<br />\r\n<br />\r\n手续比较多要走流程，争取在12月底弄好。<br />\r\n<br />\r\n有住户爆料称，今年9月，成华区郦景东城小区7栋4单元电梯坏了，两个月过去了仍未修好，住户们爬楼梯觉得很辛苦。<br />\r\n<br />\r\n小区住户：天天爬楼很吃力<br />\r\n<br />\r\n11月20上午11点，记者来到成华区郦景东城小区，7栋为高11层的电梯住宅，每个单元有一部电梯使用，目前4单元电梯无法运行。在4单元门口，张贴了一些告示，其中物业公司在9月4日曾提示电梯正在抢修中，9月7日则发布了电梯配件更换的告示，提及电梯变频器及周边辅件需更换，费用为15640元。<br />\r\n<br />\r\n今年79岁的张婆婆住在6楼，买菜、散步、办事一天得上下楼梯五六趟，尽管楼层不算高，但每天爬起来都十分费力。“我们都在这里住十几年了，好多住户都是老年人，特别是高层爬起来很吃力。”<br />\r\n<br />\r\n随后，记者跟随张婆婆上楼时发现，尽管是白天，可楼道光线昏暗，仅从每层楼门口的灯光透出一些光线。正在下楼冯女士说：“我两岁多的孙女就在楼梯摔伤了，楼上还有住户把脚都摔骨折了，家都不能出。”冯女士表示，爬楼梯本来就比较辛苦，孩子摔伤后，现在上下楼都只敢抱着，更累。<br />\r\n<br />\r\n“9月初就坏了。”冯女士说，当时物业表示需要1.5万元的维修费，让大家分摊筹集费用，可是业主意见不统一，没收齐。后来，业主决定通过申请房屋维修基金进行电梯维修，大家都签字同意了，可现在电梯仍没修好。<br />\r\n<br />\r\n物业公司：争取在12月底修好<br />\r\n<br />\r\n小区物业成都家天下物业管理公司郦景东城项目部现场工作人员解释，目前他们正在积极申请房屋维修基金，可手续比较多要走流程，因此办理的时间比较长，“估计还有一两个月，争取在12月底弄好。”<br />\r\n<br />\r\n该工作人员说，如果业主们自己筹集费用，可以很快维修，但无法征得统一意见。现在申请维修基金的话，得按流程办事，他们派有专人在办理该业务，各种项目多，需要时间。<br />\r\n<br />\r\n维修资金管理中心：正常情况 一周即可备案<br />\r\n“给物业说了很多次，资料都给他们了，一直没交过来。”成华区住房专项维修资金管理服务中心工作人员表示，按照流程，物业把资料（损坏情况、维修方案等）填好交给中心，次日检测人员到现场检测核实并出具相关报告，即可申请、公示、备案。“正常情况，最多一周便可完成。”<br />', '0', '0', '38', '1', '', 'show.html', '1542794099', '1542794040', '1542794158', '0', '0', '0', '50', '1');
+INSERT INTO `g_article` VALUES ('14', '3', '成都一小区电梯故障2个月没修好 居民天天爬楼都要累瘫了', '电梯坏了2个月。大家都签字同意了，房屋维修基金咋还没到位？', '/uploads/image/20181121/6e6df325fa54a.jpg', '', '', '<div><pre><code>aaaaaaaaaaaaaaaaaaaa</code></pre><p><br></p></div><div><br></div>小区住户<br>\r\n<br>\r\n电梯坏了2个月。大家都签字同意了，房屋维修基金咋还没到位？<br>\r\n<br>\r\n物业公司<br>\r\n<br>\r\n手续比较多要走流程，争取在12月底弄好。<br>\r\n<br>\r\n有住户爆料称，今年9月，成华区郦景东城小区7栋4单元电梯坏了，两个月过去了仍未修好，住户们爬楼梯觉得很辛苦。<br>\r\n<br>\r\n小区住户：天天爬楼很吃力<br>\r\n<br>\r\n11月20上午11点，记者来到成华区郦景东城小区，7栋为高11层的电梯住宅，每个单元有一部电梯使用，目前4单元电梯无法运行。在4单元门口，张贴了一些告示，其中物业公司在9月4日曾提示电梯正在抢修中，9月7日则发布了电梯配件更换的告示，提及电梯变频器及周边辅件需更换，费用为15640元。<br>\r\n<br>\r\n今年79岁的张婆婆住在6楼，买菜、散步、办事一天得上下楼梯五六趟，尽管楼层不算高，但每天爬起来都十分费力。“我们都在这里住十几年了，好多住户都是老年人，特别是高层爬起来很吃力。”<br>\r\n<br>\r\n随后，记者跟随张婆婆上楼时发现，尽管是白天，可楼道光线昏暗，仅从每层楼门口的灯光透出一些光线。正在下楼冯女士说：“我两岁多的孙女就在楼梯摔伤了，楼上还有住户把脚都摔骨折了，家都不能出。”冯女士表示，爬楼梯本来就比较辛苦，孩子摔伤后，现在上下楼都只敢抱着，更累。<br>\r\n<br>\r\n“9月初就坏了。”冯女士说，当时物业表示需要1.5万元的维修费，让大家分摊筹集费用，可是业主意见不统一，没收齐。后来，业主决定通过申请房屋维修基金进行电梯维修，大家都签字同意了，可现在电梯仍没修好。<br>\r\n<br>\r\n物业公司：争取在12月底修好<br>\r\n<br>\r\n小区物业成都家天下物业管理公司郦景东城项目部现场工作人员解释，目前他们正在积极申请房屋维修基金，可手续比较多要走流程，因此办理的时间比较长，“估计还有一两个月，争取在12月底弄好。”<br>\r\n<br>\r\n该工作人员说，如果业主们自己筹集费用，可以很快维修，但无法征得统一意见。现在申请维修基金的话，得按流程办事，他们派有专人在办理该业务，各种项目多，需要时间。<br>\r\n<br>\r\n维修资金管理中心：正常情况 一周即可备案<br>\r\n“给物业说了很多次，资料都给他们了，一直没交过来。”成华区住房专项维修资金管理服务中心工作人员表示，按照流程，物业把资料（损坏情况、维修方案等）填好交给中心，次日检测人员到现场检测核实并出具相关报告，即可申请、公示、备案。“正常情况，最多一周便可完成。”<br>', '0', '0', '50', '1', '', 'show.html', '1542794099', '1542794040', '1543389959', '0', '0', '0', '50', '1');
 
 -- ----------------------------
 -- Table structure for g_article_author
@@ -3586,9 +3588,9 @@ CREATE TABLE `g_article_author` (
   `author_name` varchar(30) DEFAULT NULL COMMENT '作者名称',
   `author_breif` varchar(255) DEFAULT NULL COMMENT '作者简介',
   `status` tinyint(1) DEFAULT '1' COMMENT '状态-1删除，1正常',
-  `add_time` int(10) DEFAULT NULL COMMENT '创建时间',
+  `create_time` int(10) DEFAULT NULL COMMENT '创建时间',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COMMENT='文章作者列表';
+) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COMMENT='文章作者列表';
 
 -- ----------------------------
 -- Records of g_article_author
@@ -3648,14 +3650,14 @@ CREATE TABLE `g_article_source` (
   `source_name` varchar(30) DEFAULT NULL COMMENT '文章来源名称',
   `source_url` varchar(70) DEFAULT NULL COMMENT '文章来源网址',
   `status` tinyint(1) DEFAULT '1' COMMENT '状态-1删除，1正常',
-  `add_time` int(10) DEFAULT NULL COMMENT '新增时间',
+  `create_time` int(10) DEFAULT NULL COMMENT '新增时间',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COMMENT='文章来源表';
+) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COMMENT='文章来源表';
 
 -- ----------------------------
 -- Records of g_article_source
 -- ----------------------------
-INSERT INTO `g_article_source` VALUES ('1', 'sina', 'http://www.sina.com.cn', '1', '1540870112');
+INSERT INTO `g_article_source` VALUES ('1', '新浪', 'http://www.sina.com.cn', '1', '1540870112');
 
 -- ----------------------------
 -- Table structure for g_article_tags
@@ -3670,7 +3672,6 @@ CREATE TABLE `g_article_tags` (
 -- Records of g_article_tags
 -- ----------------------------
 INSERT INTO `g_article_tags` VALUES ('4', '2');
-INSERT INTO `g_article_tags` VALUES ('4', '1');
 INSERT INTO `g_article_tags` VALUES ('4', '4');
 INSERT INTO `g_article_tags` VALUES ('4', '3');
 INSERT INTO `g_article_tags` VALUES ('9', '5');
@@ -3679,8 +3680,8 @@ INSERT INTO `g_article_tags` VALUES ('12', '7');
 INSERT INTO `g_article_tags` VALUES ('12', '8');
 INSERT INTO `g_article_tags` VALUES ('12', '9');
 INSERT INTO `g_article_tags` VALUES ('13', '8');
-INSERT INTO `g_article_tags` VALUES ('14', '8');
 INSERT INTO `g_article_tags` VALUES ('14', '7');
+INSERT INTO `g_article_tags` VALUES ('14', '8');
 
 -- ----------------------------
 -- Table structure for g_channel_type
@@ -3721,17 +3722,21 @@ CREATE TABLE `g_config` (
   `remark` varchar(255) DEFAULT NULL COMMENT '备注',
   PRIMARY KEY (`id`),
   UNIQUE KEY `c_key_uniq` (`c_key`) USING BTREE
-) ENGINE=MyISAM AUTO_INCREMENT=7 DEFAULT CHARSET=utf8 COMMENT='网站配置项';
+) ENGINE=MyISAM AUTO_INCREMENT=11 DEFAULT CHARSET=utf8 COMMENT='网站配置项';
 
 -- ----------------------------
 -- Records of g_config
 -- ----------------------------
 INSERT INTO `g_config` VALUES ('1', '1', 'input', '网站名称', 'web_title', 'singeo博客', '', '10', '1', '网站显示的名称');
-INSERT INTO `g_config` VALUES ('2', '1', 'input', '网站网址', 'web_url', 'www.singeo.com', '', '60', '1', '网站访问地址');
-INSERT INTO `g_config` VALUES ('3', '1', 'file', '网站logo', 'web_logo', '/uploads/image/20180809/86e34695ed326a828e50ee2c0e1cb2bf.jpg', '', '30', '1', '网站LOGO');
+INSERT INTO `g_config` VALUES ('2', '1', 'input', '网站网址', 'web_url', 'http://dev.singeo.com', '', '60', '1', '网站访问地址');
+INSERT INTO `g_config` VALUES ('3', '1', 'file', '网站logo', 'web_logo', '/uploads/image/20181213/b5615d319b052.png', '', '30', '1', '网站LOGO');
 INSERT INTO `g_config` VALUES ('4', '1', 'input', '网站SEO关键字', 'web_keywords', 'php技术,分享,IT技术分享', '', '15', '1', '网站SEO关键字，有利于SEO优化');
 INSERT INTO `g_config` VALUES ('5', '1', 'input', '网站SEO描述', 'web_description', '关于IT技术的分享', '', '20', '1', '网站描述，有利于SEO优化');
 INSERT INTO `g_config` VALUES ('6', '1', 'file', '网站默认图片', 'web_no_pic', '/uploads/image/20181119/24f5f91ff2960.png', '', '100', '1', '列表无图时显示的默认图片');
+INSERT INTO `g_config` VALUES ('7', '1', 'input', '网站ICP备案号', 'web_icp_code', '蜀ICP备18009696号', '', '60', '1', '');
+INSERT INTO `g_config` VALUES ('8', '3', 'input', '图片上传限制', 'max_pic_size', '500', '', '10', '1', '图片附件限制大小，单位KB');
+INSERT INTO `g_config` VALUES ('9', '3', 'input', '图片扩展名', 'allow_pic_ext', 'jpg jpeg png gif', '', '20', '1', '系统允许上传的图片扩展名');
+INSERT INTO `g_config` VALUES ('10', '1', 'textarea', '网站统计代码', 'web_census_code', '', '', '70', '1', '网站统计代码');
 
 -- ----------------------------
 -- Table structure for g_console_menu
@@ -3751,7 +3756,7 @@ CREATE TABLE `g_console_menu` (
   UNIQUE KEY `menu_url_unique` (`menu_url`) USING BTREE,
   KEY `status` (`status`),
   KEY `parentid` (`parent_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=50 DEFAULT CHARSET=utf8 COMMENT='后台菜单表';
+) ENGINE=MyISAM AUTO_INCREMENT=54 DEFAULT CHARSET=utf8 COMMENT='后台菜单表';
 
 -- ----------------------------
 -- Records of g_console_menu
@@ -3786,7 +3791,7 @@ INSERT INTO `g_console_menu` VALUES ('30', '26', '2', '1', '提交修改', '', '
 INSERT INTO `g_console_menu` VALUES ('31', '26', '2', '1', '更新配置', '', '/admin/Webconfig/submitUpdateConfig', '50', '1527748748');
 INSERT INTO `g_console_menu` VALUES ('32', '26', '2', '1', '上传文件', '', '/admin/Webconfig/upload', '60', '1527748952');
 INSERT INTO `g_console_menu` VALUES ('33', '26', '2', '1', '上传空间管理', '', '/admin/Webconfig/fileManager', '70', '1527748993');
-INSERT INTO `g_console_menu` VALUES ('34', '0', '1', '1', '数据库', 'glyphicon-hdd', '/admin/Datas/', '50', '1527750502');
+INSERT INTO `g_console_menu` VALUES ('34', '50', '1', '1', '数据库', 'glyphicon-hdd', '/admin/Datas/', '50', '1527750502');
 INSERT INTO `g_console_menu` VALUES ('35', '34', '1', '1', '数据备份', '', '/admin/Datas/index', '10', '1527750949');
 INSERT INTO `g_console_menu` VALUES ('36', '34', '1', '1', '数据还原', '', '/admin/Datas/restore', '20', '1527750999');
 INSERT INTO `g_console_menu` VALUES ('37', '0', '1', '1', '内容管理', 'glyphicon-th', '/admin/Portal/', '40', '1531281719');
@@ -3802,6 +3807,10 @@ INSERT INTO `g_console_menu` VALUES ('46', '45', '1', '-1', '导航分类', '', 
 INSERT INTO `g_console_menu` VALUES ('47', '45', '1', '-1', '导航菜单', '', '/admin/Navigation/index', '20', '1541663348');
 INSERT INTO `g_console_menu` VALUES ('48', '37', '1', '1', '栏目管理', '', '/admin/Arctype/index', '10', '1542094309');
 INSERT INTO `g_console_menu` VALUES ('49', '37', '1', '1', '模型管理', '', '/admin/ChannelType/index', '15', '1542097397');
+INSERT INTO `g_console_menu` VALUES ('50', '0', '1', '1', '扩展管理', 'glyphicon-hourglass', '/admin/extend', '45', '1544682961');
+INSERT INTO `g_console_menu` VALUES ('51', '50', '1', '1', '作者管理', '', '/admin/Author/index', '10', '1544683387');
+INSERT INTO `g_console_menu` VALUES ('52', '50', '1', '1', '文章来源', '', '/admin/Source/index', '20', '1544683430');
+INSERT INTO `g_console_menu` VALUES ('53', '50', '1', '1', '标签管理', '', '/admin/Tags/index', '30', '1544683555');
 
 -- ----------------------------
 -- Table structure for g_console_role
@@ -3869,7 +3878,7 @@ CREATE TABLE `g_console_user` (
 -- ----------------------------
 -- Records of g_console_user
 -- ----------------------------
-INSERT INTO `g_console_user` VALUES ('1', 'master', '81281e7e666729f69d62134b814e11bd', 'R6Y8d2', '超级管理员', '123@123.com', '', '', '1524807887', '1', '52', '1542942858', '127.0.0.1');
+INSERT INTO `g_console_user` VALUES ('1', 'master', '81281e7e666729f69d62134b814e11bd', 'R6Y8d2', '超级管理员', '123@123.com', '', '', '1524807887', '1', '65', '1544766494', '127.0.0.1');
 INSERT INTO `g_console_user` VALUES ('18', 'test_01', '29338382855cf9d3ab6fb6e773eab437', 'CIinom', 'aaaaa', '', '', '', '1527576831', '1', '3', '1531297909', '127.0.0.1');
 
 -- ----------------------------
@@ -3993,6 +4002,7 @@ CREATE TABLE `g_single_page` (
 -- ----------------------------
 -- Records of g_single_page
 -- ----------------------------
+INSERT INTO `g_single_page` VALUES ('5', '关于博主1111<p><br></p>', '1543387066');
 
 -- ----------------------------
 -- Table structure for g_tags
@@ -4005,7 +4015,7 @@ CREATE TABLE `g_tags` (
   `hits_day_num` mediumint(7) DEFAULT '0' COMMENT '日点击量(每日定时更新)',
   `hits_week_num` int(11) DEFAULT '0' COMMENT '周点击量(每周定时更新)',
   `hits_month_num` int(11) DEFAULT '0' COMMENT '月点击量(每月自动更新)',
-  `add_time` int(10) DEFAULT NULL COMMENT '新增时间',
+  `create_time` int(10) DEFAULT NULL COMMENT '新增时间',
   `status` tinyint(1) DEFAULT '1' COMMENT '状态-1删除，1正常',
   PRIMARY KEY (`tags_id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=10 DEFAULT CHARSET=utf8 COMMENT='标签列表';
@@ -4013,11 +4023,10 @@ CREATE TABLE `g_tags` (
 -- ----------------------------
 -- Records of g_tags
 -- ----------------------------
-INSERT INTO `g_tags` VALUES ('1', '测试', '0', '0', '0', '0', '1540953472', '1');
 INSERT INTO `g_tags` VALUES ('2', 'test', '0', '0', '0', '0', '1540953472', '1');
 INSERT INTO `g_tags` VALUES ('3', 'atest', '0', '0', '0', '0', '1540953472', '1');
 INSERT INTO `g_tags` VALUES ('4', 'aaaa', '0', '0', '0', '0', '1540953694', '1');
-INSERT INTO `g_tags` VALUES ('5', '北斗导航卫星', '0', '0', '0', '0', '1542609470', '1');
+INSERT INTO `g_tags` VALUES ('5', '北斗导航卫星', '2', '3', '3', '3', '1542609470', '1');
 INSERT INTO `g_tags` VALUES ('6', '北斗系统', '0', '0', '0', '0', '1542609470', '1');
 INSERT INTO `g_tags` VALUES ('7', '城市创新', '0', '0', '0', '0', '1542877910', '1');
 INSERT INTO `g_tags` VALUES ('8', '竞争力', '0', '0', '0', '0', '1542877910', '1');
