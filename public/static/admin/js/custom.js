@@ -31,12 +31,12 @@ var lang = {
 //修改密码modal框
 function editPassword(){
     $.myModal.open({
-        remote:'/Admin/AdminUser/editPassword',
+        remote:'/Admin/Index/editPassword',
         backdrop: 'static',
         keyboard: false,
         show:true,
         success:function(o){
-            userValid();
+            initModal();
         }
     }) ;
 }

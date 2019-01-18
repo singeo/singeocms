@@ -17,8 +17,7 @@ class Home extends Base
      * 首页
      */
     public function index(){
-        $articlemodel = new \app\common\model\Article() ;
-        $articlemodel->getRelativeList(12) ;
+        print_r($_COOKIE) ;
         return $this->fetch() ;
     }
 }
