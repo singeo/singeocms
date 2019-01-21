@@ -22,6 +22,8 @@ return [
     ],
     //后台登录地址
     'admin_login_url' => '/console/login',
+    //后台登录地址token
+    'login_token' => 'b4f0dd1c7a6370374f48d0859c3b654d',
     //数据库备份路径
     'data_backup_path' => './uploads/sqlbackup/',
     //数据库备份卷大小

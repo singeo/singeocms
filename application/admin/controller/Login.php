@@ -20,6 +20,13 @@ class Login extends Controller
      * 登录页面
      */
     public function index(){
+        $loginToken = $this->request->get('token') ;
+        if(empty($loginToken)){
+            $this->error('地址不存在','/') ;
+        }
+        if($loginToken != config('login_token')){
+            $this->error('地址不存在','/') ;
+        }
         return $this->fetch() ;
     }
 }
