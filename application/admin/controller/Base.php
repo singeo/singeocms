@@ -20,7 +20,7 @@ class Base extends Controller
         parent::__construct($request);
         //session(config('admin_login_info'),['id'=>1]) ;
         //验证权限
-        $consoleInfo = cache(config('admin_login_info')) ;
+        $consoleInfo = session(config('admin_login_info')) ;
         if(empty($consoleInfo)){
             $this->error('请重新登录',config('admin_login_url')) ;
         }else{
