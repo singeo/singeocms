@@ -13,11 +13,11 @@ if(!function_exists('checkAuth')){
      * @return bool
      */
     function checkAuth($url){
-        $consoleInfo = cache(config('admin_login_info')) ;
+        $consoleInfo = session(config('admin_login_info')) ;
         if($consoleInfo['id']  === config('super_admin_uid')){
             return true ;
         }else{
-            $rules = cache(config('admin_login_info')) ;
+            $rules = session(config('admin_login_info')) ;
             if(!empty($rules)){
                 $rules = array_column($rules,'menu_url') ;
                 if(is_array($rules)){
