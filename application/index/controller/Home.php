@@ -16,8 +16,7 @@ class Home extends Base
     /**
      * 首页
      */
-    public function index(){
-        print_r($_COOKIE) ;
+    public function index(){ 
         return $this->fetch() ;
     }
 }
