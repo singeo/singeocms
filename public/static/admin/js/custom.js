@@ -136,4 +136,5 @@ function initWangEditor(editor_id,textarea) {
     } ;
     editor.create() ;
     editor.txt.html(textarea.val()) ;
+    return editor ;
 }
