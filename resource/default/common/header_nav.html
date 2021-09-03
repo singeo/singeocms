@@ -1,6 +1,12 @@
 <header>
     <div class="tophead">
-        <div class="logo"><a href="{:getWebconfig('web_url')}/index.html"><img src="{:getWebconfig('web_logo')}" width="240"/></a></div>
+        <div class="logo"><a href="{:getWebconfig('web_url')}/index.html">
+            {if condition="getWebconfig('web_logo') != ''"}
+            <h1>{:getWebconfig('web_title')}</h1>
+            {else /}
+            <img src="{:getWebconfig('web_logo')}" width="240"/></a>
+            {/if}
+        </div>
         <div id="mnav">
             <h2><span class="navicon"></span></h2>
             {:widget('PartsWidgets/main_nav')}

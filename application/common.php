@@ -337,7 +337,11 @@ if(!function_exists('getWebconfig')) {
      * @return mixed|string
      */
     function getWebconfig($key){
-        return cache(config('web_config_catch'))[$key] ;
+        static $webconfig ;
+        if(empty($webconfig)){
+            $webconfig = cache(config('web_config_catch'));
+        }
+        return $webconfig[$key];
     }
 }
 ?>

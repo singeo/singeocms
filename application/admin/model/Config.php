@@ -121,6 +121,11 @@ class Config extends Base
                 ->select() ;
             $rel_config = [] ;
             foreach ($config as $item){
+                if($item['c_type'] == 'file' && !empty($item['c_value'])){
+                    if(!file_exists($_SERVER['DOCUMENT_ROOT'].$item['c_value'])){
+                        $item['c_value'] = '' ;
+                    }
+                }
                 $rel_config[$item['c_key']] = $item['c_value'] ;
             }
             //更新完成将配置写入到缓存中去

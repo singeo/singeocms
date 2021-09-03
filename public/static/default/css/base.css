@@ -19,6 +19,7 @@ article { overflow: hidden }
 .logo { float: left; overflow: hidden; font-size: 30px; margin-top: 10px; margin-left: 10px }
 .logo a { color: #333 }
 .logo img { float: left }
+.logo a h1{ font-size: 22px;color: #8fdf82 }
 .topnav { overflow: hidden; margin: 10px 0; }
 nav { color: #999; line-height: 32px; }
 nav ul { text-align: right; }
