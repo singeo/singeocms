@@ -105,6 +105,7 @@ class Article extends Base
      */
     public function getArclist($param = [],$row = 5 ,$orderby = '',$addfields = ''){
         $arcWhere = [] ;
+        $arcWhere['a.status'] = 1;
         //栏目ID
         if(!empty($param['cid'])){
             $arctypemodel = new \app\common\model\Arctype() ;
