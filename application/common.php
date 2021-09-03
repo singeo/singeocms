@@ -339,7 +339,7 @@ if(!function_exists('getWebconfig')) {
     function getWebconfig($key){
         static $webconfig ;
         if(empty($webconfig)){
-            $webconfig = cache(config('web_config_catch'));
+            $webconfig = \think\Cache::get(config('web_config_catch'));
         }
         return $webconfig[$key];
     }

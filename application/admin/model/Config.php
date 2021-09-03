@@ -124,9 +124,11 @@ class Config extends Base
                 if($item['c_type'] == 'file' && !empty($item['c_value'])){
                     if(!file_exists($_SERVER['DOCUMENT_ROOT'].$item['c_value'])){
                         $item['c_value'] = '' ;
+                        $rel_config[$item['c_key']] = '' ;
                     }
+                }else{
+                    $rel_config[$item['c_key']] = $item['c_value'] ;
                 }
-                $rel_config[$item['c_key']] = $item['c_value'] ;
             }
             //更新完成将配置写入到缓存中去
             Cache::set(config('web_config_catch'), $rel_config) ;

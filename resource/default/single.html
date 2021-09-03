@@ -6,7 +6,7 @@
         <div class="newsview">
             {sg:singleinfo cid="$cur_column_id" id="info"}
             <div class="news_infos">
-                {$info.p_content}
+                {:htmlspecialchars_decode($info.p_content)}
             </div>
             {/sg:singleinfo}
         </div>

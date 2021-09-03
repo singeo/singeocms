@@ -297,7 +297,7 @@ class Sg extends TagLib
     }
 
     /**
-     * 获取单页内容
+     * 获取广告列表内容
      * @param $tags
      */
     public function tagAdvertlist($tags,$content){

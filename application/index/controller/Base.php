@@ -53,7 +53,7 @@ class Base extends Controller
         parent::__construct($request);
         //读取网站配置
         $this->web_config = Cache::get(config('web_config_catch')) ;
-        if(empty($webConfig)){
+        if(empty($this->web_config)){
             $configmodel = new \app\common\model\Config() ;
             $configmodel->setWebConfig() ;
             $this->web_config = Cache::get(config('web_config_catch')) ;
