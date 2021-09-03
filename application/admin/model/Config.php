@@ -125,6 +125,8 @@ class Config extends Base
                     if(!file_exists($_SERVER['DOCUMENT_ROOT'].$item['c_value'])){
                         $item['c_value'] = '' ;
                         $rel_config[$item['c_key']] = '' ;
+                    }else{
+                        $rel_config[$item['c_key']] = $item['c_value'] ;
                     }
                 }else{
                     $rel_config[$item['c_key']] = $item['c_value'] ;
