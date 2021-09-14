@@ -108,7 +108,7 @@ class Config extends Base
             }**/
             foreach ($data as $key=>$datum) {
                 if($c_stored[$key]['c_value'] != $datum){
-                    $c_data['c_value'] = $datum ;
+                    $c_data['c_value'] = htmlspecialchars_decode($datum) ;
                     Db::name('Config')->where(['c_key'=>$key])->update($c_data) ;
                     if($c_stored[$key]['c_type'] == 'file'){
                         @unlink($_SERVER['DOCUMENT_ROOT'].$c_stored[$key]['c_value']) ;
