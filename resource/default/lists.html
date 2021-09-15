@@ -6,7 +6,7 @@
     <ul class="list-body">
         {sg:articlelist id="item" cid="$cur_column_id" pagesize="10"}
         {assign name="url" value=":get_content_link($item.id,$item.link_attr,$item.link_url,$item.template_view)" /}
-        <li>{if condition="item.article_pic != '' && item.article_desc != ''"}<span class="blogpic"><a href="{$url}" title="{$item.article_title}"><img src="{$item.article_pic}"></a></span>{/if}
+        <li>{if condition="$item.article_pic != '' && $item.article_desc != ''"}<span class="blogpic"><a href="{$url}" title="{$item.article_title}"><img src="{$item.article_pic}"></a></span>{/if}
             <h3 class="blogtitle"><a href="{$url}" title="{$item.article_title}">{$item.article_title|getSubstr=###,0,30}</a></h3>
             {notempty name="item.article_desc"}
             <div class="bloginfo">
