@@ -56,7 +56,7 @@ class Sg extends TagLib
         $parseStr .= '$articlemodel = new \app\common\model\Article() ;' ;
         $parseStr .= '$list = $articlemodel->getArclist($param,"'.$row.'","'.$orderby.'","'.$addfields.'") ;' ;
         $parseStr .= 'foreach($list as $'.$key.'=>$'.$id.'):  ' ;
-        $parseStr .= 'if(empty($'.$id.'["article_pic"]) || !file_exists($_SERVER["DOCUMENT_ROOT"].$'.$id.'["article_pic"])): $'.$id.'["article_pic"] = getWebconfig("web_no_pic") ;endif;' ;
+        //$parseStr .= 'if(empty($'.$id.'["article_pic"]) || !file_exists($_SERVER["DOCUMENT_ROOT"].$'.$id.'["article_pic"])): $'.$id.'["article_pic"] = getWebconfig("web_no_pic") ;endif;' ;
         $parseStr .= ' ?>' ;
         $parseStr .= $content ;
         $parseStr .= '<?php endforeach ;?>' ;
@@ -93,7 +93,7 @@ class Sg extends TagLib
         $parseStr .= '$__LIST__ = $res["list"] ;' ;
         $parseStr .= '$__PAGES__ = $res["pages"] ;' ;
         $parseStr .= 'foreach($__LIST__ as $'.$key.'=>$'.$id.'):  ' ;
-        $parseStr .= 'if(empty($'.$id.'["article_pic"]) || !file_exists($_SERVER["DOCUMENT_ROOT"].$'.$id.'["article_pic"])): $'.$id.'["article_pic"] = cache(config("web_config_catch"))["web_no_pic"] ;endif;' ;
+        //$parseStr .= 'if(empty($'.$id.'["article_pic"]) || !file_exists($_SERVER["DOCUMENT_ROOT"].$'.$id.'["article_pic"])): $'.$id.'["article_pic"] = cache(config("web_config_catch"))["web_no_pic"] ;endif;' ;
         $parseStr .= ' ?>' ;
         $parseStr .= $content ;
         $parseStr .= '<?php endforeach ;?>' ;

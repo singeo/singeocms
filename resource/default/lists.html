@@ -6,11 +6,13 @@
     <ul class="list-body">
         {sg:articlelist id="item" cid="$cur_column_id" pagesize="10"}
         {assign name="url" value=":get_content_link($item.id,$item.link_attr,$item.link_url,$item.template_view)" /}
-        <li> <span class="blogpic"><a href="{$url}" title="{$item.article_title}"><img src="{$item.article_pic}"></a></span>
+        <li>{notempty name="item.article_pic"}<span class="blogpic"><a href="{$url}" title="{$item.article_title}"><img src="{$item.article_pic}"></a></span>{/notempty}
             <h3 class="blogtitle"><a href="{$url}" title="{$item.article_title}">{$item.article_title|getSubstr=###,0,30}</a></h3>
+            {notempty name="item.article_desc"}
             <div class="bloginfo">
                 <p>{$item.article_desc|getSubstr=###,0,255}</p>
             </div>
+            {/notempty}
             <div class="autor"><span class="lm"><a href="{:get_nav_link($item.cid,$item.lm_link_attr,$item.lm_link_url,$item.template_list)}" title="{$item.c_name}" target="_blank" class="classname">{$item.c_name}</a></span><span class="dtime">{$item.publish_time|date="Y-m-d",###}</span><span class="viewnum">浏览（{$item.view_num}）</span><span class="readmore"><a href="{$url}">阅读原文</a></span></div>
         </li>
         {/sg:articlelist}

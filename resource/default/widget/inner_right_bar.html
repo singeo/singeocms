@@ -20,7 +20,7 @@
             {sg:article id="item" row="5" order="view_num DESC,id DESC"}
             {assign name="url" value=":get_content_link($item.id,$item.link_attr,$item.link_url,$item.template_view)" /}
             <li><b><a href="{$url}" target="_blank">[{$item.c_name}]{$item.article_title|getSubstr=###,0,15}</a></b>
-                <p><i><img src="{$item.article_pic}"></i>{$item.article_desc|getSubstr=###,0,30}</p>
+                {notempty name="article_desc"}<p>{notempty name="item.article_pic"}<i><img src="{$item.article_pic}"></i>{/notempty}{$item.article_desc|getSubstr=###,0,30}</p>{/notempty}
             </li>
             {/sg:article}
         </ul>
@@ -39,7 +39,7 @@
             {sg:article id="item" row="5" is_recom="1"}
             {assign name="url" value=":get_content_link($item.id,$item.link_attr,$item.link_url,$item.template_view)" /}
             <li><b><a href="{$url}" target="_blank">[{$item.c_name}]{$item.article_title|getSubstr=###,0,15}</a></b>
-                <p><i><img src="{$item.article_pic}"></i>{$item.article_desc|getSubstr=###,0,30}</p>
+                {notempty name="article_desc"}<p>{notempty name="item.article_pic"}<i><img src="{$item.article_pic}"></i>{/notempty}{$item.article_desc|getSubstr=###,0,30}</p>{/notempty}
             </li>
             {/sg:article}
         </ul>
